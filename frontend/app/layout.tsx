@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header/header";
 
-const inter = Inter({ subsets: ["latin"] });
+
+const robotoCondensed = Roboto_Condensed({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Music shop",
@@ -19,8 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.png" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
       </head>
-      <body className={inter.className}>
+      <body className={robotoCondensed.className}>
         <Header />
         {children}
       </body>
