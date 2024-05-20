@@ -1,4 +1,5 @@
-import styles from "../styles.module.scss";
+import styles from "../../styles.module.scss";
+
 
 function Search() {
     return (
@@ -6,9 +7,8 @@ function Search() {
             
             <button>
                 <span className="material-symbols-outlined">search</span>
-                
             </button>
-            <input>
+            <input placeholder="Search">
             
             </input>
         </div>

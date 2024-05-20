@@ -1,6 +1,9 @@
 .header {
-    height: 100px;
+    height: 80px;
     background-color: rgb(243, 243, 243);
+    width: 100%;
+    position: fixed;
+    top: 0;
 
     .wrapper {
         width: 100%;
@@ -17,6 +20,10 @@
             align-items: center;
 
             h1 {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
                 font-size: 38px;
                 text-shadow: 0 0 2px #019ff9;
                 margin: 0px;
@@ -25,6 +32,11 @@
             span {
                 color: #019ff9;
                 text-shadow: 0 0 2px black;
+            }
+
+            p {
+                margin: 0px;
+                padding: 0px;
             }
         }
 
@@ -85,25 +97,13 @@
             align-items: center;
             justify-content: space-around;
 
-            .toggleButton {
-                transition: all 0.2s;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 15%;
-                margin: 0px;
-                padding: 0px;
-                border-radius: 100px;
-                border: none;
-                background-color: #c7c7c7;
-                span{
-                    line-height: normal;
-                }
-            }
-
             width: 15%;
-            height: 80%;
+            height: 90%;
             position: relative;
+
+
+
+
 
             .phones {
                 height: 100%;
@@ -117,7 +117,7 @@
                     font-size: 16px;
                     color: black;
                     text-decoration: none;
-                    height: 28%;
+                    height: 30%;
                     display: flex;
                     width: 100%;
                     justify-content: space-evenly;
@@ -125,12 +125,30 @@
                     transition: all 0.1s;
 
                     img {
-                        height: 25px;
-                        width: 25px;
+                        height: 100%;
                     }
 
 
 
+                }
+            }
+
+            .toggleButton {
+                transition: all 0.2s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
+                margin: 0px;
+                padding: 0px;
+                border-radius: 100px;
+                border: none;
+                background-color: #c7c7c7;
+                cursor: pointer;
+
+                span {
+                    line-height: normal;
                 }
             }
 
@@ -181,33 +199,65 @@
                         width: 25px;
                     }
                 }
+            }
+        }
+
+        .cart {
+            justify-content: space-evenly;
+            align-items: center;
+            width: 15%;
+            height: 100%;
+            display: flex;
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .header {
+        .wrapper {
+            .logo {
+                h1 {
+                    font-size: 3vw;
+                }
+            }
+
+            .search {}
+
+            .contacts {
+                width: 20%;
+
+                .phones {
+                    .phone {
+                        font-size: 14px;
+
+
+                    }
+                }
 
                 button {
-                    border: none;
-                    margin: 0px;
-                    padding: 0px;
-                    font-family: inherit;
-                    width: 50%;
-                    height: 30px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: #e7e7e7;
-                    cursor: pointer;
-                    transition: all 0.1s;
-                    border-radius: 5px;
-                    font-size: 16px;
+                    width: 25px;
+                    height: 25px;
+                }
+            }
 
+            .cart {
+                button {
+                    width: 35px;
+                    height: 35px;
 
-                    &:hover {
-                        box-shadow: inset 0 0 2px 1px rgb(0 0 0 / 60%);
-                    }
-
-                    &:active {
-                        box-shadow: inset 0 0 4px 2px rgb(0 0 0 / 60%);
+                    span {
+                        font-size: 18px;
                     }
                 }
             }
+
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        position: unset;
+        .wrapper {}
     }
 }
