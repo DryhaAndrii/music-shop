@@ -2,7 +2,7 @@
     height: 80px;
     background-color: rgb(243, 243, 243);
     width: 100%;
-    position: fixed;
+    position: sticky;
     top: 0;
 
     .wrapper {
@@ -40,175 +40,185 @@
             }
         }
 
-        .search {
-            width: 40%;
-            height: 50%;
+        .wrappingWrapper {
             display: flex;
+            height: 100%;
+            width: 75%;
+            justify-content: space-between;
             align-items: center;
-            justify-content: flex-start;
 
-
-            input {
-                width: 95%;
-                font-family: inherit;
-                margin: 0px;
-                padding: 0px;
-                height: 100%;
-                border: none;
-                outline: none;
-                font-size: 16px;
-                border-bottom-right-radius: 10px;
-                border-top-right-radius: 10px;
-                box-sizing: border-box;
-                padding: 0px 10px;
-            }
-
-            button {
+            .search {
+                width: 50%;
+                height: 50%;
                 display: flex;
-                justify-content: center;
                 align-items: center;
-                width: 5%;
-                font-family: inherit;
-                padding: 0px;
-                margin: 0px;
-                width: 50px;
-                height: 100%;
-                background-color: #e7e7e7;
-                border-bottom-left-radius: 10px;
-                border-top-left-radius: 10px;
-                border: none;
-                outline: none;
-                cursor: pointer;
-                transition: all 0.1s;
-
-                &:hover {
-                    box-shadow: inset 0 0 2px 1px rgb(0 0 0 / 60%);
-                }
-
-                &:active {
-                    box-shadow: inset 0 0 4px 2px rgb(0 0 0 / 60%);
-                }
-
-            }
-        }
-
-        .contacts {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-
-            width: 15%;
-            height: 90%;
-            position: relative;
+                justify-content: flex-start;
 
 
-
-
-
-            .phones {
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                width: 80%;
-
-
-                .phone {
+                input {
+                    width: 95%;
+                    font-family: inherit;
+                    margin: 0px;
+                    padding: 0px;
+                    height: 100%;
+                    border: none;
+                    outline: none;
                     font-size: 16px;
-                    color: black;
-                    text-decoration: none;
-                    height: 30%;
+                    border-bottom-right-radius: 10px;
+                    border-top-right-radius: 10px;
+                    box-sizing: border-box;
+                    padding: 0px 10px;
+                }
+
+                button {
                     display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 5%;
+                    font-family: inherit;
+                    padding: 0px;
+                    margin: 0px;
+                    width: 50px;
+                    height: 100%;
+                    background-color: #e7e7e7;
+                    border-bottom-left-radius: 10px;
+                    border-top-left-radius: 10px;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    transition: all 0.1s;
+
+                    &:hover {
+                        box-shadow: inset 0 0 2px 1px rgb(0 0 0 / 60%);
+                    }
+
+                    &:active {
+                        box-shadow: inset 0 0 4px 2px rgb(0 0 0 / 60%);
+                    }
+
+                }
+            }
+
+            .contacts {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+
+                width: 20%;
+                height: 90%;
+                position: relative;
+
+
+
+
+
+                .phones {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    width: 80%;
+
+
+                    .phone {
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: black;
+                        text-decoration: none;
+                        height: 27%;
+                        display: flex;
+                        width: 100%;
+                        justify-content: space-evenly;
+                        align-items: center;
+                        transition: all 0.1s;
+
+                        img {
+                            height: 100%;
+                        }
+
+
+
+                    }
+                }
+
+                .toggleButton {
+                    transition: all 0.2s;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    margin: 0px;
+                    padding: 0px;
+                    border-radius: 100px;
+                    border: none;
+                    background-color: #c7c7c7;
+                    cursor: pointer;
+
+                    span {
+                        line-height: normal;
+                    }
+                }
+
+                .shown {
+                    display: flex;
+                }
+
+                .hidden {
+                    display: none;
+                }
+
+                .dropDownMenu {
+
+
+
+
+
+                    position: absolute;
+                    top: 120%;
                     width: 100%;
                     justify-content: space-evenly;
                     align-items: center;
-                    transition: all 0.1s;
+                    flex-direction: column;
+                    background-color: #f3f3f3;
+                    padding: 10px;
+                    border-radius: 10px;
 
-                    img {
-                        height: 100%;
+                    .link {
+                        color: black;
+                        text-decoration: none;
+                        box-sizing: border-box;
+                        padding: 5px;
+                        margin: 2px;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        border-radius: 5px;
+
+                        &:hover {
+                            background-color: #e1e1e1;
+                        }
+
+
+
+                        img {
+                            margin-right: 10px;
+                            height: 25px;
+                            width: 25px;
+                        }
                     }
-
-
-
                 }
             }
 
-            .toggleButton {
-                transition: all 0.2s;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 30px;
-                height: 30px;
-                margin: 0px;
-                padding: 0px;
-                border-radius: 100px;
-                border: none;
-                background-color: #c7c7c7;
-                cursor: pointer;
-
-                span {
-                    line-height: normal;
-                }
-            }
-
-            .shown {
-                display: flex;
-            }
-
-            .hidden {
-                display: none;
-            }
-
-            .dropDownMenu {
-
-
-
-
-
-                position: absolute;
-                top: 120%;
-                width: 100%;
+            .cart {
                 justify-content: space-evenly;
                 align-items: center;
-                flex-direction: column;
-                background-color: #f3f3f3;
-                padding: 10px;
-                border-radius: 10px;
-
-                .link {
-                    color: black;
-                    text-decoration: none;
-                    box-sizing: border-box;
-                    padding: 5px;
-                    margin: 2px;
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    border-radius: 5px;
-
-                    &:hover {
-                        background-color: #e1e1e1;
-                    }
-
-
-
-                    img {
-                        margin-right: 10px;
-                        height: 25px;
-                        width: 25px;
-                    }
-                }
+                width: 20%;
+                height: 100%;
+                display: flex;
             }
         }
 
-        .cart {
-            justify-content: space-evenly;
-            align-items: center;
-            width: 15%;
-            height: 100%;
-            display: flex;
-        }
     }
 }
 
@@ -221,35 +231,40 @@
                 }
             }
 
-            .search {}
+            .wrappingWrapper {
+                width: 78%;
 
-            .contacts {
-                width: 20%;
+                .search {}
 
-                .phones {
-                    .phone {
-                        font-size: 14px;
+                .contacts {
+                    width: 28%;
+
+                    .phones {
+                        .phone {
+                            font-size: 16px;
 
 
+                        }
+                    }
+
+                    .toggleButton {
+                        width: 30px;
+                        height: 30px;
                     }
                 }
 
-                button {
-                    width: 25px;
-                    height: 25px;
-                }
-            }
+                .cart {
+                    button {
+                        width: 35px;
+                        height: 35px;
 
-            .cart {
-                button {
-                    width: 35px;
-                    height: 35px;
-
-                    span {
-                        font-size: 18px;
+                        span {
+                            font-size: 18px;
+                        }
                     }
                 }
             }
+
 
         }
     }
@@ -258,6 +273,121 @@
 @media (max-width: 768px) {
     .header {
         position: unset;
-        .wrapper {}
+        height: 140px;
+
+        .wrapper {
+            flex-direction: column;
+
+            .logo {
+                height: 40%;
+                width: 100%;
+
+                h1 {
+                    width: auto;
+                    font-size: 36px;
+                }
+            }
+
+            .wrappingWrapper {
+                height: 60%;
+                width: 100%;
+
+                .search {
+                    width: 40%;
+
+                    button {
+                        width: 40px;
+                    }
+                }
+
+                .contacts {
+                    width: 35%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 566px) {
+    .header {
+        .wrapper {
+            .logo {
+                h1 {}
+            }
+
+            .wrappingWrapper {
+                .search {
+                    width: 30%;
+                    button {}
+                }
+
+                .contacts {
+                    width: 38%;
+                    .phones {
+                        .phone {
+                            font-size: 12px;
+                            letter-spacing: -1px;
+                            img{
+                                height: 85%;
+                            }
+                        }
+                    }
+
+                    .toggleButton {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 30px;
+                        height: 30px;
+
+                        span {
+                            font-size: 18px;
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                    }
+                }
+
+                .cart {
+                    width: 30%;
+                    
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 366px) {
+    .header {
+        .wrapper {
+            .logo {
+                h1 {}
+            }
+
+            .wrappingWrapper {
+                
+
+                .contacts {
+                    
+
+                    .toggleButton {
+                        width: 25px;
+                        height: 25px;
+                    }
+                }
+
+                .cart {
+                    button{
+                        width: 30px;
+                        height: 30px;
+                    }
+                    
+                }
+            }
+        }
     }
 }
