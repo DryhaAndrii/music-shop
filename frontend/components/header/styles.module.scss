@@ -19,25 +19,41 @@
             justify-content: center;
             align-items: center;
 
-            h1 {
+            a {
+                height: 100%;
                 width: 100%;
                 display: flex;
+                justify-content: center;
                 align-items: center;
-                justify-content: space-evenly;
-                font-size: 38px;
-                text-shadow: 0 0 2px #019ff9;
-                margin: 0px;
+                text-decoration: none;
+                outline: none;
+                color: black;
+
+                :visited {
+                    color: inherit;
+                }
+
+                h1 {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    font-size: 38px;
+                    text-shadow: 0 0 2px #019ff9;
+                    margin: 0px;
+                }
+
+                span {
+                    color: #019ff9;
+                    text-shadow: 0 0 2px black;
+                }
+
+                p {
+                    margin: 0px;
+                    padding: 0px;
+                }
             }
 
-            span {
-                color: #019ff9;
-                text-shadow: 0 0 2px black;
-            }
-
-            p {
-                margin: 0px;
-                padding: 0px;
-            }
         }
 
         .innerWrapper {
@@ -46,6 +62,9 @@
             display: flex;
             justify-content: space-evenly;
             align-items: center;
+
+
+
 
             .search {
                 width: 80%;
@@ -166,10 +185,6 @@
 
                 .dropDownMenu {
 
-
-
-
-
                     position: absolute;
                     top: 120%;
                     width: 100%;
@@ -221,9 +236,12 @@
     .header {
         .outerWrapper {
             .logo {
-                h1 {
-                    font-size: 3vw;
+                a {
+                    h1 {
+                        font-size: 3vw;
+                    }
                 }
+
             }
 
             .innerWrapper {
@@ -278,10 +296,13 @@
                 height: 15%;
                 width: 100%;
 
-                h1 {
-                    width: auto;
-                    font-size: 40px;
+                a {
+                    h1 {
+                        width: auto;
+                        font-size: 40px;
+                    }
                 }
+
             }
 
 
@@ -312,6 +333,7 @@
                     .phones {
                         width: auto;
                         margin-right: 10px;
+
                         .phone {
                             height: 33%;
                             justify-content: flex-start;

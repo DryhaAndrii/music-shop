@@ -1,4 +1,4 @@
-import MyButton from '@/app/uiComponents/myButton/myButton';
+import MyButton from '@/components/myButton/myButton';
 import styles from '../../styles.module.scss';
 
 function Cart() {
