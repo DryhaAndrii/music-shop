@@ -1,0 +1,117 @@
+.swiper {
+    // width: 100%;
+    // height: 24vw;
+    height: 24vw;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+
+    &-pagination {
+        left: 50% !important;
+        transform: translateX(-50%);
+        width: unset !important;
+        background-color: rgb(255 255 255 / 65%);
+        padding: 0px 5px;
+        height: 20px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        border-radius: 100px;
+        box-shadow: 0px 0px 5px 0px #00000038;
+
+        &-bullet {
+            box-shadow: 0px 0px 7px 1px black;
+
+            &-active {
+                background: #019ff9;
+            }
+        }
+    }
+
+    &-button-backward {
+        left: 25px;
+        right: auto;
+    }
+
+    &-button-forward {
+        right: 25px;
+        left: auto;
+    }
+
+    &-button-forward,
+    &-button-backward {
+        position: absolute;
+        transform: translateY(-50%);
+        top: 50%;
+        z-index: 10;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.65);
+        box-shadow: 0px 0px 5px 0px #00000038;
+        width: 40px;
+        height: 40px;
+        border-radius: 100px;
+
+        span {
+            font-size: 3vw;
+            text-shadow: 0px 0px 7px #0000008f;
+            color: #019ff9;
+
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &-slide {
+        text-align: center;
+
+        /* Center slide text vertically */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 100%;
+            height: 100%;
+            user-drag: none;
+            -webkit-user-drag: none;
+            user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .swiper {
+        &-pagination {
+            scale: 0.8;
+        }
+
+        &-button-forward,
+        &-button-backward {
+            scale: 0.8;
+        }
+    }
+}
+@media (max-width: 568px) {
+    .swiper {
+        &-pagination {
+            scale: 0.6;
+            left: 46% !important;
+            bottom: 2px !important;
+        }
+
+        &-button-forward,
+        &-button-backward {
+            display: none;
+            scale: 0.6;
+        }
+    }
+}
