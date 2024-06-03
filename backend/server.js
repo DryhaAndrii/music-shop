@@ -1,14 +1,14 @@
+
 const express = require('express');
+const cors = require('cors');
 const app = express();
+const PORT = 3001;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/api', require('./routes/api'));
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
-
-const port = 8888;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
-
-
-
