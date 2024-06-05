@@ -13,34 +13,27 @@ router.post('', async (req, res) => {
         const admin = await Admin.findOne({ login });
         console.log(login, password);
         if (!admin) {
-            return res.status(200).json({ message: 'There are no admin with this login' });
+            return res.status(400).json({ message: 'There are no admin with this login' });
         }
 
         if (admin.password !== password) {
-            return res.status(200).json({ message: 'Wrong password' });
+            return res.status(400).json({ message: 'Wrong password' });
         }
 
-        const token = generateToken(admin);
+        const payload = { id: admin.id, role: 'admin' };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        return res.json({ message: 'hey you', success: true, token });
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'Strict', path: '/' });
+        res.status(200).json({ message: 'Success login',ok: true });
+
+    
 
     } catch (error) {
         console.error('Authentication error:', error);
-        return res.status(500).json({ message: 'Authentication error' });
+        return res.status(400).json({ message: 'Authentication error' });
     }
 });
 
-function generateToken(admin) {
-    const secretKey = process.env.JWT_SECRET;
 
-    const payload = {
-        adminId: admin._id,
-        role: 'admin',
-    };
-
-    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
-
-    return token;
-}
 
 module.exports = router;

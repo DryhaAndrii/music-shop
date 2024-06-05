@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-
-export const myStore = create((set) => ({
+import {devtools} from 'zustand/middleware'
+export const myStore = create(devtools((set) => ({
     loading: false,
     setLoading: (value) => set({ loading: value })
-}))
+})))

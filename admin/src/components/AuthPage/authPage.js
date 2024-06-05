@@ -1,16 +1,21 @@
 
 import React, { useState } from 'react';
-import './authForm.scss';
+
 import { INPUT_TYPES } from '../input/input';
 import Input from '../input/input';
 import Form from '../form/form';
-import { toast, Bounce } from 'react-toastify';
+import { toast } from 'react-toastify';
+import {myStore} from '../../store/store';
+
 import 'react-toastify/dist/ReactToastify.css';
+import './authPage.scss';
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export default function AuthForm() {
+export default function AuthPage() {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
+    const setLoading = myStore(state => state.setLoading);
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -18,29 +23,32 @@ export default function AuthForm() {
             toast.warn('Your login or password is not correct');
             return;
         }
-        console.log(apiUrl);
-         fetchData();
+        fetchData();
     };
 
     async function fetchData() {
-
         try {
+            setLoading(true);
             const response = await fetch(`${apiUrl}admin/login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ login, password })
+                body: JSON.stringify({ login, password }),
+                credentials: 'include',
             });
-            const data = await response.json();
-            if (data.success) {
-                localStorage.setItem('token', data.token);
-                console.log('NU TI KRENDEL');
-            } else {
+            const data=await response.json();
+            if (!data.ok) {
                 toast.warn(data.message);
-            }
+                
+                return;
+            } 
+            console.log('Successfully logged in');
+            window.location.href = '/';
         } catch (error) {
             toast.error('An error occurred while logging in.');
+        } finally {
+            setLoading(false);
         }
     }
 
