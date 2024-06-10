@@ -45,7 +45,6 @@ export default function Slider() {
         </img>
       </SwiperSlide>
       <SwiperSlide>
-
         <img src="https://jam.ua/files/images/cort/x_series/X_series-banner-2018.jpg">
         </img>
       </SwiperSlide>

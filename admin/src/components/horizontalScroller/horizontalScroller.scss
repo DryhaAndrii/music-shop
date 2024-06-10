@@ -1,0 +1,10 @@
+.horizontalScroller {
+    box-sizing: border-box;
+    min-width: 100%;
+    display: flex;
+    padding: 10px;
+    align-items: stretch;
+    flex-grow: 1;
+    overflow-x: auto;
+    gap: 20px;
+}

@@ -1,15 +1,13 @@
-import {myStore} from '../../store/store';
 
-
+import StartPageHeader from './startPageHeader/startPageHeader';
+import './startPage.scss';
+import Categories from './categories/categories';
 export default function StartPage() {
-    const loading = myStore(state => state.loading);
-    const setLoading = myStore(state => state.setLoading);
     return (
         <div className="startPage">
-            <h1>Start Page</h1>
-            <button onClick={() => setLoading(true)}>
-                LOADING
-            </button>
+            <StartPageHeader />
+            <Categories />
+
         </div>
     )
 }

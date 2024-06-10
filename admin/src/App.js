@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   async function checkToken() {
-    if (window.location.pathname === '/login') return;
+
     try {
       setLoading(true);
       const response = await fetch(`${apiUrl}checkToken`, {
@@ -29,14 +29,21 @@ function App() {
         credentials: 'include',
       });
       if (response.status === 401) {
-        window.location.href = '/login';
+        if (window.location.pathname === '/login') {//if we do not have valid token and we are on login page we stay here to log in
+          setLoading(false);
+          return
+        }
+        window.location.href = '/login'; //if we do not have valid token and we are not on login page we redirect to login page
         return;
       }
       setLoading(false);
+      if (window.location.pathname === '/login') { //if we have valid token and we are on login page we redirect to start page
+        window.location.href = '/';
+      };
+
     }
     catch (error) {
-      setLoading(false);
-      toast.error('An error occurred while checking token');
+      toast.error('An error occurred while checking token, maybe server is not working so you can do nothing now');
     }
 
   }
