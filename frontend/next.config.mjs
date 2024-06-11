@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    target: 'serverless',
+    // Другие настройки Next.js
   };
   
   export default nextConfig;
