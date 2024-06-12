@@ -12,7 +12,7 @@ import 'swiper/css/navigation';
 import './styles.scss';
 
 // import required modules
-import { Pagination, Autoplay } from 'swiper/modules';
+import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 
 export default function Slider() {
   return (
@@ -28,7 +28,7 @@ export default function Slider() {
         nextEl: '.swiper-button-forward',
         prevEl: '.swiper-button-backward',
       }}
-      modules={[Pagination, Autoplay]}
+      modules={[Pagination, Autoplay,Navigation]}
 
       className='swiper'
       autoplay={{
