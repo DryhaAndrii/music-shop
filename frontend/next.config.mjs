@@ -1,12 +1,11 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  swcMinify: true,
-  basePath: '',
-  assetPrefix: '',
+import 'dotenv/config';
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+export default {
+  reactStrictMode: true,
   images: {
-    domains: ['https://music-shop-client.netlify.app/'],
+    domains: ['music-shop-client.netlify.app'],
   },
+  assetPrefix: isProduction ? 'https://music-shop-client.netlify.app/' : '',
 };
-
-export default nextConfig;
-
