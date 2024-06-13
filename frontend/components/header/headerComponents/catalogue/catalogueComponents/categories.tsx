@@ -8,7 +8,7 @@ interface CategoriesProps {
 }
 
 function Categories({ show, categories, toggleMenu }: CategoriesProps) {
-    console.log(categories);
+    
     return (
         <div className={`${styles.categories} ${styles[show]}`} >
             <MyButton>
