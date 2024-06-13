@@ -14,9 +14,7 @@
     "react-toastify": "^10.0.5",
     "sass": "^1.77.4",
     "web-vitals": "^2.1.4",
-    "zukeeper": "^1.0.2",
-    "zustand": "^4.5.2",
-    "zustymiddleware": "^1.2.0"
+    "zustand": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
