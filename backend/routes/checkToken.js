@@ -19,7 +19,7 @@ router.get('', (req, res) => {
         console.log('token is good');
     } catch (error) {
         console.log('token is bad');
-        // res.clearCookie("token");
+        res.clearCookie("token");
         res.status(401).json({ message: 'Token is not valid', isTokenValid: false });
     }
 });
