@@ -6,19 +6,19 @@ function DropDownMenu({ show }: { show: string }) {
     return (
         <div className={`${styles.dropDownMenu} ${styles[show]}`}>
             <Link className={styles.link} href="viber://chat?number=%2B380677264654/">
-                <img src="/images/contacts/viber.svg"></img>
+                <img src="/images/contacts/Viber.svg"></img>
                 Our viber
             </Link>
             <Link className={styles.link} href="https://t.me/MusicShop">
-                <img src="/images/contacts/telegram.svg"></img>
+                <img src="/images/contacts/Telegram.svg"></img>
                 Our telegram
             </Link>
             <Link className={styles.link} href="mailto:MusicShop@ukr.net">
-                <img src="/images/contacts/mail.svg"></img>
+                <img src="/images/contacts/Mail.svg"></img>
                 Our email
             </Link>
             <Link className={styles.link} href="https://maps.app.goo.gl/2y23ro5GBWvniCx9A">
-                <img src="/images/contacts/location.svg"></img>
+                <img src="/images/contacts/Location.svg"></img>
                 Our adress
             </Link>
             <MyButton width={MyButtonWidths.Wide}>
