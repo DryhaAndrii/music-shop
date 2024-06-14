@@ -5,10 +5,14 @@ import { INPUT_TYPES } from '../input/input';
 import Input from '../input/input';
 import Form from '../form/form';
 import { toast } from 'react-toastify';
-import {myStore} from '../../store/store';
+import { myStore } from '../../store/store';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './authPage.scss';
+
+const LETTER_AND_DIGITS_REGEXP = /[^a-zA-Z0-9]/g;
+const LOGIN = 'login';
+const PASSWORD = 'password';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -37,12 +41,12 @@ export default function AuthPage() {
                 body: JSON.stringify({ login, password }),
                 credentials: 'include',
             });
-            const data=await response.json();
+            const data = await response.json();
             if (!data.ok) {
                 toast.warn(data.message);
-                
+
                 return;
-            } 
+            }
             console.log('Successfully logged in');
             window.location.href = '/';
         } catch (error) {
@@ -54,20 +58,23 @@ export default function AuthPage() {
 
     function onInputChange(e) {
         const { name, value } = e.target;
-        if (name === 'login') {
-            setLogin(value.replace(/[^a-zA-Z0-9]/g, ''));
-        } else if (name === 'password') {
-            setPassword(value.replace(/[^a-zA-Z0-9]/g, ''));
+        if (name === LOGIN) {
+            setLogin(value.replace(LETTER_AND_DIGITS_REGEXP, ''));
+        } else if (name === PASSWORD) {
+            setPassword(value.replace(LETTER_AND_DIGITS_REGEXP, ''));
         }
     };
 
     return (
         <div className="authForm">
-            <Form handleSubmit={handleSubmit}>
-                <Input type={INPUT_TYPES.TEXT} placeholder={'Your login'} name="login" value={login} onChangeHandler={onInputChange} />
-                <Input type={INPUT_TYPES.PASSWORD} placeholder={'Your password'} name="password" value={password} onChangeHandler={onInputChange} />
-                <Input type={INPUT_TYPES.SUBMIT} value="Login" />
-            </Form>
+            <div className='formWrapper'>
+                <Form handleSubmit={handleSubmit}>
+                    <Input type={INPUT_TYPES.TEXT} placeholder={'Your login'} name={LOGIN} value={login} onChangeHandler={onInputChange} />
+                    <Input type={INPUT_TYPES.PASSWORD} placeholder={'Your password'} name={PASSWORD} value={password} onChangeHandler={onInputChange} />
+                    <Input type={INPUT_TYPES.SUBMIT} value="Login" />
+                </Form>
+            </div>
+
         </div>
     );
 }

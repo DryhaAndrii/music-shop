@@ -1,0 +1,29 @@
+header {
+    height: 100px;
+    width: 100%;
+    background-color: #efefef;
+
+    .wrapper {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        h1 {
+            a{
+                text-decoration: none;
+                outline: none;
+                color: black;
+
+                &:hover{
+                    text-shadow: 0px 0px 2px ;
+                }
+                :visited{
+                    color: inherit;
+                }
+            }
+            margin: 0px;
+        }
+    }
+
+}

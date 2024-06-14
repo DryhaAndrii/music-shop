@@ -3,12 +3,15 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const app = express();
-require('dotenv').config(); 
+require('dotenv').config();
 const PORT = 3001;
+
 
 const allowedOrigins = [
     process.env.CLIENT_URL,
-    process.env.ADMIN_URL
+    process.env.ADMIN_URL,
+    process.env.DEV_ADMIN_URL,
+    process.env.DEV_CLIENT_URL,
 ];
 
 const corsOptions = {

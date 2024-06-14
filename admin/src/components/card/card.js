@@ -7,7 +7,7 @@ export const CARD_TYPES = {
     ADDCARD: "addcard",
     GOOD: 'good'
 }
-function Card({ type = CARD_TYPES.CATEGORY, text }) {
+function Card({ type = CARD_TYPES.CATEGORY, text,cardClickHandler }) {
     const cardClassNames = classNames({
         card: true,
         [`card--${type}`]: true
@@ -33,7 +33,7 @@ function Card({ type = CARD_TYPES.CATEGORY, text }) {
 
         case CARD_TYPES.ADDCARD:
             return (
-                <div className={cardClassNames}>
+                <div className={cardClassNames} onClick={cardClickHandler}>
                     &#10010;
                     <p>{text}</p>
                 </div>

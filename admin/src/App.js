@@ -9,8 +9,9 @@ import './App.css';
 
 import Loading from './components/Loading/loading';
 import AuthPage from './components/AuthPage/authPage';
-
+import AddCategoryPage from './components/addCategoryPage/addCategoryPage';
 import StartPage from './components/StartPage/startPage';
+import Header from './components/header/header';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -18,7 +19,8 @@ function App() {
   const setLoading = myStore(state => state.setLoading);
   useEffect(() => {
     checkToken();
-  }, []);
+    
+  });
 
   async function checkToken() {
 
@@ -50,10 +52,13 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       <Router>
         <Routes>
-          <Route path="/login" element={<AuthPage />} />
+          <Route path="/addCategory" element={<AddCategoryPage />} />
           <Route path="/" element={<StartPage />} />
+          <Route path="/login" element={<AuthPage />} />
+
         </Routes>
       </Router>
       <Loading />

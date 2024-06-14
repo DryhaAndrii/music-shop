@@ -11,24 +11,35 @@ function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, va
         input: true,
         [`input--${type}`]: true
     });
-    return (
-        type === INPUT_TYPES.SUBMIT.toString() ?
-            <input
-                type={type}
-                value={value}
-                className={inputClassName}
 
-            />
-            :
-            <input
-                name={name}
-                value={value}
-                onChange={(e) => onChangeHandler(e)}
-                className={inputClassName}
-                placeholder={placeholder}
-                type={type}
-            />
-    );
+    switch (type) {
+        case INPUT_TYPES.SUBMIT:
+            return (
+                <input
+                    type={type}
+                    value={value}
+                    className={inputClassName}
+
+                />
+            );
+
+        case INPUT_TYPES.TEXT:
+        case INPUT_TYPES.PASSWORD:
+            return (
+                <input
+                    name={name}
+                    value={value}
+                    onChange={(e) => onChangeHandler(e)}
+                    className={inputClassName}
+                    placeholder={placeholder}
+                    type={type}
+                />
+            );
+
+        default:
+            return null;
+    }
+
 }
 export default Input;
 

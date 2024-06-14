@@ -1,0 +1,41 @@
+.drag-and-drop-input {
+    box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, 0.1490196078);
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    position: relative;
+    img {
+        box-shadow: 0 0 20px 5px #00000091;
+        max-width: 100%;
+        max-height: 50%;
+        object-fit: contain;
+        border-radius: 10px;
+    }
+}
+
+
+.dragging {
+    border: 2px dashed #00f;
+    background-color: #f0f0f0;
+}
+
+.drag-overlay {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    align-items: start;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
+    border: dashed;
+    border-radius: 10px;
+    color: #00f;
+    pointer-events: none;
+}
