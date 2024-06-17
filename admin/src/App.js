@@ -52,6 +52,8 @@ function App() {
 
   return (
     <div className="App">
+      <Loading />
+      <ToastContainer />
       <Header />
       <Router>
         <Routes>
@@ -61,8 +63,7 @@ function App() {
 
         </Routes>
       </Router>
-      <Loading />
-      <ToastContainer />
+      
     </div >
   );
 }
