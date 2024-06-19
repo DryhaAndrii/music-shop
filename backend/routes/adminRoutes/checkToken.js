@@ -13,9 +13,9 @@ router.get('', (req, res) => {
 
     try {
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        
-        res.status(200).json({ message: 'Token is valid', isTokenValid: true });
         console.log('token is good');
+        return res.status(200).json({ message: 'Token is valid', isTokenValid: true });
+        
     } catch (error) {
         console.log('token is bad');
         res.clearCookie("token");

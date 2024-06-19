@@ -17,7 +17,7 @@ export default function Header() {
                 method: 'GET',
                 credentials: 'include',
             });
-            window.location.href = '/login';
+            //window.location.href = '/login';
         } catch (error) {
             toast.error('An error occurred while checking token, maybe server is not working so you can do nothing now');
             setLoading(false);
