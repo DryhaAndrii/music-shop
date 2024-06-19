@@ -13,14 +13,10 @@ export default function Header() {
     async function LogOut() {
         try {
             setLoading(true);
-            const response = await fetch(`${apiUrl}logout`, {
-                method: 'GET',
-                credentials: 'include',
+            await axios.get(`${apiUrl}logout`, {
+                withCredentials: true, 
             });
-            const data = await response.json();
-            if(data.isLoggedOut){
-                window.location.href = '/login';
-            }
+            window.location.href = '/login';
         } catch (error) {
             toast.error('An error occurred while checking token, maybe server is not working so you can do nothing now');
             setLoading(false);
@@ -33,7 +29,7 @@ export default function Header() {
                     <h1><a href='/'>Admin panel</a></h1>
                     {window.location.pathname === '/login'
                         ? <></>
-                        : <Button buttonText={'Log out'} onClick={LogOut} />
+                        : <Button buttonText={'Log out'} onClick={LogOut}/>
                     }
 
                 </div>

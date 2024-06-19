@@ -11,8 +11,8 @@ router.get('', (req, res) => {
         return res.status(401).json({ message: 'You have no token', isToken: false });
     }
     console.log('unlogging');
-    res.clearCookie("token");
-    return res.status(200).json({ message: 'Token is ok but you are logged out', isLoggedOut: true });
+    res.clearCookie("token",{ httpOnly: true, secure: true, sameSite: 'none', path: '/', domain: 'https://music-shop-admin-panel.netlify.app/' });
+    return res.status(200).json({ message: 'Token is ok but you are logging out'  });
 
 });
 
