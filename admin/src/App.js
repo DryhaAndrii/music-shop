@@ -3,6 +3,7 @@ import { myStore } from './store/store';
 import { ToastContainer, toast } from 'react-toastify';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
@@ -31,6 +32,7 @@ function App() {
         method: 'GET',
         credentials: 'include',
       });
+      
       if (response.status === 401) {
         if (window.location.pathname === '/login') {//if we do not have valid token and we are on login page we stay here to log in
           setLoading(false);
