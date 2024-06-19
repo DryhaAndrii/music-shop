@@ -13,8 +13,9 @@ export default function Header() {
     async function LogOut() {
         try {
             setLoading(true);
-            await axios.get(`${apiUrl}logout`, {
-                withCredentials: true, 
+            const response = await fetch(`${apiUrl}checkToken`, {
+                method: 'GET',
+                credentials: 'include',
             });
             window.location.href = '/login';
         } catch (error) {
@@ -29,7 +30,7 @@ export default function Header() {
                     <h1><a href='/'>Admin panel</a></h1>
                     {window.location.pathname === '/login'
                         ? <></>
-                        : <Button buttonText={'Log out'} onClick={LogOut}/>
+                        : <Button buttonText={'Log out'} onClick={LogOut} />
                     }
 
                 </div>
