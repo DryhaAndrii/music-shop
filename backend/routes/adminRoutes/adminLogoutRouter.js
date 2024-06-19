@@ -12,7 +12,7 @@ router.get('', (req, res) => {
     }
     console.log('unlogging');
     res.clearCookie("token");
-    return res.status(200).json({ message: 'Token is ok but you are logging out'  });
+    return res.status(401).json({ message: 'Token is ok but you are logging out'  });
 
 });
 
