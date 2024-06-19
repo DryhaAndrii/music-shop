@@ -13,7 +13,7 @@ export default function Header() {
     async function LogOut() {
         try {
             setLoading(true);
-            const response = await fetch(`${apiUrl}checkToken`, {
+            const response = await fetch(`${apiUrl}logout`, {
                 method: 'GET',
                 credentials: 'include',
             });
