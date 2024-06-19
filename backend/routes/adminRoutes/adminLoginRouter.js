@@ -23,10 +23,10 @@ router.post('', async (req, res) => {
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         console.log('created token, sending it to the client');
-        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', path: '/', domain: 'https://music-shop-admin-panel.netlify.app/' });
-        res.status(200).json({ message: 'Success login', ok: true });
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', path: '/' });
+        res.status(200).json({ message: 'Success login',ok: true });
 
-
+    
 
     } catch (error) {
         console.error('Authentication error:', error);
