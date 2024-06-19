@@ -18,6 +18,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 function App() {
   const setLoading = myStore(state => state.setLoading);
   useEffect(() => {
+    console.log('App.js useeffect caled');
     checkToken();
     
   });
@@ -53,6 +54,7 @@ function App() {
   return (
     <div className="App">
       <Loading />
+      
       <ToastContainer />
       <Header />
       <Router>

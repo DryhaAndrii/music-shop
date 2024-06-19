@@ -2,10 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
-const adminLogin = require('./adminLoginRouter');
-const checkToken = require('./checkToken');
+const adminApi=require('./adminRoutes/adminRoutesApi')
+const commonApi = require('./commonRoutes/commonRoutesApi');
 
-router.use('/admin/login', adminLogin);
-router.use('/checkToken', checkToken);
+router.use('/admin', adminApi);
+router.use('/', commonApi);
 
 module.exports = router;

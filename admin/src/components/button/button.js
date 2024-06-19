@@ -6,13 +6,13 @@ export const BUTTON_TYPES = {
     TEXT: 'text',
     SUBMIT: "submit",
 }
-function Button({ type = BUTTON_TYPES.DEFAULT, buttonText }) {
+function Button({ type = BUTTON_TYPES.DEFAULT, buttonText,onClick }) {
     const buttonClassName = classNames({
         button: true,
         [`button--${type}`]: true
     });
     return (
-        <button className={buttonClassName}>{buttonText}</button>
+        <button onClick={onClick} className={buttonClassName}>{buttonText}</button>
     );
 }
 export default Button;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './dragAndDrop.scss';
+import { toast } from 'react-toastify';
+
 const DragAndDrop = ({ onFilesAdded }) => {
     const [dragging, setDragging] = useState(false);
     const [preview, setPreview] = useState(null);
@@ -16,14 +18,21 @@ const DragAndDrop = ({ onFilesAdded }) => {
         setDragging(false);
     };
 
-    const handleDrop = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragging(false);
+    const validateFile = (file) => {
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!validTypes.includes(file.type)) {
+            toast.warn('Only image files are allowed');
+            return false;
+        }
+        if (file.size > 10 * 1024 * 1024) {
+            toast.warn('File size should be less than 10 MB');
+            return false;
+        }
+        return true;
+    };
 
-        const files = e.dataTransfer.files;
-        if (files && files.length > 0) {
-            const file = files[0];
+    const handleFiles = (file) => {
+        if (validateFile(file)) {
             onFilesAdded(file);
             const reader = new FileReader();
             reader.onload = (event) => {
@@ -33,14 +42,23 @@ const DragAndDrop = ({ onFilesAdded }) => {
         }
     };
 
+    const handleDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDragging(false);
+
+        const files = e.dataTransfer.files;
+        if (files && files.length > 0) {
+            const file = files[0];
+            handleFiles(file);
+        }
+    };
+
     const handleChange = (e) => {
         const file = e.target.files[0];
-        onFilesAdded(file);
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            setPreview(event.target.result);
-        };
-        reader.readAsDataURL(file);
+        if (file) {
+            handleFiles(file);
+        }
     };
 
     return (
@@ -52,7 +70,6 @@ const DragAndDrop = ({ onFilesAdded }) => {
         >
             <input
                 onChange={handleChange}
-                placeholder={'Click or drag files here'}
                 type="file"
                 accept="image/*"
                 style={{ display: 'none' }}

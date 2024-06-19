@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const db = require('../db');
-const Admin = require('../models/adminModel');
+const Admin = require('../../models/adminModel');
 
 router.post('', async (req, res) => {
     const { login, password } = req.body;

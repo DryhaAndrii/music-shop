@@ -7,7 +7,7 @@ export const CARD_TYPES = {
     ADDCARD: "addcard",
     GOOD: 'good'
 }
-function Card({ type = CARD_TYPES.CATEGORY, text,cardClickHandler }) {
+function Card({ type = CARD_TYPES.CATEGORY, text,cardClickHandler,pictureCode }) {
     const cardClassNames = classNames({
         card: true,
         [`card--${type}`]: true
@@ -15,16 +15,18 @@ function Card({ type = CARD_TYPES.CATEGORY, text,cardClickHandler }) {
 
     switch (type) {
         case CARD_TYPES.CATEGORY:
+            
             return (
                 <div className={cardClassNames}>
                     <div className='top'>
+                        
                         <img
                             className="image"
-                            src="https://i.ibb.co/2jHBZYX/guitars-Category.png"
+                            src={`data:image/png;base64, ${pictureCode}`}
                             alt="categoryPicture" />
                     </div>
                     <div className='bot'>
-                        <p>Guitars (10)</p>
+                        <p>{text}</p>
                         <Button buttonText={`Delete this ${type}`} />
                         <Button buttonText={`Edit this ${type}`} />
                     </div>

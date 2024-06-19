@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const db = require('../db');
 router.get('', (req, res) => {
     const token = req.cookies.token;
 
@@ -20,7 +19,7 @@ router.get('', (req, res) => {
     } catch (error) {
         console.log('token is bad');
         res.clearCookie("token");
-        res.status(401).json({ message: 'Token is not valid', isTokenValid: false });
+        return res.status(401).json({ message: 'Token is not valid', isTokenValid: false });
     }
 });
 
