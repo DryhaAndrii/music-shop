@@ -3,28 +3,16 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const Category = require('../../models/categoryModel');
 require('dotenv').config();
+const authMiddleware = require('../../middlewares/authMiddleware');
 
-router.get('', async (req, res) => {
-    const token = req.cookies.token;
-
-    if (!token) {
-        console.log('he has no token');
-        return res.status(401).json({ message: 'You have no token', isToken: false });
-    }
-
+router.get('', authMiddleware, async (req, res) => {
     try {
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
-        console.log('token is good');
+        const categories = await Category.find();
+        res.status(200).json({ categories });
     } catch (error) {
-        console.log('token is bad');
-        res.clearCookie("token");
-        return res.status(401).json({ message: 'Token is not valid', isTokenValid: false });
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
-
-    const categories = await Category.find();
-
-    res.status(200).json({ categories });
 });
 
 module.exports = router;

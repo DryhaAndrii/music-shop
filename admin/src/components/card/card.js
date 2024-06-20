@@ -2,12 +2,13 @@ import React from 'react';
 import classNames from 'classnames';
 import './card.scss'
 import Button from '../button/button';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 export const CARD_TYPES = {
     CATEGORY: "category",
     ADDCARD: "addcard",
     GOOD: 'good'
 }
-function Card({ type = CARD_TYPES.CATEGORY, text,cardClickHandler,pictureCode }) {
+function Card({ type = CARD_TYPES.CATEGORY, text, cardClickHandler, pictureCode }) {
     const cardClassNames = classNames({
         card: true,
         [`card--${type}`]: true
@@ -15,15 +16,18 @@ function Card({ type = CARD_TYPES.CATEGORY, text,cardClickHandler,pictureCode })
 
     switch (type) {
         case CARD_TYPES.CATEGORY:
-            
+
             return (
                 <div className={cardClassNames}>
                     <div className='top'>
-                        
-                        <img
-                            className="image"
-                            src={`data:image/png;base64, ${pictureCode}`}
-                            alt="categoryPicture" />
+                        <div className='imageContainer'>
+                            <img
+                                className="image"
+                                src={`data:image/png;base64, ${pictureCode}`}
+                                alt="categoryPicture" />
+                        </div>
+
+
                     </div>
                     <div className='bot'>
                         <p>{text}</p>
@@ -40,7 +44,6 @@ function Card({ type = CARD_TYPES.CATEGORY, text,cardClickHandler,pictureCode })
                     <p>{text}</p>
                 </div>
             );
-
         default:
             return null;
     }

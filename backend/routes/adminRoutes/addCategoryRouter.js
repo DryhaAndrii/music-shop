@@ -5,35 +5,17 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const Category = require('../../models/categoryModel');
-
+const authMiddleware = require('../../middlewares/authMiddleware');
 
 
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('', upload.single('file'), async (req, res) => {
-    const token = req.cookies.token;
-
-    if (!token) {
-        console.log('he has no token');
-        return res.status(401).json({ message: 'You have no token', isToken: false });
-    }
-
-    try {
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('token is good');
-    } catch (error) {
-        console.log('token is bad');
-        res.clearCookie("token");
-        return res.status(401).json({ message: 'Token is not valid', isTokenValid: false });
-    }
-
+router.post('',authMiddleware ,upload.single('file'), async (req, res) => {
     try {
         const { categoryTitle } = req.body;
-        const pictureCode = req.file.buffer.toString('base64'); 
-
-
+        const pictureCode = req.file.buffer.toString('base64');
         const newCategory = new Category({
             title: categoryTitle,
             pictureCode,
@@ -41,7 +23,6 @@ router.post('', upload.single('file'), async (req, res) => {
             subcategories: []
         });
         await newCategory.save();
-
         res.status(201).json({ message: 'Category created successfully' });
         console.log('Category created');
     } catch (error) {

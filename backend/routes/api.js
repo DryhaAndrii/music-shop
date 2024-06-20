@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 const adminApi=require('./adminRoutes/adminRoutesApi')
 const commonApi = require('./commonRoutes/commonRoutesApi');
 
