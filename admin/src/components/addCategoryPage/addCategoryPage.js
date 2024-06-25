@@ -1,10 +1,11 @@
 import './addCategoryPage.scss';
 import Form from '../form/form';
 import Input, { INPUT_TYPES } from '../input/input';
-import { useState } from 'react';
+import { useState} from 'react';
 import DragAndDrop from '../dragAndDrop/dragAndDrop';
 import { toast } from 'react-toastify';
 import { myStore } from '../../store/store';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -15,6 +16,8 @@ const NO_MULTIPLE_SPACES_REGEXP = /\s\s+/g
 function AddCategoryPage() {
     const [categoryTitle, setCategoryTitle] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);
+    const { parentCategoryId } = useParams();
+
 
     const setLoading = myStore(state => state.setLoading);
 
@@ -36,9 +39,6 @@ function AddCategoryPage() {
             toast.warn('Title should contain at least 3 characters and image should be set');
             return;
         }
-
-
-        console.log('Submit', categoryTitle, uploadedFile);
         fetchData();
     };
     async function fetchData() {
@@ -48,15 +48,16 @@ function AddCategoryPage() {
             const data = new FormData();
             data.append('file', uploadedFile);
             data.append('categoryTitle', categoryTitle);
+            data.append('parentCategoryId', parentCategoryId);
             axios.post(`${apiUrl}addCategory`, data, {
                 withCredentials: true
             })
-                .then(res => { 
+                .then(res => {
                     toast.success(res.data.message);
                 })
                 .catch(error => {
                     //checking if error is about no token
-                    if(error.response.data.isToken===false){
+                    if (error.response.data.isToken === false) {
                         window.location.href = '/login';
                         return;
                     }
@@ -73,11 +74,9 @@ function AddCategoryPage() {
         <div className='addCategoryPage'>
             <div className='formWrapper'>
                 <Form handleSubmit={handleSubmit}>
-
                     <Input type={INPUT_TYPES.TEXT} placeholder={'Category title'} value={categoryTitle} onChangeHandler={onInputChange} />
                     <Input type={INPUT_TYPES.SUBMIT} value="Create category" />
                 </Form>
-
             </div>
             <div className='dragAndDropWrapper'>
                 <DragAndDrop onFilesAdded={handleFilesAdded} />
@@ -85,5 +84,4 @@ function AddCategoryPage() {
         </div>
     );
 }
-
 export default AddCategoryPage;

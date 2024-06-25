@@ -1,34 +1,25 @@
-
 import Categories from '../categories/categories';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import fetchAllCategories from '../../functions/fetchAllCategories';
 
 import './startPage.scss';
 export default function StartPage() {
     const [categories, setCategories] = useState(null);
-    
-    const apiUrl = process.env.REACT_APP_API_URL;
-    
     useEffect(() => {
-        fetchAllCategories();
+        fetchData();
+
     }, []);
-    async function fetchAllCategories() {
-        try {
-            axios.get(`${apiUrl}getAllCategories`, {
-                withCredentials: true
-            })
-                .then(res => {
-                    setCategories(res.data.categories);
-                })
-        } catch (error) {
-            toast.error('Some error happened during fetching categories');
+    async function fetchData() {
+        const categories = await fetchAllCategories();
+        console.log(categories);
+        if (categories) {
+            const filteredCategories = categories.filter(category => category.isSubcategory === false);
+            setCategories(filteredCategories);
         }
     }
     return (
         <div className="startPage">
-            <Categories categories={categories}/>
-
+            <Categories categories={categories} categoryTitle={'Main categories'} />
         </div>
     )
 }

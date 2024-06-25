@@ -9,17 +9,38 @@ const authMiddleware = require('../../middlewares/authMiddleware');
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('',authMiddleware ,upload.single('file'), async (req, res) => {
+router.post('', authMiddleware, upload.single('file'), async (req, res) => {
     try {
-        const { categoryTitle } = req.body;
+        const { categoryTitle, parentCategoryId } = req.body;
         const pictureCode = req.file.buffer.toString('base64');
+        console.log('parentCategoryId: ', parentCategoryId, 'categoryTitle: ', categoryTitle);
+        let isSubcategory = false;
+
+        if (parentCategoryId!=='undefined') {
+            isSubcategory = true;
+        }
+        console.log(isSubcategory);
         const newCategory = new Category({
             title: categoryTitle,
             pictureCode,
             products: [],
-            subcategories: []
+            subcategories: [],
+            isSubcategory
         });
+
+
         await newCategory.save();
+
+        if (parentCategoryId!=='undefined') {
+            const parentCategory = await Category.findById(parentCategoryId);
+            if (parentCategory) {
+                parentCategory.subcategories.push(newCategory._id);
+                await parentCategory.save();
+                console.log('subcategory saved');
+            }
+        }
+
+
         res.status(201).json({ message: 'Category created successfully' });
         console.log('Category created');
     } catch (error) {

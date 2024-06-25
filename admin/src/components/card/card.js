@@ -2,13 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import './card.scss'
 import Button from '../button/button';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 export const CARD_TYPES = {
     CATEGORY: "category",
     ADDCARD: "addcard",
     GOOD: 'good'
 }
-function Card({ type = CARD_TYPES.CATEGORY, editButtonHandler, text, cardClickHandler, categoryId,pictureCode }) {
+function Card({ type = CARD_TYPES.CATEGORY, editButtonHandler, text, addCategoryHandler, categoryId,pictureCode }) {
     const cardClassNames = classNames({
         card: true,
         [`card--${type}`]: true
@@ -39,7 +38,7 @@ function Card({ type = CARD_TYPES.CATEGORY, editButtonHandler, text, cardClickHa
 
         case CARD_TYPES.ADDCARD:
             return (
-                <div className={cardClassNames} onClick={cardClickHandler}>
+                <div className={cardClassNames} onClick={addCategoryHandler}>
                     &#10010;
                     <p>{text}</p>
                 </div>

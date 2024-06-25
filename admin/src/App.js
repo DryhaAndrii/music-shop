@@ -18,7 +18,6 @@ const apiUrl = process.env.REACT_APP_API_URL;
 function App() {
   const setLoading = myStore(state => state.setLoading);
   useEffect(() => {
-    console.log('App.js useeffect caled');
     checkToken();
   });
   async function checkToken() {
@@ -52,10 +51,11 @@ function App() {
       <Header />
       <Router>
         <Routes>
+          <Route path="/addCategory/:parentCategoryId" element={<AddCategoryPage />} />
           <Route path="/addCategory" element={<AddCategoryPage />} />
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<AuthPage />} />
-          <Route path="editCategory/:categoryId" element={<EditCategoryPage />} />
+          <Route path="/editCategory/:categoryId" element={<EditCategoryPage />} />
         </Routes>
       </Router>
     </div >
