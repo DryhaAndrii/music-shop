@@ -9,25 +9,31 @@ function EditCategoryPage() {
     const { categoryId } = useParams();
 
     useEffect(() => {
-        fetchData();
+        fetchCategory();
+
     }, []);
 
-    async function fetchData() {
+    async function fetchCategory() {
         const categories = await fetchCategoriesByIds([categoryId]);
-        if (categories) {
-            setCategory(categories[0]);
-        }
+        if (!categories || categories.length === 0) return;//if category not found return
+        const newCategory = categories[0];
+
+        setCategory(newCategory);
+    }
+    function resetCategories(){
+        setCategory({});
     }
 
     return (
         <div className="editCategoryPage">
             <Categories
                 categoryTitle={category.title}
-                categories={[]}
+                categories={category.handledSubcategories}
                 parentCategoryId={categoryId}
+                fetchCategories={fetchCategory}
+                resetCategories={resetCategories}
             />
         </div>
     );
 }
-
 export default EditCategoryPage;

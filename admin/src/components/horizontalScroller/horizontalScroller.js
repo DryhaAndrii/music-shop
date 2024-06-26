@@ -37,7 +37,7 @@ export default function HorizontalScroller({ children }) {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - wrapperRef.current.offsetLeft;
-        const walk = (x - startX); 
+        const walk = (x - startX);
         wrapperRef.current.scrollLeft = scrollLeft - walk;
         setVelocity(e.pageX - lastX);
         setLastX(e.pageX);
@@ -46,14 +46,20 @@ export default function HorizontalScroller({ children }) {
     const startInertiaScroll = () => {
         let currentVelocity = velocity;
         const inertiaScroll = () => {
-            if (Math.abs(currentVelocity) < 0.5) {
+            try {
+                if (Math.abs(currentVelocity) < 0.5) {
+                    cancelAnimationFrame(animationFrame);
+                    setAnimationFrame(null);
+                    return;
+                }
+                wrapperRef.current.scrollLeft -= currentVelocity;
+                currentVelocity *= 0.95;
+                setAnimationFrame(requestAnimationFrame(inertiaScroll));
+            }catch (error) {
                 cancelAnimationFrame(animationFrame);
                 setAnimationFrame(null);
-                return;
             }
-            wrapperRef.current.scrollLeft -= currentVelocity;
-            currentVelocity *= 0.95;
-            setAnimationFrame(requestAnimationFrame(inertiaScroll));
+            
         };
         setAnimationFrame(requestAnimationFrame(inertiaScroll));
     };

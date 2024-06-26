@@ -54,6 +54,7 @@ function AddCategoryPage() {
             })
                 .then(res => {
                     toast.success(res.data.message);
+                    setLoading(false);
                 })
                 .catch(error => {
                     //checking if error is about no token
@@ -65,9 +66,8 @@ function AddCategoryPage() {
                 });
         } catch (error) {
             toast.error('Some error happened during adding category');
-        } finally {
             setLoading(false);
-        }
+        } 
     }
 
     return (

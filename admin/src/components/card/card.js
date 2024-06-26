@@ -7,7 +7,15 @@ export const CARD_TYPES = {
     ADDCARD: "addcard",
     GOOD: 'good'
 }
-function Card({ type = CARD_TYPES.CATEGORY, editButtonHandler, text, addCategoryHandler, categoryId,pictureCode }) {
+function Card({
+    type = CARD_TYPES.CATEGORY,
+    editButtonHandler,
+    text,
+    addCategoryHandler,
+    categoryId,
+    pictureCode,
+    deleteButtonHandler
+}) {
     const cardClassNames = classNames({
         card: true,
         [`card--${type}`]: true
@@ -30,7 +38,7 @@ function Card({ type = CARD_TYPES.CATEGORY, editButtonHandler, text, addCategory
                     </div>
                     <div className='bot'>
                         <p>{text}</p>
-                        <Button buttonText={`Delete this ${type}`} />
+                        <Button onClick={() => deleteButtonHandler(categoryId)} buttonText={`Delete this ${type}`} />
                         <Button onClick={() => editButtonHandler(categoryId)} buttonText={`Edit this ${type}`} />
                     </div>
                 </div>

@@ -1,0 +1,57 @@
+.modalWindowWrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modalWindow {
+        width: 300px;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        position: relative;
+        background-color: #fbfbfb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        border: 1px solid #cfcfcf;
+
+        &--confirmation {
+            box-shadow: inset 0 0 17px 4px #00000082;
+            padding: 10px;
+            justify-content: space-around;
+
+            .buttons {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                align-items: stretch;
+                height: 50px;
+
+                .button {
+                    width: 40%;
+                    &:first-child{
+                        box-shadow: 0px 0px 8px 0px rgba(72, 255, 0, 0.445);
+                        &:active{
+                            box-shadow: inset 0 0 6px 0px rgba(72, 255, 0, 0.445);
+                        }
+                    }
+                    &:last-child{
+                        box-shadow: 0px 0px 8px 0px rgba(255, 0, 0, 0.445);
+                        &:active{
+                            box-shadow: inset 0 0 6px 0px rgba(255, 0, 0, 0.445);
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+}

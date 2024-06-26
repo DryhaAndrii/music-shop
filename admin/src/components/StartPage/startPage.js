@@ -7,19 +7,20 @@ export default function StartPage() {
     const [categories, setCategories] = useState(null);
     useEffect(() => {
         fetchData();
-
     }, []);
     async function fetchData() {
         const categories = await fetchAllCategories();
-        console.log(categories);
         if (categories) {
             const filteredCategories = categories.filter(category => category.isSubcategory === false);
             setCategories(filteredCategories);
         }
     }
+    function resetData(){
+        setCategories(null);
+    }
     return (
         <div className="startPage">
-            <Categories categories={categories} categoryTitle={'Main categories'} />
+            <Categories fetchCategories={fetchData} resetCategories={resetData} categories={categories} categoryTitle={'Main categories'} />
         </div>
     )
 }
