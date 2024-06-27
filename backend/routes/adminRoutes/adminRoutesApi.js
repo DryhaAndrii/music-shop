@@ -9,6 +9,7 @@ const getAllCategories = require('./getAllCategories');
 const adminLogout = require('./adminLogoutRouter');
 const getCategoriesByIds = require('./getCategoriesByIds');
 const deleteCategoryById = require('./deleteCategoryById');
+const addProduct = require('./addProductRouter');
 
 router.use('/login', adminLogin);
 router.use('/logout', adminLogout);
@@ -17,5 +18,6 @@ router.use('/addCategory', addCategory);
 router.use('/getAllCategories', getAllCategories);
 router.use('/getCategoriesByIds', getCategoriesByIds);
 router.use('/deleteCategoryById', deleteCategoryById);
+router.use('/addProduct', addProduct);
 
 module.exports = router;

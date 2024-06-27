@@ -11,7 +11,7 @@ function Card({
     type = CARD_TYPES.CATEGORY,
     editButtonHandler,
     text,
-    addCategoryHandler,
+    addCardHandler,
     categoryId,
     pictureCode,
     deleteButtonHandler
@@ -46,7 +46,7 @@ function Card({
 
         case CARD_TYPES.ADDCARD:
             return (
-                <div className={cardClassNames} onClick={addCategoryHandler}>
+                <div className={cardClassNames} onClick={addCardHandler}>
                     &#10010;
                     <p>{text}</p>
                 </div>

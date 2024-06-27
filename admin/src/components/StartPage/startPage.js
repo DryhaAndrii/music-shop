@@ -21,6 +21,7 @@ export default function StartPage() {
     return (
         <div className="startPage">
             <Categories fetchCategories={fetchData} resetCategories={resetData} categories={categories} categoryTitle={'Main categories'} />
+            
         </div>
     )
 }

@@ -26,7 +26,7 @@ export default function Categories({ categories, categoryTitle, parentCategoryId
     }
     function onCancelModalWindow() {
     }
-    function addCategoryHandler() {
+    function addCardHandler() {
         if (parentCategoryId) {
             window.location.href = `/addCategory/${parentCategoryId}`;
         } else {
@@ -43,7 +43,7 @@ export default function Categories({ categories, categoryTitle, parentCategoryId
                 <h2>{categoryTitle}</h2>
             </div>
             <HorizontalScroller>
-                <Card type={CARD_TYPES.ADDCARD} text={'Add category'} addCategoryHandler={addCategoryHandler} />
+                <Card type={CARD_TYPES.ADDCARD} text={'Add category'} addCardHandler={addCardHandler} />
                 {
                     categories.map((category) =>
                         <Card

@@ -11,7 +11,7 @@ import axios from 'axios';
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const NO_SPACE_AT_THE_START_REGEXP = /^\s+/;
-const NO_MULTIPLE_SPACES_REGEXP = /\s\s+/g
+const NO_MULTIPLE_SPACES_REGEXP = /\s\s+/g;
 
 function AddCategoryPage() {
     const [categoryTitle, setCategoryTitle] = useState('');
@@ -63,6 +63,7 @@ function AddCategoryPage() {
                         return;
                     }
                     toast.error(error.response.data.message);
+                    setLoading(false);
                 });
         } catch (error) {
             toast.error('Some error happened during adding category');

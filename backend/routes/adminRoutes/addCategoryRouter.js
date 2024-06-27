@@ -13,7 +13,6 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
     try {
         const { categoryTitle, parentCategoryId } = req.body;
         const pictureCode = req.file.buffer.toString('base64');
-        console.log('parentCategoryId: ', parentCategoryId, 'categoryTitle: ', categoryTitle);
         let isSubcategory = false;
 
         if (parentCategoryId!=='undefined') {
@@ -36,7 +35,6 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
             if (parentCategory) {
                 parentCategory.subcategories.push(newCategory._id);
                 await parentCategory.save();
-                console.log('subcategory saved');
             }
         }
 

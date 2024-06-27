@@ -1,9 +1,9 @@
 import HorizontalScroller from '../../horizontalScroller/horizontalScroller';
 import SkeletonCard from '../../card/skeletonCard/skeletonCard';
 import Skeleton from 'react-loading-skeleton';
-function categoriesSkeleton() {
+function ProductsSkeleton() {
     return (
-        <div className="categoriesSkeleton">
+        <div className="productsSkeleton">
             <div className='container'><h2><Skeleton /></h2></div>
             <HorizontalScroller>
                 <SkeletonCard />
@@ -16,4 +16,4 @@ function categoriesSkeleton() {
     );
 }
 
-export default categoriesSkeleton;
+export default ProductsSkeleton;
