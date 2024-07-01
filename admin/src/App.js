@@ -11,7 +11,7 @@ import AuthPage from './components/AuthPage/authPage';
 import AddCategoryPage from './components/addCategoryPage/addCategoryPage';
 import StartPage from './components/StartPage/startPage';
 import Header from './components/header/header';
-import EditCategoryPage from './components/editCategoryPage/editCategoryPage';
+import CategoryInfoPage from './components/categoryInfoPage/categoryInfoPage';
 import AddProductPage from './components/addProductPage/addProductPage';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -58,7 +58,7 @@ function App() {
           <Route path="/addCategory" element={<AddCategoryPage />} />
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<AuthPage />} />
-          <Route path="/editCategory/:categoryId" element={<EditCategoryPage />} />
+          <Route path="/categoryInfo/:categoryId" element={<CategoryInfoPage />} />
           <Route path="/addProduct/:categoryId" element={<AddProductPage />} />
         </Routes>
       </Router>

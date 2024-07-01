@@ -11,8 +11,11 @@ import 'react-loading-skeleton/dist/skeleton.css'
 export default function Categories({ categories, categoryTitle, parentCategoryId, resetCategories, fetchCategories }) {
     const setShowModalWindow = myStore(state => state.setShowModalWindow);
     const [idCategoryToDelete, setIdCategoryToDelete] = useState();
+    function cardClickHandler(categoryId) {
+        window.location.href = `/categoryInfo/${categoryId}`;
+    }
     function editButtonHandler(categoryId) {
-        window.location.href = `/editCategory/${categoryId}`;
+        console.log('edit: ', categoryId);
     }
     function deleteButtonHandler(categoryId) {
         console.log(categoryId);
@@ -52,7 +55,10 @@ export default function Categories({ categories, categoryTitle, parentCategoryId
                             categoryId={category._id}
                             text={`${category.title} (${category.products.length + category.subcategories.length})`}
                             key={category._id}
-                            pictureCode={category.pictureCode} />
+                            pictureCode={category.pictureCode}
+                            cardClickHandler={cardClickHandler}
+                        />,
+
                     )
                 }
             </HorizontalScroller>

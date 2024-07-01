@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import './editCategoryPage.scss';
+import './categoryInfoPage.scss';
 import Categories from '../categories/categories';
 import fetchCategoriesByIds from '../../functions/fetchCategoriesByIds';
 import fetchProductsByIds from '../../functions/fetchProductsByIds';
 import Products from '../products/products';
 
-function EditCategoryPage() {
+function CategoryInfoPage() {
     const [category, setCategory] = useState({});
     const [products, setProducts] = useState();
     const { categoryId } = useParams();
@@ -47,7 +47,7 @@ function EditCategoryPage() {
     }
 
     return (
-        <div className="editCategoryPage">
+        <div className="categoryInfoPage">
             <Categories
                 categoryTitle={category.title}
                 categories={category.handledSubcategories}
@@ -65,4 +65,4 @@ function EditCategoryPage() {
         </div>
     );
 }
-export default EditCategoryPage;
+export default CategoryInfoPage;

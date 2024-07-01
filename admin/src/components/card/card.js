@@ -14,7 +14,8 @@ function Card({
     addCardHandler,
     categoryId,
     pictureCode,
-    deleteButtonHandler
+    deleteButtonHandler,
+    cardClickHandler
 }) {
     const cardClassNames = classNames({
         card: true,
@@ -23,9 +24,8 @@ function Card({
 
     switch (type) {
         case CARD_TYPES.CATEGORY:
-
             return (
-                <div className={cardClassNames}>
+                <div className={cardClassNames} onClick={() => cardClickHandler(categoryId)}>
                     <div className='top'>
                         <div className='imageContainer'>
                             <img
@@ -38,14 +38,13 @@ function Card({
                     </div>
                     <div className='bot'>
                         <p>{text}</p>
-                        <Button onClick={() => deleteButtonHandler(categoryId)} buttonText={`Delete this ${type}`} />
-                        <Button onClick={() => editButtonHandler(categoryId)} buttonText={`Edit this ${type}`} />
+                        <Button onClick={(event) => { event.stopPropagation(); deleteButtonHandler(categoryId); }} buttonText={`Delete this ${type}`} />
+                        <Button onClick={(event) => { event.stopPropagation(); editButtonHandler(categoryId); }} buttonText={`Edit this ${type}`} />
                     </div>
                 </div>
             );
 
         case CARD_TYPES.PRODUCT:
-
             return (
                 <div className={cardClassNames}>
                     <div className='top'>
