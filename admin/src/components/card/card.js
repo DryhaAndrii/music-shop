@@ -5,7 +5,7 @@ import Button from '../button/button';
 export const CARD_TYPES = {
     CATEGORY: "category",
     ADDCARD: "addcard",
-    GOOD: 'good'
+    PRODUCT: 'product'
 }
 function Card({
     type = CARD_TYPES.CATEGORY,
@@ -23,6 +23,28 @@ function Card({
 
     switch (type) {
         case CARD_TYPES.CATEGORY:
+
+            return (
+                <div className={cardClassNames}>
+                    <div className='top'>
+                        <div className='imageContainer'>
+                            <img
+                                className="image"
+                                src={`data:image/png;base64, ${pictureCode}`}
+                                alt="categoryPicture" />
+                        </div>
+
+
+                    </div>
+                    <div className='bot'>
+                        <p>{text}</p>
+                        <Button onClick={() => deleteButtonHandler(categoryId)} buttonText={`Delete this ${type}`} />
+                        <Button onClick={() => editButtonHandler(categoryId)} buttonText={`Edit this ${type}`} />
+                    </div>
+                </div>
+            );
+
+        case CARD_TYPES.PRODUCT:
 
             return (
                 <div className={cardClassNames}>

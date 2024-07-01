@@ -32,7 +32,6 @@ export default function Categories({ categories, categoryTitle, parentCategoryId
         } else {
             window.location.href = `/addCategory`;
         }
-
     }
     if (!categories || !categoryTitle) return (
         <CategoriesSkeleton />
@@ -40,7 +39,7 @@ export default function Categories({ categories, categoryTitle, parentCategoryId
     return (
         <div className="categories">
             <div className='container'>
-                <h2>{categoryTitle}</h2>
+                <h2>{categoryTitle} subcategories</h2>
             </div>
             <HorizontalScroller>
                 <Card type={CARD_TYPES.ADDCARD} text={'Add category'} addCardHandler={addCardHandler} />

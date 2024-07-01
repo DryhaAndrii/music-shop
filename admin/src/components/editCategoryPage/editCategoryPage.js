@@ -8,7 +8,7 @@ import Products from '../products/products';
 
 function EditCategoryPage() {
     const [category, setCategory] = useState({});
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState();
     const { categoryId } = useParams();
 
     useEffect(() => {//useEffect for category
@@ -16,10 +16,13 @@ function EditCategoryPage() {
     }, []);
 
     useEffect(() => {//useEffect for products
-        
-        if(!category.products || category.products.length===0) return
-        console.log('fetching products');
-        //fetchProducts();
+
+        if (!category.products) return
+        if (category.products.length === 0) {
+            setProducts([]);
+            return
+        }
+        fetchProducts();
     }, [category]);
 
 
@@ -33,13 +36,14 @@ function EditCategoryPage() {
     function resetCategories() {
         setCategory({});
     }
+    function resetProducts() {
+        setProducts(null);
+    }
 
     async function fetchProducts() {
-        if(category.subcategories.products===0) return;//if no subcategories return
         const products = await fetchProductsByIds(category.products);
         if (!products) return;//if products not found return
         setProducts(products);
-
     }
 
     return (
@@ -51,7 +55,13 @@ function EditCategoryPage() {
                 fetchCategories={fetchCategory}
                 resetCategories={resetCategories}
             />
-            <Products categoryId={categoryId} products={products} />
+            <Products
+                categoryId={categoryId}
+                products={products}
+                categoryTitle={category.title}
+                resetProducts={resetProducts}
+                fetchProducts={fetchProducts}
+            />
         </div>
     );
 }

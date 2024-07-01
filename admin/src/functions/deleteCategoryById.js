@@ -8,9 +8,13 @@ export default async function deleteCategoryById(categoryId) {
         const { data } = await axios.delete(`${apiUrl}/deleteCategoryById/${categoryId}`, {
             withCredentials: true
         });
-        toast.success(data.categories);
+        toast.success(data.message);
     } catch (error) {
-        toast.error('Some error happened during fetching categories');
-        throw error;
+        if (error.response.status === 401) {
+            window.location.href = '/login'
+            return;
+        };
+        toast.error('Some error happened during fetching products: ' + error.message);
+        
     }
 }

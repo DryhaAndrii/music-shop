@@ -28,7 +28,7 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
             category: categoryId,
         });
 
-        const savedProduct = await newProduct.save(); // Сначала сохраняем продукт
+        const savedProduct = await newProduct.save(); 
 
         const category = await Category.findById(categoryId);
         if (!category) {
