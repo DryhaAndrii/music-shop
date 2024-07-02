@@ -1,9 +1,8 @@
 import Card, { CARD_TYPES } from '../card/card';
 import HorizontalScroller from '../horizontalScroller/horizontalScroller';
 import ProductsSkeleton from './productsSkeleton/productsSkeleton';
-import ModalWindow, { WINDOW_TYPES } from '../modalWindow/modalWindow';
+import ModalWindow, { WINDOW_TYPES, useModal } from '../modalWindow/modalWindow';
 import { useState } from 'react';
-import { myStore } from '../../store/store';
 
 import './products.scss';
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -11,8 +10,7 @@ import deleteProductById from '../../functions/deleteProductById';
 
 export default function Products({ products, categoryId, resetProducts, fetchProducts, categoryTitle }) {
     const [idProductToDelete, setIdProductToDelete] = useState();
-
-    const setShowModalWindow = myStore(state => state.setShowModalWindow);
+    const { isOpen, openModalWindow, closeModalWindow } = useModal();
 
     function addCardHandler() {
         window.location.href = `/addProduct/${categoryId}`;
@@ -21,7 +19,7 @@ export default function Products({ products, categoryId, resetProducts, fetchPro
     function deleteButtonHandler(productId) {
         console.log(productId);
         setIdProductToDelete(productId);
-        setShowModalWindow(true);
+        openModalWindow();
     }
 
     async function onConfirmModalWindow() {
@@ -60,11 +58,12 @@ export default function Products({ products, categoryId, resetProducts, fetchPro
                 }
             </HorizontalScroller>
             <ModalWindow
-                confirmationText={'Are you sure you want to delete this product?'}
                 type={WINDOW_TYPES.CONFIRMATION}
+                confirmationText="Are you sure you want to delete this product?"
                 onConfirm={onConfirmModalWindow}
                 onCancel={onCancelModalWindow}
-
+                isOpen={isOpen}
+                onClose={closeModalWindow}  
             />
 
         </div>

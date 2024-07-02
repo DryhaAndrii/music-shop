@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 
-import { INPUT_TYPES } from '../input/input';
-import Input from '../input/input';
-import Form from '../form/form';
+import { INPUT_TYPES } from '../../components/input/input';
+import Input from '../../components/input/input';
+import Form from '../../components/form/form';
 import { toast } from 'react-toastify';
 import { myStore } from '../../store/store';
 

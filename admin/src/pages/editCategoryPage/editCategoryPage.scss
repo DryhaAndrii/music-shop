@@ -1,0 +1,22 @@
+.editCategoryPage{
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    .formWrapper{
+        height: 80%;
+        width: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .dragAndDropWrapper{
+        height: 80%;
+        width: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

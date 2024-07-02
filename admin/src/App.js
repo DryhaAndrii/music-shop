@@ -7,12 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 import Loading from './components/Loading/loading';
-import AuthPage from './components/AuthPage/authPage';
-import AddCategoryPage from './components/addCategoryPage/addCategoryPage';
-import StartPage from './components/StartPage/startPage';
+import AuthPage from './pages/authPage/authPage';
+import AddCategoryPage from './pages/addCategoryPage/addCategoryPage';
+import StartPage from './pages/startPage/startPage';
 import Header from './components/header/header';
-import CategoryInfoPage from './components/categoryInfoPage/categoryInfoPage';
-import AddProductPage from './components/addProductPage/addProductPage';
+import CategoryInfoPage from './pages/categoryInfoPage/categoryInfoPage';
+import AddProductPage from './pages/addProductPage/addProductPage';
+import EditCategoryPage from './pages/editCategoryPage/editCategoryPage';
+
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -60,6 +62,7 @@ function App() {
           <Route path="/login" element={<AuthPage />} />
           <Route path="/categoryInfo/:categoryId" element={<CategoryInfoPage />} />
           <Route path="/addProduct/:categoryId" element={<AddProductPage />} />
+          <Route path="/editCategory/:categoryId" element={<EditCategoryPage />} />
         </Routes>
       </Router>
     </div >

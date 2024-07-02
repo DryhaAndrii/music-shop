@@ -1,4 +1,4 @@
-import Categories from '../categories/categories';
+import Categories from '../../components/categories/categories';
 import { useState, useEffect } from 'react';
 import fetchAllCategories from '../../functions/fetchAllCategories';
 

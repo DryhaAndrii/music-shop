@@ -1,6 +1,9 @@
 import './loading.css';
 import { myStore } from '../../store/store';
 import { createPortal } from 'react-dom';
+
+
+
 function Loading() {
     const loading = myStore(state => state.loading);
     return (

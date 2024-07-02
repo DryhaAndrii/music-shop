@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import './dragAndDrop.scss';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import './dragAndDrop.scss';
 
-const DragAndDrop = ({ onFilesAdded }) => {
+const DragAndDrop = ({ onFilesAdded, defaultImage }) => {
     const [dragging, setDragging] = useState(false);
     const [preview, setPreview] = useState(null);
+
+    useEffect(() => {
+        if (defaultImage) {
+            setPreview(`data:image/jpeg;base64,${defaultImage}`);
+        }
+    }, [defaultImage]);
 
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -76,7 +82,7 @@ const DragAndDrop = ({ onFilesAdded }) => {
                 id="fileUpload"
             />
             <label htmlFor="fileUpload" style={{ cursor: 'pointer' }}>
-                {'Click or drag files here'}
+                {preview ? 'Change image' : 'Click or drag files here'}
             </label>
             {dragging && <div className="drag-overlay">Drop your files here</div>}
             {preview && <img src={preview} alt="Preview" className="image-preview" />}

@@ -1,7 +1,7 @@
-import Form from '../form/form';
-import Input, { INPUT_TYPES } from '../input/input';
+import Form from '../../components/form/form';
+import Input, { INPUT_TYPES } from '../../components/input/input';
 import { useState} from 'react';
-import DragAndDrop from '../dragAndDrop/dragAndDrop';
+import DragAndDrop from '../../components/dragAndDrop/dragAndDrop';
 import { toast } from 'react-toastify';
 import { myStore } from '../../store/store';
 import { useParams } from 'react-router-dom';

@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './categoryInfoPage.scss';
-import Categories from '../categories/categories';
+import Categories from '../../components/categories/categories';
 import fetchCategoriesByIds from '../../functions/fetchCategoriesByIds';
 import fetchProductsByIds from '../../functions/fetchProductsByIds';
-import Products from '../products/products';
+import Products from '../../components/products/products';
 
 function CategoryInfoPage() {
     const [category, setCategory] = useState({});
