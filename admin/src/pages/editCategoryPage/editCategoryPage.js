@@ -9,7 +9,7 @@ import DragAndDrop from '../../components/dragAndDrop/dragAndDrop';
 import fetchCategoriesByIds from '../../functions/fetchCategoriesByIds';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { myStore } from '../../store/store';
+import Loading, { useLoading } from '../../components/Loading/loading';
 import './editCategoryPage.scss'
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -22,22 +22,38 @@ function EditCategoryPage() {
     const [categoryTitle, setCategoryTitle] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);
     const { categoryId } = useParams();
-    const setLoading = myStore(state => state.setLoading);
+    const { hideLoading, showLoading, isShow } = useLoading();
 
     useEffect(() => {//useEffect for category
         fetchCategory();
         console.log('useEffect category')
-    },[]);
-    useEffect(() => {//useEffect for title
+    }, []);
+    useEffect(() => {
         setCategoryTitle(category.title);
+        if (category.pictureCode) {
+            // Convert base64 to Blob
+            fetch(`data:image/jpeg;base64,${category.pictureCode}`)
+                .then(res => res.blob())
+                .then(blob => {
+                    // Создание объекта File из Blob
+                    const file = new File([blob], "category_image.jpg", { type: "image/jpeg" });
+                    setUploadedFile(file); // Установка файла в состояние
+                });
+
+        }
         console.log('useEffect title');
     }, [category]);
 
     async function fetchCategory() {
+        showLoading();
         const categories = await fetchCategoriesByIds([categoryId]);
-        if (!categories || categories.length === 0) return;//if category not found return
+        if (!categories || categories.length === 0) {
+            hideLoading();
+            return;
+        };//if category not found return
         const newCategory = categories[0];
         setCategory(newCategory);
+        hideLoading();
     }
 
     const onInputChange = (e) => {
@@ -63,17 +79,17 @@ function EditCategoryPage() {
 
     async function fetchData() {
         try {
-            setLoading(true);
+            showLoading();
 
             const data = new FormData();
             data.append('file', uploadedFile);
             data.append('categoryTitle', categoryTitle);
-            axios.post(`${apiUrl}updateCategory`, data, {
+            axios.put(`${apiUrl}editCategory/${categoryId}`, data, {
                 withCredentials: true
             })
                 .then(res => {
                     toast.success(res.data.message);
-                    setLoading(false);
+                    hideLoading();
                 })
                 .catch(error => {
                     //checking if error is about no token
@@ -82,18 +98,18 @@ function EditCategoryPage() {
                         return;
                     }
                     toast.error(error.response.data.message);
-                    setLoading(false);
+                    hideLoading();
                 });
         } catch (error) {
             toast.error('Some error happened during updating category: ' + error.message);
             console.log(error);
-            setLoading(false);
-        } 
+            hideLoading();
+        }
     }
 
     return (
         <div className='editCategoryPage'>
-
+            <Loading isShow={isShow} />
             <div className='formWrapper'>
                 <Form handleSubmit={handleSubmit}>
                     <Input type={INPUT_TYPES.TEXT} placeholder={'Category title'} value={categoryTitle} onChangeHandler={onInputChange} />
@@ -101,7 +117,7 @@ function EditCategoryPage() {
                 </Form>
             </div>
             <div className='dragAndDropWrapper'>
-                <DragAndDrop onFilesAdded={handleFilesAdded} defaultImage={category.pictureCode}/>
+                <DragAndDrop onFilesAdded={handleFilesAdded} defaultImage={category.pictureCode} />
             </div>
         </div>
     );

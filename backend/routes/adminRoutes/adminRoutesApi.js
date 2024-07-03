@@ -12,6 +12,7 @@ const deleteCategoryById = require('./deleteCategoryById');
 const addProduct = require('./addProductRouter');
 const getProductsByIds = require('./getProductsByIds');
 const deleteProductById = require('./deleteProductById');
+const editCategoryRouter = require('./editCategoryRouter');
 
 router.use('/login', adminLogin);
 router.use('/logout', adminLogout);
@@ -23,5 +24,6 @@ router.use('/deleteCategoryById', deleteCategoryById);
 router.use('/addProduct', addProduct);
 router.use('/getProductsByIds', getProductsByIds);
 router.use('/deleteProductById', deleteProductById);
+router.use('/editCategory', editCategoryRouter);
 
 module.exports = router;
