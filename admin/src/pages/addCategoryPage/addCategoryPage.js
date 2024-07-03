@@ -1,10 +1,10 @@
 import './addCategoryPage.scss';
 import Form from '../../components/form/form';
 import Input, { INPUT_TYPES } from '../../components/input/input';
-import { useState} from 'react';
+import { useState } from 'react';
 import DragAndDrop from '../../components/dragAndDrop/dragAndDrop';
 import { toast } from 'react-toastify';
-import { myStore } from '../../store/store';
+import Loading, { useLoading } from '../../components/Loading/loading';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,9 +17,8 @@ function AddCategoryPage() {
     const [categoryTitle, setCategoryTitle] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);
     const { parentCategoryId } = useParams();
+    const { hideLoading, showLoading, isShow } = useLoading();
 
-
-    const setLoading = myStore(state => state.setLoading);
 
     const handleFilesAdded = (file) => {
         setUploadedFile(file);
@@ -43,7 +42,7 @@ function AddCategoryPage() {
     };
     async function fetchData() {
         try {
-            setLoading(true);
+            showLoading();
 
             const data = new FormData();
             data.append('file', uploadedFile);
@@ -54,7 +53,7 @@ function AddCategoryPage() {
             })
                 .then(res => {
                     toast.success(res.data.message);
-                    setLoading(false);
+                    hideLoading();
                 })
                 .catch(error => {
                     //checking if error is about no token
@@ -63,16 +62,17 @@ function AddCategoryPage() {
                         return;
                     }
                     toast.error(error.response.data.message);
-                    setLoading(false);
+                    hideLoading();
                 });
         } catch (error) {
             toast.error('Some error happened during adding category');
-            setLoading(false);
-        } 
+            hideLoading();
+        }
     }
 
     return (
         <div className='addCategoryPage'>
+            <Loading isShow={isShow} />
             <div className='formWrapper'>
                 <Form handleSubmit={handleSubmit}>
                     <Input type={INPUT_TYPES.TEXT} placeholder={'Category title'} value={categoryTitle} onChangeHandler={onInputChange} />

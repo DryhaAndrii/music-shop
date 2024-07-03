@@ -1,4 +1,4 @@
-import { myStore } from './store/store';
+
 import { ToastContainer, toast } from 'react-toastify';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
-import Loading from './components/Loading/loading';
 import AuthPage from './pages/authPage/authPage';
 import AddCategoryPage from './pages/addCategoryPage/addCategoryPage';
 import StartPage from './pages/startPage/startPage';
@@ -14,33 +13,32 @@ import Header from './components/header/header';
 import CategoryInfoPage from './pages/categoryInfoPage/categoryInfoPage';
 import AddProductPage from './pages/addProductPage/addProductPage';
 import EditCategoryPage from './pages/editCategoryPage/editCategoryPage';
-
+import Loading, { useLoading } from './components/Loading/loading';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function App() {
-  const setLoading = myStore(state => state.setLoading);
-
+  const { hideLoading, showLoading, isShow } = useLoading();
 
   useEffect(() => {
     checkToken();
-  });
+  },[]);
   async function checkToken() {
     try {
-      setLoading(true);
+      showLoading();
       const response = await fetch(`${apiUrl}checkToken`, {
         method: 'GET',
         credentials: 'include',
       });
       if (response.status === 401) {
         if (window.location.pathname === '/login') {//if we do not have valid token and we are on login page we stay here to log in
-          setLoading(false);
+          hideLoading();
           return
         }
         window.location.href = '/login'; //if we do not have valid token and we are not on login page we redirect to login page
         return;
       }
-      setLoading(false);
+      hideLoading();
       if (window.location.pathname === '/login') { //if we have valid token and we are on login page we redirect to start page
         window.location.href = '/';
       };
@@ -51,7 +49,7 @@ function App() {
   }
   return (
     <div className="App">
-      <Loading />
+      <Loading isShow={isShow} />
       <ToastContainer />
       <Header />
       <Router>
