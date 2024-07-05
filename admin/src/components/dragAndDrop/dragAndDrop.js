@@ -1,30 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import './dragAndDrop.scss';
 
-const DragAndDrop = ({ onFilesAdded, defaultImage }) => {
+const DragAndDrop = ({ onFilesAdded, defaultImage, id }) => {
     const [dragging, setDragging] = useState(false);
     const [preview, setPreview] = useState(null);
 
     useEffect(() => {
         if (defaultImage) {
-            setPreview(`data:image/jpeg;base64,${defaultImage}`);
+            if (typeof defaultImage === 'string') {
+                setPreview(`data:image/jpeg;base64,${defaultImage}`);
+            } else if (defaultImage instanceof File) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    setPreview(reader.result);
+                };
+                reader.readAsDataURL(defaultImage);
+            }
         }
     }, [defaultImage]);
 
-    const handleDragOver = (e) => {
+    const handleDragOver = useCallback((e) => {
         e.preventDefault();
         e.stopPropagation();
         setDragging(true);
-    };
+    }, []);
 
-    const handleDragLeave = (e) => {
+    const handleDragLeave = useCallback((e) => {
         e.preventDefault();
         e.stopPropagation();
         setDragging(false);
-    };
+    }, []);
 
-    const validateFile = (file) => {
+    const validateFile = useCallback((file) => {
         const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
         if (!validTypes.includes(file.type)) {
             toast.warn('Only image files are allowed');
@@ -35,20 +43,22 @@ const DragAndDrop = ({ onFilesAdded, defaultImage }) => {
             return false;
         }
         return true;
-    };
+    }, []);
 
-    const handleFiles = (file) => {
+    const handleFiles = useCallback((file) => {
         if (validateFile(file)) {
-            onFilesAdded(file);
+            if (onFilesAdded) {
+                onFilesAdded(file);
+            }
             const reader = new FileReader();
             reader.onload = (event) => {
                 setPreview(event.target.result);
             };
             reader.readAsDataURL(file);
         }
-    };
+    }, [onFilesAdded, validateFile]);
 
-    const handleDrop = (e) => {
+    const handleDrop = useCallback((e) => {
         e.preventDefault();
         e.stopPropagation();
         setDragging(false);
@@ -58,14 +68,14 @@ const DragAndDrop = ({ onFilesAdded, defaultImage }) => {
             const file = files[0];
             handleFiles(file);
         }
-    };
+    }, [handleFiles]);
 
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
         const file = e.target.files[0];
         if (file) {
             handleFiles(file);
         }
-    };
+    }, [handleFiles]);
 
     return (
         <div
@@ -79,9 +89,9 @@ const DragAndDrop = ({ onFilesAdded, defaultImage }) => {
                 type="file"
                 accept="image/*"
                 style={{ display: 'none' }}
-                id="fileUpload"
+                id={`fileUpload-${id}`}
             />
-            <label htmlFor="fileUpload" style={{ cursor: 'pointer' }}>
+            <label htmlFor={`fileUpload-${id}`} style={{ cursor: 'pointer' }}>
                 {preview ? 'Change image' : 'Click or drag files here'}
             </label>
             {dragging && <div className="drag-overlay">Drop your files here</div>}

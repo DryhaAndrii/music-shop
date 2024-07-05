@@ -1,13 +1,13 @@
 import Form from '../../components/form/form';
 import Input, { INPUT_TYPES } from '../../components/input/input';
 import { useState } from 'react';
-import DragAndDrop from '../../components/dragAndDrop/dragAndDrop';
 import { toast } from 'react-toastify';
 import Loading, { useLoading } from '../../components/Loading/loading';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import './addProductPage.scss';
+import Images from '../../components/images/images';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -23,17 +23,10 @@ function AddProductPage() {
     const [productTitle, setProductTitle] = useState('');
     const [productDescription, setProductDescription] = useState('');
     const [productPrice, setProductPrice] = useState('');
-    const [uploadedFile, setUploadedFile] = useState(null);
+    const [images, setImages] = useState([]);
     const { categoryId } = useParams();
 
-
     const { hideLoading, showLoading, isShow } = useLoading();
-
-
-
-    const handleFilesAdded = (file) => {
-        setUploadedFile(file);
-    };
 
     const onInputChange = (e) => {
         const { name } = e.target;
@@ -60,8 +53,24 @@ function AddProductPage() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (productTitle.length < 3 || productPrice.length < 3 || productDescription.length < 3 || !uploadedFile) {
-            toast.warn('Every input should contain at least 3 characters and image should be set');
+        if (productTitle.length < 3) {
+            toast.warn('Title should contain at least 3 characters');
+            return;
+        }
+        if (productPrice.length < 1) {
+            toast.warn('Price should be set');
+            return;
+        }
+        if (productDescription.length < 3) {
+            toast.warn('Description should contain at least 3 characters');
+            return;
+        }
+        if (images.length === 0) {
+            toast.warn('You should add at least 1 image');
+            return;
+        }
+        if (images.includes(null)) {
+            toast.warn('You should set all images, or delete empty images');
             return;
         }
         fetchData();
@@ -71,7 +80,9 @@ function AddProductPage() {
             showLoading();
 
             const data = new FormData();
-            data.append('file', uploadedFile);
+            images.forEach(image => {
+                data.append('images', image); 
+            });
             data.append('productTitle', productTitle);
             data.append('productPrice', productPrice);
             data.append('productDescription', productDescription);
@@ -109,9 +120,10 @@ function AddProductPage() {
                     <Input type={INPUT_TYPES.SUBMIT} value="Create product" />
                 </Form>
             </div>
-            <div className='dragAndDropWrapper'>
-                <DragAndDrop onFilesAdded={handleFilesAdded} />
+            <div className='imagesWrapper'>
+                <Images images={images} setImages={setImages} />
             </div>
+
         </div>
     );
 }

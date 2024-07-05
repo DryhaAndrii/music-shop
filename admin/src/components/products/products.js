@@ -53,7 +53,7 @@ export default function Products({ products, categoryId, resetProducts, fetchPro
                             categoryId={product._id}
                             text={`${product.title} (${product.price}$)`}
                             key={product._id}
-                            pictureCode={product.pictureCode} />
+                            pictureCode={product.pictureCodes[0]} />
                     )
                 }
             </HorizontalScroller>

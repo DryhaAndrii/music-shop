@@ -117,7 +117,7 @@ function EditCategoryPage() {
                 </Form>
             </div>
             <div className='dragAndDropWrapper'>
-                <DragAndDrop onFilesAdded={handleFilesAdded} defaultImage={category.pictureCode} />
+                <DragAndDrop onFilesAdded={handleFilesAdded} defaultImage={uploadedFile} />
             </div>
         </div>
     );

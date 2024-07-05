@@ -1,72 +1,50 @@
-
 import './horizontalScroller.scss';
 import React, { useRef, useState } from 'react';
+
 export default function HorizontalScroller({ children }) {
     const wrapperRef = useRef(null);
     const [isDown, setIsDown] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
-    const [velocity, setVelocity] = useState(0);
-    const [lastX, setLastX] = useState(0);
-    const [animationFrame, setAnimationFrame] = useState(null);
+    const [isDragging, setIsDragging] = useState(false);
 
     const handleMouseDown = (e) => {
         setIsDown(true);
         setStartX(e.pageX - wrapperRef.current.offsetLeft);
         setScrollLeft(wrapperRef.current.scrollLeft);
-        setLastX(e.pageX);
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
-            setAnimationFrame(null);
-        }
+        setIsDragging(false); // Начинаем с того, что не перетаскиваем
     };
 
     const handleMouseLeave = () => {
-        setIsDown(false);
         if (isDown) {
-            startInertiaScroll();
+            setIsDown(false);
         }
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (e) => {
         setIsDown(false);
-        startInertiaScroll();
+        if (isDragging) {
+            e.preventDefault();
+            e.stopPropagation(); // предотвращение клика при скроллинге
+        } else {
+            // обрабатываем клик
+        }
     };
 
     const handleMouseMove = (e) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - wrapperRef.current.offsetLeft;
-        const walk = (x - startX);
+        const walk = x - startX;
         wrapperRef.current.scrollLeft = scrollLeft - walk;
-        setVelocity(e.pageX - lastX);
-        setLastX(e.pageX);
-    };
-
-    const startInertiaScroll = () => {
-        let currentVelocity = velocity;
-        const inertiaScroll = () => {
-            try {
-                if (Math.abs(currentVelocity) < 0.5) {
-                    cancelAnimationFrame(animationFrame);
-                    setAnimationFrame(null);
-                    return;
-                }
-                wrapperRef.current.scrollLeft -= currentVelocity;
-                currentVelocity *= 0.95;
-                setAnimationFrame(requestAnimationFrame(inertiaScroll));
-            }catch (error) {
-                cancelAnimationFrame(animationFrame);
-                setAnimationFrame(null);
-            }
-            
-        };
-        setAnimationFrame(requestAnimationFrame(inertiaScroll));
+        if (Math.abs(walk) > 5) { // 5 пикселей – порог для определения скролла
+            setIsDragging(true);
+        }
     };
 
     return (
-        <div className="horizontalScroller"
-
+        <div
+            className="horizontalScroller"
             ref={wrapperRef}
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
@@ -75,6 +53,5 @@ export default function HorizontalScroller({ children }) {
         >
             {children}
         </div>
-
-    )
+    );
 }
