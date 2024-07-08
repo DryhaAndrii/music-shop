@@ -62,7 +62,7 @@ function App() {
           <Route path="/categoryInfo/:categoryId" element={<CategoryInfoPage />} />
           <Route path="/addProduct/:categoryId" element={<AddProductPage />} />
           <Route path="/editCategory/:categoryId" element={<EditCategoryPage />} />
-          {/* <Route path="/editProduct/:productId" element={<EditProductPage />} /> */}
+          <Route path="/editProduct/:productId" element={<EditProductPage />} />
         </Routes>
       </Router>
     </div >
