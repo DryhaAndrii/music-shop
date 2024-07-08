@@ -1,0 +1,20 @@
+.editProductPage{
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    .formWrapper{
+        height: 80%;
+        width: 15%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .imagesWrapper{
+        width: 80%;
+        height: 80%;
+    }
+    
+}

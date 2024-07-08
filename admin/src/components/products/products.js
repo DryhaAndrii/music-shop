@@ -21,6 +21,9 @@ export default function Products({ products, categoryId, resetProducts, fetchPro
         setIdProductToDelete(productId);
         openModalWindow();
     }
+    function editButtonHandler(productId) {
+        window.location.href = `/editProduct/${productId}`;
+    }
 
     async function onConfirmModalWindow() {
         resetProducts();
@@ -47,7 +50,7 @@ export default function Products({ products, categoryId, resetProducts, fetchPro
                 {
                     products.map((product) =>
                         <Card
-                            editButtonHandler={() => console.log('edit product')}
+                            editButtonHandler={editButtonHandler}
                             deleteButtonHandler={deleteButtonHandler}
                             type={CARD_TYPES.PRODUCT}
                             categoryId={product._id}

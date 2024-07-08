@@ -14,6 +14,7 @@ import CategoryInfoPage from './pages/categoryInfoPage/categoryInfoPage';
 import AddProductPage from './pages/addProductPage/addProductPage';
 import EditCategoryPage from './pages/editCategoryPage/editCategoryPage';
 import Loading, { useLoading } from './components/Loading/loading';
+import EditProductPage from './pages/editProductPage/editProductPage';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -61,6 +62,7 @@ function App() {
           <Route path="/categoryInfo/:categoryId" element={<CategoryInfoPage />} />
           <Route path="/addProduct/:categoryId" element={<AddProductPage />} />
           <Route path="/editCategory/:categoryId" element={<EditCategoryPage />} />
+          {/* <Route path="/editProduct/:productId" element={<EditProductPage />} /> */}
         </Routes>
       </Router>
     </div >

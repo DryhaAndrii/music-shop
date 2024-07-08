@@ -35,9 +35,9 @@ function EditCategoryPage() {
             fetch(`data:image/jpeg;base64,${category.pictureCode}`)
                 .then(res => res.blob())
                 .then(blob => {
-                    // Создание объекта File из Blob
+                    // creating object File from Blob
                     const file = new File([blob], "category_image.jpg", { type: "image/jpeg" });
-                    setUploadedFile(file); // Установка файла в состояние
+                    setUploadedFile(file); // Setting created file to state
                 });
 
         }

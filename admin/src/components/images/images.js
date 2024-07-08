@@ -7,8 +7,8 @@ import './images.scss';
 
 function Images({ images, setImages }) {
     function addImage() {
-        if(images.length === 10){
-            toast.warn('You can not add more than 10 images');
+        if (images.length >= 10) {
+            toast.warn('You cannot add more than 10 images');
             return;
         }
         setImages([...images, null]);
@@ -23,17 +23,13 @@ function Images({ images, setImages }) {
     }
 
     function onFileRemove(index) {
-        setImages(prevImages => {
-            const newImages = prevImages.filter((_, i) => i !== index);
-            return newImages;
-        });
+        setImages(prevImages => prevImages.filter((_, i) => i !== index));
     }
 
     return (
         <div className='scrollerWrapper'>
             <HorizontalScroller>
-                <Button buttonText={'Add image'} onClick={addImage}/>
-                
+                <Button buttonText={'Add image'} onClick={addImage} />
                 {images.map((image, index) => (
                     <DragAndDropWrapper
                         key={index}
