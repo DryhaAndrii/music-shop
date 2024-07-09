@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 
 import Form from '../../components/form/form';
 import Input, { INPUT_TYPES } from '../../components/input/input';
 import Loading, { useLoading } from '../../components/Loading/loading';
 import Images from '../../components/images/images';
-
+import { TextEditor, useTextEditor } from '../../components/textEditor/textEditor';
 import fetchProductsByIds from '../../functions/fetchProductsByIds';
 
 import './editProductPage.scss';
@@ -20,16 +21,16 @@ const ONLY_DIGITS_REGEXP = /\D/g;
 
 const TITLE = 'title';
 const PRICE = 'price';
-const DESCRIPTION = 'description';
 
 function EditProductPage() {
     const [productTitle, setProductTitle] = useState('');
-    const [productDescription, setProductDescription] = useState('');
     const [productPrice, setProductPrice] = useState('');
     const [images, setImages] = useState([]);
     const { productId } = useParams();
-
+    
     const { hideLoading, showLoading, isShow } = useLoading();
+
+    const { editorState, setEditorState, handleKeyCommand, toggleBold } = useTextEditor();
 
     useEffect(() => {
         fetchProduct();
@@ -46,8 +47,18 @@ function EditProductPage() {
 
         const product = products[0];
         setProductTitle(product.title);
-        setProductDescription(product.description);
         setProductPrice(product.price);
+
+        // Преобразуем raw контент в EditorState
+        if (product.description && product.description.raw) {
+            try {
+                const contentState = convertFromRaw(JSON.parse(product.description.raw));
+                setEditorState(EditorState.createWithContent(contentState));
+            } catch (error) {
+                console.error('Error parsing product description:', error);
+                toast.error('Error loading product description');
+            }
+        }
 
         const newImages = await Promise.all(
             product.pictureCodes.map(async (pictureCode) => {
@@ -65,14 +76,22 @@ function EditProductPage() {
     }
 
     const onInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name } = e.target;
         if (name === PRICE) {
-            const newValue = value.replace(ONLY_DIGITS_REGEXP, '').slice(0, 10);
+            const newValue = e.target.value
+                .replace(ONLY_DIGITS_REGEXP, '')
+                .slice(0, 10);
             setProductPrice(newValue);
-        } else {
-            const newValue = value.replace(NO_SPACE_AT_THE_START_REGEXP, '').replace(NO_MULTIPLE_SPACES_REGEXP, ' ').slice(0, 50);
-            if (name === TITLE) setProductTitle(newValue);
-            if (name === DESCRIPTION) setProductDescription(newValue);
+            return;
+        }
+
+        const newValue = e.target.value
+            .replace(NO_SPACE_AT_THE_START_REGEXP, '')
+            .replace(NO_MULTIPLE_SPACES_REGEXP, ' ')
+            .slice(0, 50);
+
+        if (name === TITLE) {
+            setProductTitle(newValue);
         }
     };
 
@@ -86,8 +105,9 @@ function EditProductPage() {
             toast.warn('Price should be set');
             return;
         }
-        if (productDescription.length < 3) {
-            toast.warn('Description should contain at least 3 characters');
+        const description = convertToRaw(editorState.getCurrentContent());
+        if (description.blocks.every(block => block.text.trim() === '')) {
+            toast.warn('Description should not be empty');
             return;
         }
         if (images.length === 0) {
@@ -111,7 +131,7 @@ function EditProductPage() {
             });
             data.append('productTitle', productTitle);
             data.append('productPrice', productPrice);
-            data.append('productDescription', productDescription);
+            data.append('productDescription', JSON.stringify(convertToRaw(editorState.getCurrentContent())));
 
             await axios.put(`${apiUrl}editProduct/${productId}`, data, {
                 withCredentials: true
@@ -132,15 +152,25 @@ function EditProductPage() {
     return (
         <div className="editProductPage">
             <Loading isShow={isShow} />
-            <div className="formWrapper">
+            <div className='formWrapper container'>
                 <Form handleSubmit={handleSubmit}>
-                    <Input type={INPUT_TYPES.TEXT} name={TITLE} placeholder={'Product title'} value={productTitle} onChangeHandler={onInputChange} />
-                    <Input type={INPUT_TYPES.TEXT} name={DESCRIPTION} placeholder={'Product description'} value={productDescription} onChangeHandler={onInputChange} />
-                    <Input type={INPUT_TYPES.TEXT} name={PRICE} placeholder={'Product price'} value={productPrice} onChangeHandler={onInputChange} />
-                    <Input type={INPUT_TYPES.SUBMIT} value="Update product" />
+                    <div className='inputsWrapper'>
+                        <Input type={INPUT_TYPES.TEXT} name={TITLE} placeholder={'Product title'} value={productTitle} onChangeHandler={onInputChange} />
+                        <Input type={INPUT_TYPES.TEXT} name={PRICE} placeholder={'Product price'} value={productPrice} onChangeHandler={onInputChange} />
+                        <Input type={INPUT_TYPES.SUBMIT} value="Update product" />
+                    </div>
+                    <div className='textEditorWrapper'>
+                        <h3>Description</h3>
+                        <TextEditor
+                            editorState={editorState}
+                            setEditorState={setEditorState}
+                            handleKeyCommand={handleKeyCommand}
+                            onBoldClick={toggleBold}
+                        />
+                    </div>
                 </Form>
             </div>
-            <div className="imagesWrapper">
+            <div className='imagesWrapper'>
                 <Images images={images} setImages={setImages} />
             </div>
         </div>

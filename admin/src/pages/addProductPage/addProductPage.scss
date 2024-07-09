@@ -1,20 +1,44 @@
-.addProductPage{
+.addProductPage {
     width: 100%;
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     justify-content: space-evenly;
-    .formWrapper{
-        height: 80%;
-        width: 15%;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0px;
+
+    .formWrapper {
+        height: 500px;
         display: flex;
         align-items: center;
         justify-content: center;
+
+        form {
+            justify-content: space-between;
+
+            .inputsWrapper {
+                margin-top: 10px;
+                gap: 20px;
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .textEditorWrapper {
+                font-family: inherit;
+                height: 80%;
+                width: 90%;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
     }
-    .imagesWrapper{
+
+    .imagesWrapper {
         width: 80%;
-        height: 80%;
+        height: 500px
     }
-    
+
 }

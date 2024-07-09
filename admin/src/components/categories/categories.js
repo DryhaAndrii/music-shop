@@ -17,7 +17,6 @@ export default function Categories({ categories, categoryTitle, parentCategoryId
         window.location.href = `/editCategory/${categoryId}`;
     }
     function deleteButtonHandler(categoryId) {
-        console.log(categoryId);
         setIdCategoryToDelete(categoryId);
         openModalWindow();
     }
