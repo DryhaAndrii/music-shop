@@ -4,27 +4,35 @@ const multer = require('multer');
 const Category = require('../../models/categoryModel');
 const Product = require('../../models/productModel');
 const authMiddleware = require('../../middlewares/authMiddleware');
+const { convertFromRaw } = require('draft-js');
+const { stateToHTML } = require('draft-js-export-html');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('', authMiddleware, upload.array('images', 15), async (req, res) => { // 'images' – is the name of the input field in the form
+router.post('', authMiddleware, upload.array('images', 15), async (req, res) => {
     try {
         const { productTitle, productPrice, productDescription, categoryId } = req.body;
 
         if (!productTitle || !productPrice || !productDescription || !categoryId) {
             return res.status(400).json({ message: 'All fields are required' });
         }
-        // checking if files are uploaded
+
         if (req.files.length === 0) {
             return res.status(400).json({ message: 'No files uploaded' });
         }
+
+        const contentState = convertFromRaw(JSON.parse(productDescription));
+        const htmlDescription = stateToHTML(contentState);
 
         const pictureCodes = req.files.map(file => file.buffer.toString('base64'));
 
         const newProduct = new Product({
             title: productTitle,
-            description: productDescription,
+            description: {
+                raw: productDescription,  
+                html: htmlDescription    
+            },
             pictureCodes,
             price: productPrice,
             category: categoryId,
