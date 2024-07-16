@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Form from '../../components/form/form';
 import Input, { INPUT_TYPES } from '../../components/input/input';
 import DragAndDrop from '../../components/dragAndDrop/dragAndDrop';
+import Attributes from '../../components/attributes/attributes';
 import fetchCategoriesByIds from '../../functions/fetchCategoriesByIds';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -21,6 +22,7 @@ function EditCategoryPage() {
     const [category, setCategory] = useState({});
     const [categoryTitle, setCategoryTitle] = useState('');
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [attributes, setAttributes] = useState([]);
     const { categoryId } = useParams();
     const { hideLoading, showLoading, isShow } = useLoading();
 
@@ -30,6 +32,9 @@ function EditCategoryPage() {
     }, []);
     useEffect(() => {
         setCategoryTitle(category.title);
+        if (category.attributes) {
+            setAttributes(category.attributes);
+        }
         if (category.pictureCode) {
             // Convert base64 to Blob
             fetch(`data:image/jpeg;base64,${category.pictureCode}`)
@@ -74,6 +79,30 @@ function EditCategoryPage() {
             toast.warn('Title should contain at least 3 characters and image should be set');
             return;
         }
+
+        if (attributes.length < 3) {
+            toast.warn('Each category should have at least 3 attributes');
+            return;
+        }
+        for (let attribute of attributes) {
+            if (attribute.name.length < 3) {
+                toast.warn('Each attribute name should contain at least 3 characters');
+                return;
+            }
+
+            if (attribute.options.length < 3) {
+                toast.warn('Each attribute should have at least 3 options');
+                return;
+            }
+
+            for (let option of attribute.options) {
+                if (option.length < 3) {
+                    toast.warn('Each option name should contain at least 3 characters');
+                    return;
+                }
+            }
+        }
+
         fetchData();
     };
 
@@ -84,6 +113,7 @@ function EditCategoryPage() {
             const data = new FormData();
             data.append('file', uploadedFile);
             data.append('categoryTitle', categoryTitle);
+            data.append('attributes', JSON.stringify(attributes));
             axios.put(`${apiUrl}editCategory/${categoryId}`, data, {
                 withCredentials: true
             })
@@ -108,16 +138,21 @@ function EditCategoryPage() {
     }
 
     return (
-        <div className='editCategoryPage'>
-            <Loading isShow={isShow} />
-            <div className='formWrapper'>
-                <Form handleSubmit={handleSubmit}>
-                    <Input type={INPUT_TYPES.TEXT} placeholder={'Category title'} value={categoryTitle} onChangeHandler={onInputChange} />
-                    <Input type={INPUT_TYPES.SUBMIT} value="Edit category" />
-                </Form>
-            </div>
-            <div className='dragAndDropWrapper'>
-                <DragAndDrop onFilesAdded={handleFilesAdded} defaultImage={uploadedFile} />
+        <div className='container'>
+            <div className='editCategoryPage'>
+                <Loading isShow={isShow} />
+                <div className='formWrapper'>
+                    <Form handleSubmit={handleSubmit}>
+                        <Input type={INPUT_TYPES.TEXT} placeholder={'Category title'} value={categoryTitle} onChangeHandler={onInputChange} />
+                        <Input type={INPUT_TYPES.SUBMIT} value="Edit category" />
+                    </Form>
+                </div>
+                <div className='dragAndDropWrapper'>
+                    <DragAndDrop onFilesAdded={handleFilesAdded} defaultImage={uploadedFile} />
+                </div>
+                <div className='attributesWrapper'>
+                    <Attributes attributes={attributes} setAttributes={setAttributes} />
+                </div>
             </div>
         </div>
     );

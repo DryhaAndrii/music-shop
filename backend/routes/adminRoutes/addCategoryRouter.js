@@ -11,18 +11,22 @@ const upload = multer({ storage });
 
 router.post('', authMiddleware, upload.single('file'), async (req, res) => {
     try {
-        const { categoryTitle, parentCategoryId } = req.body;
+        const { categoryTitle, parentCategoryId, attributes } = req.body;
         const pictureCode = req.file.buffer.toString('base64');
         let isSubcategory = false;
 
-        if (parentCategoryId!=='undefined') {
+        if (parentCategoryId !== 'undefined') {
             isSubcategory = true;
         }
         console.log(isSubcategory);
+
+        const parsedAttributes = JSON.parse(attributes);
+
         const newCategory = new Category({
             title: categoryTitle,
             pictureCode,
             products: [],
+            attributes:parsedAttributes,
             subcategories: [],
             isSubcategory
         });
@@ -30,7 +34,7 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
 
         await newCategory.save();
 
-        if (parentCategoryId!=='undefined') {
+        if (parentCategoryId !== 'undefined') {
             const parentCategory = await Category.findById(parentCategoryId);
             if (parentCategory) {
                 parentCategory.subcategories.push(newCategory._id);

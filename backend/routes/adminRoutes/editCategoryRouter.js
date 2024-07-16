@@ -10,7 +10,7 @@ const upload = multer({ storage });
 router.put('/:categoryId', authMiddleware, upload.single('file'), async (req, res) => {
     try {
         const { categoryId } = req.params;
-        const { categoryTitle } = req.body;
+        const { categoryTitle, attributes } = req.body;
 
         if (!categoryTitle) {
             return res.status(404).json({ message: 'Title not found' });
@@ -18,6 +18,10 @@ router.put('/:categoryId', authMiddleware, upload.single('file'), async (req, re
         if (!req.file) {
             return res.status(404).json({ message: 'Image not found' });
         }
+        if (!attributes) {
+            return res.status(404).json({ message: 'Attributes not found' });
+        }
+        const parsedAttributes = JSON.parse(attributes);
         // Find category
         const category = await Category.findById(categoryId);
         if (!category) {
@@ -28,6 +32,9 @@ router.put('/:categoryId', authMiddleware, upload.single('file'), async (req, re
         // update category image
         const pictureCode = req.file.buffer.toString('base64');
         category.pictureCode = pictureCode;
+        // update category attributes
+        category.attributes = parsedAttributes;
+
         // save category
         await category.save();
 

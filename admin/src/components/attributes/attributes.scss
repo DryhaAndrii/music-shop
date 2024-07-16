@@ -1,0 +1,40 @@
+.attributes {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, 0.1490196078);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+    .button {
+        flex-shrink: 0;
+        width: 100%;
+        height: 50px;
+    }
+
+    .scrollerWrapper {
+        height: 200px;
+        width: 100%;
+        box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, 0.1490196078);
+        border-radius: 10px;
+
+        .button {
+            width: 200px;
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            top: 10px;
+        }
+
+
+
+        .horizontalScroller {
+            position: relative;
+            padding-left: 230px;
+
+            
+        }
+    }
+}

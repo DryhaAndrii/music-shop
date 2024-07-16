@@ -1,20 +1,34 @@
-.editCategoryPage{
+.editCategoryPage {
     width: 100%;
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    justify-content: space-evenly;
-    .formWrapper{
-        height: 80%;
-        width: 40%;
+    align-items: start;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .formWrapper {
+        height: 300px;
+        width: 45%;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .dragAndDropWrapper{
-        height: 80%;
-        width: 40%;
+
+    .dragAndDropWrapper {
+        height: 300px;
+        width: 45%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .attributesWrapper {
+        height: 300px;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
