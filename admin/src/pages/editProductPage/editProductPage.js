@@ -10,7 +10,7 @@ import Loading, { useLoading } from '../../components/Loading/loading';
 import Images from '../../components/images/images';
 import { TextEditor, useTextEditor } from '../../components/textEditor/textEditor';
 import fetchProductsByIds from '../../functions/fetchProductsByIds';
-
+import fetchCategoriesByIds from '../../functions/fetchCategoriesByIds';
 import './editProductPage.scss';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -25,6 +25,8 @@ const PRICE = 'price';
 function EditProductPage() {
     const [productTitle, setProductTitle] = useState('');
     const [productPrice, setProductPrice] = useState('');
+    const [parentCategoryId,setParentCategoryId]=useState('');
+    const [parentCategoryAttributes,setParentCategoryAttributes] = useState({});
     const [images, setImages] = useState([]);
     const { productId } = useParams();
     
@@ -32,9 +34,21 @@ function EditProductPage() {
 
     const { editorState, setEditorState, handleKeyCommand, toggleBold } = useTextEditor();
 
-    useEffect(() => {
+    useEffect(() => {//useEffect for fetching info about product
         fetchProduct();
-    }, []);
+    },[]);
+    useEffect(() => {//useEffect for fetching info about parentCategoryAttributes
+        fetchCategory();
+    },[parentCategoryId]);
+    async function fetchCategory() {
+        if(parentCategoryId === '') return;
+        const categories = await fetchCategoriesByIds([parentCategoryId]);
+        if (!categories || categories.length === 0) {
+            return;
+        };//if category not found return
+        const newCategory = categories[0];
+        setParentCategoryAttributes(newCategory.attributes);
+    }
 
     async function fetchProduct() {
         showLoading();
@@ -48,8 +62,8 @@ function EditProductPage() {
         const product = products[0];
         setProductTitle(product.title);
         setProductPrice(product.price);
-
-        // Преобразуем raw контент в EditorState
+        setParentCategoryId(product.parentCategoryId);
+        
         if (product.description && product.description.raw) {
             try {
                 const contentState = convertFromRaw(JSON.parse(product.description.raw));

@@ -29,6 +29,7 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
 
         const newProduct = new Product({
             title: productTitle,
+            parentCategoryId: categoryId,
             description: {
                 raw: productDescription,  
                 html: htmlDescription    

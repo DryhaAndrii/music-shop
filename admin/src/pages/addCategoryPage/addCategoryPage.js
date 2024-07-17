@@ -7,8 +7,7 @@ import { toast } from 'react-toastify';
 import Loading, { useLoading } from '../../components/Loading/loading';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Attributes from '../../components/attributes/attributes';
-
+import CategoryAttributes from '../../components/categoryAttributes/categoryAttributes'; 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const NO_SPACE_AT_THE_START_REGEXP = /^\s+/;
@@ -40,7 +39,7 @@ function AddCategoryPage() {
             toast.warn('Title should contain at least 3 characters and image should be set');
             return;
         }
-        if(attributes.length<3){
+        if (attributes.length < 3) {
             toast.warn('Each category should have at least 3 attributes');
             return;
         }
@@ -73,7 +72,7 @@ function AddCategoryPage() {
             data.append('file', uploadedFile);
             data.append('categoryTitle', categoryTitle);
             data.append('parentCategoryId', parentCategoryId);
-             data.append('attributes', JSON.stringify(attributes));
+            data.append('attributes', JSON.stringify(attributes));
             axios.post(`${apiUrl}addCategory`, data, {
                 withCredentials: true
             })
@@ -112,7 +111,7 @@ function AddCategoryPage() {
                     <DragAndDrop onFilesAdded={handleFilesAdded} />
                 </div>
                 <div className='attributesWrapper'>
-                    <Attributes attributes={attributes} setAttributes={setAttributes} />
+                    <CategoryAttributes attributes={attributes} setAttributes={setAttributes} />
                 </div>
             </div>
         </div>

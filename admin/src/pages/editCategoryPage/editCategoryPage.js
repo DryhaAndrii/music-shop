@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import Form from '../../components/form/form';
 import Input, { INPUT_TYPES } from '../../components/input/input';
 import DragAndDrop from '../../components/dragAndDrop/dragAndDrop';
-import Attributes from '../../components/attributes/attributes';
+import CategoryAttributes from '../../components/categoryAttributes/categoryAttributes';
 import fetchCategoriesByIds from '../../functions/fetchCategoriesByIds';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -151,7 +151,7 @@ function EditCategoryPage() {
                     <DragAndDrop onFilesAdded={handleFilesAdded} defaultImage={uploadedFile} />
                 </div>
                 <div className='attributesWrapper'>
-                    <Attributes attributes={attributes} setAttributes={setAttributes} />
+                    <CategoryAttributes attributes={attributes} setAttributes={setAttributes} />
                 </div>
             </div>
         </div>

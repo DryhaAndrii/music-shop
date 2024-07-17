@@ -6,7 +6,7 @@ import './attributes.scss';
 const NO_SPACE_AT_THE_START_REGEXP = /^\s+/;
 const NO_MULTIPLE_SPACES_REGEXP = /\s\s+/g;
 
-function Attributes({ attributes, setAttributes }) {
+function CategoryAttributes({ attributes, setAttributes }) {
 
     function addAttribute() {
         setAttributes([{ name: '', options: [] }, ...attributes]);
@@ -62,4 +62,4 @@ function Attributes({ attributes, setAttributes }) {
     );
 }
 
-export default Attributes;
+export default CategoryAttributes;

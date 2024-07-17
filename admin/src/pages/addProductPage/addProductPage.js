@@ -1,14 +1,17 @@
 import Form from '../../components/form/form';
 import Input, { INPUT_TYPES } from '../../components/input/input';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Loading, { useLoading } from '../../components/Loading/loading';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { TextEditor, useTextEditor } from '../../components/textEditor/textEditor';
 
+import fetchCategoriesByIds from '../../functions/fetchCategoriesByIds';
+
 import './addProductPage.scss';
 import Images from '../../components/images/images';
+import ProductAttributes from '../../components/productAttributes/productAttributes';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -22,13 +25,34 @@ const PRICE = 'price';
 function AddProductPage() {
     const [productTitle, setProductTitle] = useState('');
     const [productPrice, setProductPrice] = useState('');
+    const [productAttributes, setProductAttributes] = useState({});
+    const [attributesOptions,setAttributeOptions] = useState([]);
     const [images, setImages] = useState([]);
     const { categoryId } = useParams();
 
-    // Используем хук для текстового редактора
     const { editorState, setEditorState, handleKeyCommand, toggleBold, getRawContent } = useTextEditor();
 
     const { hideLoading, showLoading, isShow } = useLoading();
+
+    useEffect(() => {
+        fetchCategory();
+    }, []);
+    async function fetchCategory() {
+        const categories = await fetchCategoriesByIds([categoryId]);
+        if (!categories || categories.length === 0) {
+            return;
+        };//if category not found return
+
+        const newProductAttributes = {};
+        let newAttributeOptions = [];
+        for (let attribute of categories[0].attributes) {
+            newProductAttributes[attribute.name] = 'none';
+            newAttributeOptions.push(attribute.options);
+        }
+        setProductAttributes(newProductAttributes);
+        setAttributeOptions(newAttributeOptions);
+    }
+
 
     const onInputChange = (e) => {
         const { name } = e.target;
@@ -110,28 +134,37 @@ function AddProductPage() {
     }
 
     return (
-        <div className='addProductPage'>
-            <Loading isShow={isShow} />
-            <div className='formWrapper container'>
-                <Form handleSubmit={handleSubmit}>
-                    <div className='inputsWrapper'>
-                        <Input type={INPUT_TYPES.TEXT} name={TITLE} placeholder={'Product title'} value={productTitle} onChangeHandler={onInputChange} />
-                        <Input type={INPUT_TYPES.TEXT} name={PRICE} placeholder={'Product price'} value={productPrice} onChangeHandler={onInputChange} />
-                        <Input type={INPUT_TYPES.SUBMIT} value="Create product" />
-                    </div>
-                    <div className='textEditorWrapper'>
-                        <h3>Description</h3>
-                        <TextEditor
-                            editorState={editorState}
-                            setEditorState={setEditorState}
-                            handleKeyCommand={handleKeyCommand}
-                            onBoldClick={toggleBold}
-                        />
-                    </div>
-                </Form>
-            </div>
-            <div className='imagesWrapper'>
-                <Images images={images} setImages={setImages} />
+        <div className="container">
+
+
+            <div className='addProductPage'>
+                <Loading isShow={isShow} />
+                <div className='formWrapper'>
+                    <Form handleSubmit={handleSubmit}>
+                        <div className='inputsWrapper'>
+                            <Input type={INPUT_TYPES.TEXT} name={TITLE} placeholder={'Product title'} value={productTitle} onChangeHandler={onInputChange} />
+                            <Input type={INPUT_TYPES.TEXT} name={PRICE} placeholder={'Product price'} value={productPrice} onChangeHandler={onInputChange} />
+                            <Input type={INPUT_TYPES.SUBMIT} value="Create product" />
+                        </div>
+                        <div className='textEditorWrapper'>
+                            <h3>Description</h3>
+                            <TextEditor
+                                editorState={editorState}
+                                setEditorState={setEditorState}
+                                handleKeyCommand={handleKeyCommand}
+                                onBoldClick={toggleBold}
+                            />
+                        </div>
+                    </Form>
+                </div>
+                <div className='imagesWrapper'>
+                    <Images images={images} setImages={setImages} />
+                </div>
+                <div className='attributesWrapper'>
+
+                    <ProductAttributes attributesOptions={attributesOptions} productAttributes={productAttributes} setProductAttributes={setProductAttributes} />
+                </div>
+
             </div>
         </div>
     );
