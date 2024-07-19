@@ -7,6 +7,7 @@ function ProductAttributes({ productAttributes, setProductAttributes, attributes
     function chooseOption(name,option){
         setProductAttributes(prev=>({...prev,[name]:option}));
     }
+    if(!productAttributes || !attributesOptions) return null;
 
     return (
         <div className='productAttributes'>

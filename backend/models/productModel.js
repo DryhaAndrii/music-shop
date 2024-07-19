@@ -8,6 +8,7 @@ const ProductSchema = new mongoose.Schema({
         html: { type: String, required: true }  
     },
     pictureCodes: { type: [String], required: true },
+    attributes: {},
     price: { type: String, required: true },
     category: {
         type: mongoose.Schema.Types.ObjectId,

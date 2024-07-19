@@ -12,9 +12,11 @@ const upload = multer({ storage });
 
 router.post('', authMiddleware, upload.array('images', 15), async (req, res) => {
     try {
-        const { productTitle, productPrice, productDescription, categoryId } = req.body;
+        const { productTitle, productPrice, productDescription, categoryId, productAttributes } = req.body;
 
-        if (!productTitle || !productPrice || !productDescription || !categoryId) {
+        const parsedAttributes = JSON.parse(productAttributes);
+
+        if (!productTitle || !productPrice || !productDescription || !categoryId || !parsedAttributes) {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
@@ -27,12 +29,15 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
 
         const pictureCodes = req.files.map(file => file.buffer.toString('base64'));
 
+        
+
         const newProduct = new Product({
             title: productTitle,
             parentCategoryId: categoryId,
+            attributes:parsedAttributes,
             description: {
-                raw: productDescription,  
-                html: htmlDescription    
+                raw: productDescription,
+                html: htmlDescription
             },
             pictureCodes,
             price: productPrice,

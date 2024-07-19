@@ -26,7 +26,7 @@ function AddProductPage() {
     const [productTitle, setProductTitle] = useState('');
     const [productPrice, setProductPrice] = useState('');
     const [productAttributes, setProductAttributes] = useState({});
-    const [attributesOptions,setAttributeOptions] = useState([]);
+    const [attributesOptions, setAttributeOptions] = useState([]);
     const [images, setImages] = useState([]);
     const { categoryId } = useParams();
 
@@ -46,7 +46,7 @@ function AddProductPage() {
         const newProductAttributes = {};
         let newAttributeOptions = [];
         for (let attribute of categories[0].attributes) {
-            newProductAttributes[attribute.name] = 'none';
+            newProductAttributes[attribute.name] = null;
             newAttributeOptions.push(attribute.options);
         }
         setProductAttributes(newProductAttributes);
@@ -76,6 +76,7 @@ function AddProductPage() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        //Checking all data that we should send to server
         if (productTitle.length < 3) {
             toast.warn('Title should contain at least 3 characters');
             return;
@@ -97,6 +98,14 @@ function AddProductPage() {
             toast.warn('You should set all images, or delete empty images');
             return;
         }
+
+        for (let attribute in productAttributes) {
+            if (productAttributes[attribute] === null) {
+                toast.warn('All attributes should be set');
+                return;
+            }
+        }
+        //if everything is ok we can send data
         fetchData();
     };
 
@@ -110,7 +119,8 @@ function AddProductPage() {
             });
             data.append('productTitle', productTitle);
             data.append('productPrice', productPrice);
-            data.append('productDescription', getRawContent()); // Отправляем содержимое редактора
+            data.append('productAttributes', JSON.stringify(productAttributes));
+            data.append('productDescription', getRawContent());
             data.append('categoryId', categoryId);
             axios.post(`${apiUrl}addProduct`, data, {
                 withCredentials: true

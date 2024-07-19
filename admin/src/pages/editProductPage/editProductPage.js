@@ -12,6 +12,7 @@ import { TextEditor, useTextEditor } from '../../components/textEditor/textEdito
 import fetchProductsByIds from '../../functions/fetchProductsByIds';
 import fetchCategoriesByIds from '../../functions/fetchCategoriesByIds';
 import './editProductPage.scss';
+import ProductAttributes from '../../components/productAttributes/productAttributes';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -25,29 +26,34 @@ const PRICE = 'price';
 function EditProductPage() {
     const [productTitle, setProductTitle] = useState('');
     const [productPrice, setProductPrice] = useState('');
-    const [parentCategoryId,setParentCategoryId]=useState('');
-    const [parentCategoryAttributes,setParentCategoryAttributes] = useState({});
+    const [parentCategoryId, setParentCategoryId] = useState('');
+    const [productAttributes, setProductAttributes] = useState({});
+    const [attributesOptions, setAttributeOptions] = useState([]);
     const [images, setImages] = useState([]);
     const { productId } = useParams();
-    
+
     const { hideLoading, showLoading, isShow } = useLoading();
 
     const { editorState, setEditorState, handleKeyCommand, toggleBold } = useTextEditor();
 
     useEffect(() => {//useEffect for fetching info about product
         fetchProduct();
-    },[]);
+    }, []);
     useEffect(() => {//useEffect for fetching info about parentCategoryAttributes
         fetchCategory();
-    },[parentCategoryId]);
+    }, [parentCategoryId]);
     async function fetchCategory() {
-        if(parentCategoryId === '') return;
+        if (parentCategoryId === '') return;
         const categories = await fetchCategoriesByIds([parentCategoryId]);
         if (!categories || categories.length === 0) {
             return;
         };//if category not found return
-        const newCategory = categories[0];
-        setParentCategoryAttributes(newCategory.attributes);
+
+        let newAttributeOptions = [];
+        for (let attribute of categories[0].attributes) {
+            newAttributeOptions.push(attribute.options);
+        }
+        setAttributeOptions(newAttributeOptions);
     }
 
     async function fetchProduct() {
@@ -60,10 +66,12 @@ function EditProductPage() {
         }
 
         const product = products[0];
+        console.log(product)
         setProductTitle(product.title);
         setProductPrice(product.price);
         setParentCategoryId(product.parentCategoryId);
-        
+        setProductAttributes(product.attributes);
+
         if (product.description && product.description.raw) {
             try {
                 const contentState = convertFromRaw(JSON.parse(product.description.raw));
@@ -110,6 +118,7 @@ function EditProductPage() {
     };
 
     const handleSubmit = (event) => {
+        //Checking all data that we should send to server
         event.preventDefault();
         if (productTitle.length < 3) {
             toast.warn('Title should contain at least 3 characters');
@@ -132,6 +141,13 @@ function EditProductPage() {
             toast.warn('You should set all images, or delete empty images');
             return;
         }
+        for (let attribute in productAttributes) {
+            if (productAttributes[attribute] === null) {
+                toast.warn('All attributes should be set');
+                return;
+            }
+        }
+        //if everything is ok we can send data
         fetchData();
     };
 
@@ -145,6 +161,7 @@ function EditProductPage() {
             });
             data.append('productTitle', productTitle);
             data.append('productPrice', productPrice);
+            data.append('productAttributes', JSON.stringify(productAttributes));
             data.append('productDescription', JSON.stringify(convertToRaw(editorState.getCurrentContent())));
 
             await axios.put(`${apiUrl}editProduct/${productId}`, data, {
@@ -164,28 +181,35 @@ function EditProductPage() {
     }
 
     return (
-        <div className="editProductPage">
-            <Loading isShow={isShow} />
-            <div className='formWrapper container'>
-                <Form handleSubmit={handleSubmit}>
-                    <div className='inputsWrapper'>
-                        <Input type={INPUT_TYPES.TEXT} name={TITLE} placeholder={'Product title'} value={productTitle} onChangeHandler={onInputChange} />
-                        <Input type={INPUT_TYPES.TEXT} name={PRICE} placeholder={'Product price'} value={productPrice} onChangeHandler={onInputChange} />
-                        <Input type={INPUT_TYPES.SUBMIT} value="Update product" />
-                    </div>
-                    <div className='textEditorWrapper'>
-                        <h3>Description</h3>
-                        <TextEditor
-                            editorState={editorState}
-                            setEditorState={setEditorState}
-                            handleKeyCommand={handleKeyCommand}
-                            onBoldClick={toggleBold}
-                        />
-                    </div>
-                </Form>
-            </div>
-            <div className='imagesWrapper'>
-                <Images images={images} setImages={setImages} />
+        <div className='container'>
+
+
+            <div className="editProductPage">
+                <Loading isShow={isShow} />
+                <div className='formWrapper'>
+                    <Form handleSubmit={handleSubmit}>
+                        <div className='inputsWrapper'>
+                            <Input type={INPUT_TYPES.TEXT} name={TITLE} placeholder={'Product title'} value={productTitle} onChangeHandler={onInputChange} />
+                            <Input type={INPUT_TYPES.TEXT} name={PRICE} placeholder={'Product price'} value={productPrice} onChangeHandler={onInputChange} />
+                            <Input type={INPUT_TYPES.SUBMIT} value="Update product" />
+                        </div>
+                        <div className='textEditorWrapper'>
+                            <h3>Description</h3>
+                            <TextEditor
+                                editorState={editorState}
+                                setEditorState={setEditorState}
+                                handleKeyCommand={handleKeyCommand}
+                                onBoldClick={toggleBold}
+                            />
+                        </div>
+                    </Form>
+                </div>
+                <div className='imagesWrapper'>
+                    <Images images={images} setImages={setImages} />
+                </div>
+                <div className='attributesWrapper'>
+                    <ProductAttributes attributesOptions={attributesOptions} productAttributes={productAttributes} setProductAttributes={setProductAttributes} />
+                </div>
             </div>
         </div>
     );
