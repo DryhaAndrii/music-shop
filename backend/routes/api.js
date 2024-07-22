@@ -7,6 +7,6 @@ const adminApi=require('./adminRoutes/adminRoutesApi')
 const commonApi = require('./commonRoutes/commonRoutesApi');
 
 router.use('/admin', adminApi);
-router.use('/', commonApi);
+router.use('/common', commonApi);
 
 module.exports = router;
