@@ -16,16 +16,31 @@ const allowedOrigins = [
     process.env.DEV_CLIENT_URL,
 ];
 
+
 const corsOptions = {
     origin: (origin, callback) => {
         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
             callback(null, true);
         } else {
+            console.log('Blocked by CORS:', origin); // Логируем заблокированные запросы
             callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true,
 };
+
+
+
+// const corsOptions = {
+//     origin: (origin, callback) => {
+//         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     },
+//     credentials: true,
+// };
 
 app.use(cors(corsOptions));
 app.use(express.json());
