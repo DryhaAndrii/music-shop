@@ -43,7 +43,7 @@ function EditProductPage() {
         fetchCategory();
     }, [parentCategoryId]);
     async function fetchCategory() {
-        if (parentCategoryId === '') return;
+        if (parentCategoryId === ''||!parentCategoryId) return;
         const categories = await fetchCategoriesByIds([parentCategoryId]);
         if (!categories || categories.length === 0) {
             return;
@@ -66,7 +66,7 @@ function EditProductPage() {
         }
 
         const product = products[0];
-        console.log(product)
+       
         setProductTitle(product.title);
         setProductPrice(product.price);
         setParentCategoryId(product.parentCategoryId);

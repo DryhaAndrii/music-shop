@@ -6,7 +6,7 @@ import './attribute.scss'
 
 function Attribute({ attribute, index, onInputChange, addOption, deleteAttribute, deleteOption }) {
     return (
-        <div className="attribute">
+        <div className="categoryAttribute">
             <HorizontalScroller>
                 <Input
                     type={INPUT_TYPES.TEXT}

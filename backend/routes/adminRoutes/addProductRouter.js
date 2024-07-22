@@ -35,13 +35,13 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
             title: productTitle,
             parentCategoryId: categoryId,
             attributes:parsedAttributes,
+            messages: [],
             description: {
                 raw: productDescription,
                 html: htmlDescription
             },
             pictureCodes,
             price: productPrice,
-            category: categoryId,
         });
 
         const savedProduct = await newProduct.save();
