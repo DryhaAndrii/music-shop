@@ -1,20 +1,26 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 // const Grid = require('gridfs-stream');
 // const mongoose = require('mongoose');
 
-require('dotenv').config();
+
 
 const app = express();
 const PORT = 3001;
 
 const allowedOrigins = [
-    process.env.CLIENT_URL,
-    process.env.ADMIN_URL,
-    process.env.DEV_ADMIN_URL,
-    process.env.DEV_CLIENT_URL,
+    'https://music-shop-client.vercel.app',
+    'https://music-shop-admin-panel.netlify.app',
+    'http://localhost:3000',
+    'http://localhost:3000',
 ];
+
+console.log('CLIENT_URL:', process.env.CLIENT_URL);
+console.log('ADMIN_URL:', process.env.ADMIN_URL);
+console.log('DEV_ADMIN_URL:', process.env.DEV_ADMIN_URL);
+console.log('DEV_CLIENT_URL:', process.env.DEV_CLIENT_URL);
 
 
 const corsOptions = {
