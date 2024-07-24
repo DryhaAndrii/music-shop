@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto_Condensed } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header/header";
+
 import Footer from "@/components/Footer/footer";
 
 //ALLO
@@ -25,7 +25,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
       </head>
       <body className={robotoCondensed.className}>
-        <Header />
+        
         {children}
         <Footer />
       </body>
