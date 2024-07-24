@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header/header";
 import Footer from "@/components/Footer/footer";
 
-
+//ALLO
 
 const robotoCondensed = Roboto_Condensed({ subsets: ["latin"] });
 
