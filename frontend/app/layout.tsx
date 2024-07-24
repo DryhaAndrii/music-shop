@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto_Condensed } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header/header";
+import Header from "@/components/Header/header";
+import Footer from "@/components/Footer/footer";
 
 
 
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={robotoCondensed.className}>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
