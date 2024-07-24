@@ -4,7 +4,7 @@ import "./globals.css";
 
 import Footer from "@/components/Footer/footer";
 import Header from "@/components/Header/header";
-
+//PADLA
 
 const robotoCondensed = Roboto_Condensed({ subsets: ["latin"] });
 
