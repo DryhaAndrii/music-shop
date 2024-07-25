@@ -1,4 +1,4 @@
-import MyButton, { MyButtonWidths } from '@/components/myButton/myButton';
+import MyButton from '@/components/myButton/myButton';
 import styles from '../../../styles.module.scss';
 import Link from 'next/link';
 
@@ -21,7 +21,7 @@ function DropDownMenu({ show }: { show: string }) {
                 <img src="/images/contacts/Location.svg"></img>
                 Our adress
             </Link>
-            <MyButton width={MyButtonWidths.Wide}>
+            <MyButton>
                 Book call
             </MyButton>
         </div>

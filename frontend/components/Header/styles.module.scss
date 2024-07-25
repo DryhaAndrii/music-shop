@@ -77,41 +77,14 @@
 
                 input {
                     width: 95%;
-                    font-family: inherit;
-                    margin: 0px;
-                    padding: 0px;
                     height: 100%;
-                    border: none;
-                    outline: none;
-                    font-size: 16px;
-                    border-bottom-right-radius: 10px;
-                    border-top-right-radius: 10px;
-                    box-sizing: border-box;
-                    padding: 0px 10px;
-                }
+                    border-top-left-radius: 0px;
+                    border-bottom-left-radius: 0px;
+                }   
 
                 button {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 5%;
-                    font-family: inherit;
-                    padding: 0px;
-                    margin: 0px;
-                    width: 50px;
-                    height: 100%;
-                    background-color: #e7e7e7;
-                    border-bottom-left-radius: 10px;
-                    border-top-left-radius: 10px;
-                    border: none;
-                    outline: none;
-                    cursor: pointer;
-                    transition: all 0.1s;
-
-                    &:active {
-                        box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
-                    }
-
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
                 }
             }
 

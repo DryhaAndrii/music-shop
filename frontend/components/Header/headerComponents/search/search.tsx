@@ -1,16 +1,14 @@
 import styles from "../../styles.module.scss";
-
-
+import Input from "@/components/input/input";
+import MyButton from "@/components/myButton/myButton";
 function Search() {
     return (
         <div className={styles.search}>
             
-            <button>
+            <MyButton>
                 <span className="material-symbols-outlined">search</span>
-            </button>
-            <input placeholder="Search">
-            
-            </input>
+            </MyButton>
+            <Input placeholder="Search"/>
         </div>
     );
 }
