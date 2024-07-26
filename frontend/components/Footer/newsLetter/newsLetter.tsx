@@ -1,5 +1,5 @@
 
-import Input from "@/components/input/input";
+import Input, { INPUT_TYPES } from "@/components/input/input";
 import styles from "./styles.module.scss";
 import MyButton from "@/components/myButton/myButton";
 
@@ -18,7 +18,7 @@ function NewsLetter() {
                 </div>
             </div>
             <div className={styles.right}>
-                <Input placeholder="Enter your e-mail" />
+                <Input placeholder="Enter your e-mail" type={INPUT_TYPES.EMAIL} />
                 <MyButton>Subscribe</MyButton>
             </div>
 

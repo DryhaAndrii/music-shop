@@ -6,8 +6,8 @@ import classNames from 'classnames/bind';
 export enum INPUT_TYPES {
     TEXT = "text",
     SUBMIT = "submit",
-    PASSWORD = "password"
-
+    PASSWORD = "password",
+    EMAIL = "email",
 }
 
 
@@ -40,16 +40,18 @@ function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, va
             );
 
         case INPUT_TYPES.TEXT:
+        case INPUT_TYPES.EMAIL:
         case INPUT_TYPES.PASSWORD:
             return (
                 <input
                     name={name}
                     value={value}
                     onChange={onChangeHandler ? (e) => onChangeHandler(e) : undefined}
-                    
+
                     className={className}
                     placeholder={placeholder}
                     type={type}
+
                 />
             );
 
