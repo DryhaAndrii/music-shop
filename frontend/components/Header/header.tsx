@@ -6,7 +6,6 @@ import Contacts from "./headerComponents/contacts/contacts";
 import styles from "./styles.module.scss";
 import Cart from "./headerComponents/cart/cart";
 import Catalogue from "./headerComponents/catalogue/catalogue";
-import MyButton from "../myButton/myButton";
 
 
 function Header() {
