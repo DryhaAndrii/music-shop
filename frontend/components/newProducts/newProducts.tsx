@@ -1,6 +1,6 @@
 'use client'
+import { useState, useEffect } from "react";
 import styles from "./styles.module.scss";
-import { useState, useEffect, useCallback } from "react";
 import Product from "@/types/product";
 import ProductCardsContainer from "../cardsContainer/cardContainer";
 import getNewProducts from "@/functions/getNewProducts";
@@ -11,28 +11,29 @@ function NewProducts() {
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
+    const getProducts = async () => {
+        if (isLoading || !hasMore) return;
+
+        setIsLoading(true);
+        try {
+            const { products: newProducts, hasMore: moreProducts } = await getNewProducts(page, 5);
+
+            if (newProducts && newProducts.length > 0) {
+                setProducts(prevProducts => [...prevProducts, ...newProducts]);
+                setPage(prevPage => prevPage + 1);
+            }
+
+            setHasMore(moreProducts);
+        } catch (error) {
+            console.error('Error fetching new products:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
         getProducts();
-    }, [])
-
-    const getProducts = useCallback(async () => {
-        if (isLoading || !hasMore) return;
-        setIsLoading(true);
-        const { products: newProducts, hasMore: moreProducts } = await getNewProducts(page, 5);
-        if (newProducts && newProducts.length > 0) {
-            setProducts(prevProducts => {
-                const uniqueNewProducts = newProducts.filter(
-                    (newProduct: Product) => !prevProducts.some(product => product._id === newProduct._id)
-                );
-                return [...prevProducts, ...uniqueNewProducts];
-            });
-            setPage(prevPage => prevPage + 1);
-        }
-        setHasMore(moreProducts);
-        setIsLoading(false);
-    }, [page, isLoading, hasMore]);
-
-
+    }, []);
 
     return (
         <div className={styles.newProducts}>
