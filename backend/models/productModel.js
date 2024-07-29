@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const ProductSchema = new mongoose.Schema({
     title: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now() },
+    createdAt: { type: Date, default: Date.now },
     parentCategoryId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
