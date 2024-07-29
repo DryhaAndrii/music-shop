@@ -22,7 +22,7 @@ function NewProducts() {
         if (newProducts && newProducts.length > 0) {
             setProducts(prevProducts => {
                 const uniqueNewProducts = newProducts.filter(
-                    newProduct => !prevProducts.some(product => product._id === newProduct._id)
+                    (newProduct: Product) => !prevProducts.some(product => product._id === newProduct._id)
                 );
                 return [...prevProducts, ...uniqueNewProducts];
             });
@@ -32,14 +32,14 @@ function NewProducts() {
         setIsLoading(false);
     }, [page, isLoading, hasMore]);
 
-    
+
 
     return (
         <div className={styles.newProducts}>
             <ProductCardsContainer products={products} />
             {hasMore && (
-                <button 
-                    onClick={getProducts} 
+                <button
+                    onClick={getProducts}
                     className={styles.loadMoreButton}
                     disabled={isLoading}
                 >
