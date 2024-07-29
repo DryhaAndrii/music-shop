@@ -1,4 +1,4 @@
-import CategoryAttribute from "@/types/categoryAttribute";
+
 
 export default interface Category {
     attributes: CategoryAttribute[];
@@ -9,6 +9,14 @@ export default interface Category {
     title: string;
 }
 
-export interface Product {
+interface Product {
     [key: number]: string;
 }
+export interface CategoryAttribute {
+    name: string;
+    options: Option[];
+}
+export interface Option {
+    [key: number]: string;
+}
+

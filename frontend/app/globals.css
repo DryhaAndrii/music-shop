@@ -1,7 +1,9 @@
 .container {
     height: 100%;
-    width: 90%;
+    width: clamp(200px, 90vw, 1500px);
+
     margin: 0 auto;
+
 }
 
 body {

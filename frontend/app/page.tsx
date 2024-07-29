@@ -1,5 +1,6 @@
 import Slider from "@/components/slider/slider";
 import styles from "./page.module.css";
+import NewProducts from "@/components/newProducts/newProducts";
 
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
     <>
       <main className={styles.main}>
         <Slider />
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat maiores aperiam adipisci quasi ex repudiandae, corporis harum dolores libero nobis molestiae odit nostrum cupiditate. Incidunt, sapiente! Nihil rerum labore voluptatibus.
+        <NewProducts />
       </main>
       
     </>
