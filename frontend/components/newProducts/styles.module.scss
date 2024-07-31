@@ -1,0 +1,20 @@
+.newProducts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0px;
+
+    h2 {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .productCardsContainerWrapper {
+        min-height: 500px;
+    }
+
+    button {
+        width: 200px;
+        margin: 0 auto;
+    }
+}

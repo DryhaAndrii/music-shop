@@ -2,14 +2,19 @@
 import { useState, useEffect } from "react";
 import styles from "./styles.module.scss";
 import Product from "@/types/product";
-import ProductCardsContainer from "../cardsContainer/cardContainer";
+import ProductCardsContainer from "../productCardsContainer/ProductCardsContainer";
 import getNewProducts from "@/functions/getNewProducts";
+import MyButton from "../myButton/myButton";
 
 function NewProducts() {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        getProducts();
+    }, []);
 
     const getProducts = async () => {
         if (isLoading || !hasMore) return;
@@ -31,21 +36,21 @@ function NewProducts() {
         }
     };
 
-    useEffect(() => {
-        getProducts();
-    }, []);
-
     return (
         <div className={styles.newProducts}>
-            <ProductCardsContainer products={products} />
+            <h2 className="container">New Products</h2>
+            <div className={styles.productCardsContainerWrapper}>
+
+                <ProductCardsContainer products={products} />
+            </div>
+
             {hasMore && (
-                <button
+                <MyButton
                     onClick={getProducts}
-                    className={styles.loadMoreButton}
                     disabled={isLoading}
                 >
                     {isLoading ? 'Loading...' : 'Load More'}
-                </button>
+                </MyButton>
             )}
         </div>
     );

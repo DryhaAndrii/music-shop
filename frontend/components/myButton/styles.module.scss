@@ -14,12 +14,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     &:active {
         box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
     }
+}
 
-
-
-
-
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: none;
 }
