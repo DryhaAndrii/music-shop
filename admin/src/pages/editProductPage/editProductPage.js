@@ -120,8 +120,8 @@ function EditProductPage() {
     const handleSubmit = (event) => {
         //Checking all data that we should send to server
         event.preventDefault();
-        if (productTitle.length < 3) {
-            toast.warn('Title should contain at least 3 characters');
+        if (productTitle.length < 1) {
+            toast.warn('Title should contain at least 1 character');
             return;
         }
         if (productPrice.length < 1) {

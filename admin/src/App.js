@@ -20,10 +20,9 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 function App() {
   const { hideLoading, showLoading, isShow } = useLoading();
-
   useEffect(() => {
     checkToken();
-  },[]);
+  }, []);
   async function checkToken() {
     try {
       showLoading();

@@ -2,7 +2,7 @@ import Button from '../button/button';
 import { myStore } from '../../store/store';
 import './header.scss';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+
 
 
 const apiUrl = process.env.REACT_APP_API_URL;

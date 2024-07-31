@@ -35,33 +35,32 @@ function AddCategoryPage() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (categoryTitle.length < 3 || !uploadedFile) {
-            toast.warn('Title should contain at least 3 characters and image should be set');
+        if (categoryTitle.length < 1 || !uploadedFile) {
+            toast.warn('Title should contain at least 1 character and image should be set');
             return;
         }
-        if (attributes.length < 3) {
-            toast.warn('Each category should have at least 3 attributes');
+        if (attributes.length < 1) {
+            toast.warn('Each category should have at least 1 attribute');
             return;
         }
         for (let attribute of attributes) {
-            if (attribute.name.length < 3) {
-                toast.warn('Each attribute name should contain at least 3 characters');
+            if (attribute.name.length < 1) {
+                toast.warn('Each attribute name should contain at least 1 characters');
                 return;
             }
 
-            if (attribute.options.length < 3) {
-                toast.warn('Each attribute should have at least 3 options');
+            if (attribute.options.length < 2) {
+                toast.warn('Each attribute should have at least 2 options');
                 return;
             }
 
             for (let option of attribute.options) {
-                if (option.length < 3) {
-                    toast.warn('Each option name should contain at least 3 characters');
+                if (option.length < 1) {
+                    toast.warn('Each option name should contain at least 1 character');
                     return;
                 }
             }
         }
-
         fetchData();
     };
     async function fetchData() {
