@@ -39,11 +39,9 @@ function NewProducts() {
     return (
         <div className={styles.newProducts}>
             <h2 className="container">New Products</h2>
-            <div className={styles.productCardsContainerWrapper}>
-                <ProductCardsContainer products={products} />
-            </div>
+            <ProductCardsContainer products={products} />
 
-            {hasMore && products.length<=15 && (
+            {hasMore && products.length <= 15 && (
                 <MyButton
                     onClick={getProducts}
                     disabled={isLoading}

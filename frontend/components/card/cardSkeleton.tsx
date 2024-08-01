@@ -34,7 +34,7 @@ function CardSkeleton({ type = CARD_TYPES.PRODUCT }: CardProps) {
                         </p>
 
                         <div>
-                            <Skeleton height={'20px'} width={'150px'} />
+                            <Skeleton height={'20px'} width={'40px'} />
                             <Skeleton width={'40px'} height={'40px'} />
 
                         </div>

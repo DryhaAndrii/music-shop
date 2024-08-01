@@ -101,3 +101,48 @@
         }
     }
 }
+
+
+@media (max-width: 1200px) {
+    .card {
+        width: 19vw;
+
+        &--product {
+            .top {
+                height: 35%;
+            }
+
+            .bot {
+                height: 65%;
+                gap: 10px;
+
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .card {
+        width: 30vw;
+
+        .top {
+            height: 50%;
+        }
+
+        .bot {
+            height: 50%;
+        }
+    }
+}
+@media (max-width: 650px) {
+    .card {
+        width: 45vw;
+        .top {
+            height: 35%;
+        }
+
+        .bot {
+            height: 65%;
+        }
+    }
+}

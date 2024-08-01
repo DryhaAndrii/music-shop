@@ -8,3 +8,20 @@
     box-sizing: border-box;
     padding: 0px 10px;
 }
+
+@media (max-width: 1200px) {
+    .productCardsContainer{
+        gap: 5px;
+    }
+}
+
+@media (max-width: 800px) {
+    .productCardsContainer{
+        gap: 15px;
+    }
+}
+@media (max-width: 650px) {
+    .productCardsContainer{
+        gap: 5px;
+    }
+}
