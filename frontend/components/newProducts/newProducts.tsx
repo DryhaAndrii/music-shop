@@ -40,11 +40,10 @@ function NewProducts() {
         <div className={styles.newProducts}>
             <h2 className="container">New Products</h2>
             <div className={styles.productCardsContainerWrapper}>
-
                 <ProductCardsContainer products={products} />
             </div>
 
-            {hasMore && (
+            {hasMore && products.length<=15 && (
                 <MyButton
                     onClick={getProducts}
                     disabled={isLoading}

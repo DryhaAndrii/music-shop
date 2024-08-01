@@ -20,21 +20,47 @@
 
         .top {
             height: 50%;
-            
+
             .imageContainer {
                 width: 100%;
                 height: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                position: relative;
 
-                .image {
+                .image,
+                .firstImage,
+                .secondImage {
                     max-width: 95%;
                     max-height: 95%;
                     box-sizing: border-box;
                     -webkit-user-drag: none;
                     cursor: pointer;
+                    transition: all 0.4s ease;
                 }
+
+                &:hover {
+                    .firstImage {
+                        opacity: 0;
+                    }
+
+                    .secondImage {
+                        opacity: 1;
+                    }
+                }
+
+                .firstImage {
+                    position: absolute;
+                    opacity: 1;
+                }
+
+                .secondImage {
+                    position: absolute;
+                    opacity: 0;
+                }
+
+
             }
 
         }
@@ -46,20 +72,26 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            p,h3{
+
+            p,
+            h3 {
                 margin: 0px;
             }
-            p{
+
+            p {
                 font-weight: 300;
             }
-            div{
+
+            div {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                p{
+
+                p {
                     font-weight: 1000;
                 }
-                button{
+
+                button {
                     width: 40px;
                     margin: unset;
                     color: white;

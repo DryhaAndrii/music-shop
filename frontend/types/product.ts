@@ -9,9 +9,7 @@ export default interface Product {
         raw: string;
         html: string;
     },
-    pictureCodes: [{
-        [key: number]: string
-    }],
+    pictureCodes: string[];
     price: string;
     title: string;
     _id: string;

@@ -30,17 +30,38 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
             return (
                 <div className={className}>
                     <div className={styles.top}>
-                        <div className={styles.imageContainer}>
-                            <img
-                                className={styles.image}
-                                src={`data:image/png;base64, ${product.pictureCodes[0]}`}
-                                alt="categoryPicture" />
-                        </div>
+                        {/* If we have more that 1 picture we adding ability to
+                    display second picture on hover */}
+
+                        {product.pictureCodes.length > 1 ? (
+                            <div className={styles.imageContainer}>
+                                <img
+                                    className={styles.firstImage}
+                                    src={`data:image/png;base64, ${product.pictureCodes[0]}`}
+                                    alt="categoryPicture"
+                                />
+                                <img
+                                    className={styles.secondImage}
+                                    src={`data:image/png;base64, ${product.pictureCodes[1]}`}
+                                    alt="categoryPicture"
+                                />
+                            </div>
+                        )
+                            : (
+                                <div className={styles.imageContainer}>
+                                    <img
+                                        className={styles.image}
+                                        src={`data:image/png;base64, ${product.pictureCodes[0]}`}
+                                        alt="categoryPicture" />
+                                </div>
+                            )}
+
 
 
                     </div>
                     <div className={styles.bot}>
                         <h3>{product.title}</h3>
+                        {/* Getting first paragraph of description */}
                         <p>{`${product?.description.html.split('<p>').join('').split('</p>')[0].substring(0, 120)}...`}</p>
                         <div>
                             <p>{`${product.price}$`}</p>
