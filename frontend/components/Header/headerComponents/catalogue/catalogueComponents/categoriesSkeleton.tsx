@@ -9,7 +9,16 @@ function CategoriesSkeleton() {
 
     return (
         <SkeletonTheme baseColor="#ffffff33" highlightColor="#ffffffa1" >
-            <Skeleton count={8} containerClassName={styles.categories} className={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
+            <Skeleton containerClassName={styles.link} style={{ width: '100px', height: '30px' }} />
         </SkeletonTheme>
     );
 }
