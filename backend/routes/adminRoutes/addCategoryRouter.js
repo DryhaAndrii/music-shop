@@ -14,9 +14,11 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
         const { categoryTitle, parentCategoryId, attributes } = req.body;
         const pictureCode = req.file.buffer.toString('base64');
         let isSubcategory = false;
+        let parentCategoryIdToAdd = null;
 
         if (parentCategoryId !== 'undefined') {
             isSubcategory = true;
+            parentCategoryIdToAdd = parentCategoryId;
         }
         console.log(isSubcategory);
 
@@ -28,7 +30,8 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
             products: [],
             attributes:parsedAttributes,
             subcategories: [],
-            isSubcategory
+            isSubcategory,
+            parentCategoryId: parentCategoryIdToAdd,
         });
 
 

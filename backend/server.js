@@ -13,6 +13,8 @@ const allowedOrigins = [
     process.env.ADMIN_URL,
     process.env.DEV_ADMIN_URL,
     process.env.DEV_CLIENT_URL,
+    process.env.DEV_ADMIN_URL,
+    process.env.DEV_CLIENT_URL,
 ];
 
 const corsOptions = {

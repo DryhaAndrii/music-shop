@@ -16,7 +16,7 @@ function SomeInfo() {
                     </span>
                 </h3>
                 <ul className={showInformation ? "" : styles.hidden}>
-                    <li><Link href={"/return-and-exchange-policy"}>Return and Exchange Policy</Link></li>
+                    <li><Link href={"/about/returnAndExchangePolicy"}>Return and Exchange Policy</Link></li>
                     <li><Link href={"/about-us"}>About us</Link></li>
                     <li><Link href={"/delivery-and-payment"}>Delivery and payment</Link></li>
                 </ul>

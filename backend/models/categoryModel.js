@@ -7,9 +7,13 @@ const CategorySchema = new mongoose.Schema({
     isSubcategory: { type: Boolean, default: false },
     subcategories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     attributes: [{
-        name: { type: String, required: true }, 
-        options: [{ type: String }] 
+        name: { type: String, required: true },
+        options: [{ type: String }]
     }],
+    parentCategoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+    },
 });
 
 const Category = mongoose.model('Category', CategorySchema);

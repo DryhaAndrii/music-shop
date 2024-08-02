@@ -3,8 +3,6 @@ import styles from '../styles.module.scss';
 import Link from 'next/link';
 import Category from '@/types/category';
 import CategoriesSkeleton from './categoriesSkeleton';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css'
 interface CategoriesProps {
     show: boolean,
     categories: Category[] | undefined,
@@ -21,9 +19,7 @@ function Categories({ show, categories, toggleMenu }: CategoriesProps) {
                 </MyButton>
                 <CategoriesSkeleton />
             </div>
-
         </>
-
     )
     return (
         <div className={`${styles.categories}`} >
@@ -32,23 +28,14 @@ function Categories({ show, categories, toggleMenu }: CategoriesProps) {
             </MyButton>
             {
                 categories?.map((category, index) => (
-                    <>
-                        <Link href={`/${category.title}`} className={styles.link} key={index}>
+                        //replacing all spaces ' ' in title to '_' because they 
+                        //will replaced to %20l in url
+                        <Link href={`/${category.title.replace(/ /g, "_")}`} className={styles.link} key={index}>
                             {category.title}
                         </Link>
-                        <Link href={`/${category.title}`} className={styles.link} key={index}>
-                            {category.title}
-                        </Link>
-                        <Link href={`/${category.title}`} className={styles.link} key={index}>
-                            {category.title}
-                        </Link>
-                    </>
-
-
                 ))
             }
         </div>
     );
 }
-
 export default Categories;
