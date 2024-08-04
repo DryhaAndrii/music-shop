@@ -9,10 +9,12 @@ export default async function getAllPossiblePaths() {
             withCredentials: true
         });
         
+        
         // turning paths into format expected by Next.js
         return data.paths.map((path: string) => ({
             slug: path.split('/').filter(Boolean)
         }));
+        
     } catch (error: any) {
         console.error('Error getting all possible paths:', error.message);
         toast.error('Error getting all possible paths: ' + error.message);

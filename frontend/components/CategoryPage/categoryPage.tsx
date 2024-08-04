@@ -1,6 +1,8 @@
-
+'use client'
 import Category from "@/types/category"
 import styles from "./styles.module.scss"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 interface BreadCrumb {
     title: string
@@ -11,8 +13,28 @@ interface CategoryProps {
     breadCrumbs: BreadCrumb[]
 }
 
-export default function CategoryPage({ breadCrumbs }: CategoryProps) {
+const SPACE_REGEX = / /g;
 
+export default function CategoryPage({ breadCrumbs }: CategoryProps) {
+    const router = useRouter()
+
+    useEffect(() => {
+        checkUrl();
+    }, [])
+    function checkUrl() {
+        const url = breadCrumbs.map((breadCrumb: BreadCrumb) =>
+            breadCrumb.title.replace(SPACE_REGEX, "_")
+        ).join('/');
+
+        console.log(url);
+
+        const currentPath = window.location.pathname
+        if (currentPath !== `/${url}`) {
+            router.push(`/${url}`)
+        }
+    }
+
+    if (!breadCrumbs) return;
 
     return (
         <div>

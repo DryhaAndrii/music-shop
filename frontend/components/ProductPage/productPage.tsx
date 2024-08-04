@@ -1,5 +1,10 @@
+'use client'
 
 import Product from "@/types/product"
+
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+
 import styles from "./styles.module.scss"
 
 interface BreadCrumb {
@@ -11,8 +16,30 @@ interface ProductProps {
     breadCrumbs: BreadCrumb[]
 }
 
-export default function ProductPage({ breadCrumbs }: ProductProps) {
+const UNDERSCORE_REGEX = /_/g;
+const SPACE_REGEX = / /g;
 
+export default function ProductPage({ breadCrumbs }: ProductProps) {
+    const router = useRouter()
+
+    useEffect(() => {
+        checkUrl();
+    }, [])
+    function checkUrl() {
+        const url = breadCrumbs.map((breadCrumb: BreadCrumb) =>
+            breadCrumb.title.replace(SPACE_REGEX, "_")
+        ).join('/');
+
+        console.log(url);
+
+        const currentPath = window.location.pathname
+        if (currentPath !== `/${url}`) {
+            router.push(`/${url}`)
+        }
+    }
+
+
+    if (!breadCrumbs) return;
 
     return (
         <div>

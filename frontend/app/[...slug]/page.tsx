@@ -1,71 +1,49 @@
-'use client'
+// app/[...slug]/page.tsx
 
-import { useParams, useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
-import checkIsProduct from '@/functions/checkIsProduct'
-import getBreadCrumps from '@/functions/getBreadCrumps'
-import { toast } from "react-toastify";
-import ProductPage from '@/components/ProductPage/productPage'
-import CategoryPage from '@/components/CategoryPage/categoryPage'
+import checkIsProduct from '@/functions/checkIsProduct';
+import getBreadCrumps from '@/functions/getBreadCrumps';
+import ProductPage from '@/components/ProductPage/productPage';
+import CategoryPage from '@/components/CategoryPage/categoryPage';
+import getAllPossiblePaths from '@/functions/getAllPossiblePaths';
 
 const UNDERSCORE_REGEX = /_/g;
 const SPACE_REGEX = / /g;
 
-
-
 interface BreadCrumb {
-    title: string
-    id: string
+    title: string;
+    id: string;
 }
 
+interface DynamicPageProps {
+    isProduct: boolean;
+    breadCrumbs: BreadCrumb[];
+}
 
-export default function DynamicPage() {
-    const params = useParams()
-    const router = useRouter()
-    const [isProduct, setIsProduct] = useState(false)
-    const [breadCrumbs, setBreadCrumbs] = useState<BreadCrumb[]>([])
-    const slugArray: string[] = Array.isArray(params.slug) ? params.slug : [params.slug];
-
-    useEffect(() => {
-        fetchProductData();
-    }, [])
-
-    async function fetchProductData() {
-        try {
-            const lastSlug = slugArray[slugArray.length - 1]
-            const formattedSlug = lastSlug.replace(UNDERSCORE_REGEX, " ")
-
-            const [productCheck, breadCrumps] = await Promise.all([
-                checkIsProduct(formattedSlug),
-                getBreadCrumps(formattedSlug)
-            ]);
-
-            setIsProduct(productCheck)
-            setBreadCrumbs(breadCrumps)
+export default async function DynamicPage({ params }: { params: { slug: string[] } }) {
+    const slugArray = params.slug;
+    const lastSlug = slugArray[slugArray.length - 1];
+    const formattedSlug = lastSlug.replace(UNDERSCORE_REGEX, " ");
 
 
-            //If user somehow went to wrong url we should redirect him to right url
-            const url = breadCrumps.map((breadCrumb: BreadCrumb) =>
-                breadCrumb.title.replace(SPACE_REGEX, "_")
-            ).join('/')
+    const [productCheck, breadCrumps] = await Promise.all([
+        checkIsProduct(formattedSlug),
+        getBreadCrumps(formattedSlug)
+    ]);
 
-            const currentPath = window.location.pathname
-            if (currentPath !== `/${url}`) {
-                router.push(`/${url}`)
-            }
-        } catch (error: any) {
-            console.error("Error fetching product data:", error)
-            toast.error('Some error happened during checking if url is product: ' + error.message);
 
-        }
-    }
 
     return (
         <>
-            {isProduct
-                ? <ProductPage breadCrumbs={breadCrumbs} />
-                : <CategoryPage breadCrumbs={breadCrumbs} />}
-
+            {productCheck
+                ? <ProductPage breadCrumbs={breadCrumps} />
+                : <CategoryPage breadCrumbs={breadCrumps} />}
         </>
-    )
+    );
+}
+
+// Define the static paths to be generated at build time
+export async function generateStaticParams() {
+    // Define a way to fetch all possible slug paths.
+    const slugs = await getAllPossiblePaths();
+    return slugs;
 }
