@@ -10,6 +10,8 @@ const { stateToHTML } = require('draft-js-export-html');
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+
+
 router.post('', authMiddleware, upload.array('images', 15), async (req, res) => {
     try {
         const { productTitle, productPrice, productDescription, categoryId, productAttributes } = req.body;
@@ -29,12 +31,12 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
 
         const pictureCodes = req.files.map(file => file.buffer.toString('base64'));
 
-        
+        const url = await generateProductUrl(categoryId,productTitle);
 
         const newProduct = new Product({
             title: productTitle,
             parentCategoryId: categoryId,
-            attributes:parsedAttributes,
+            attributes: parsedAttributes,
             messages: [],
             description: {
                 raw: productDescription,
@@ -42,6 +44,7 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
             },
             pictureCodes,
             price: productPrice,
+            url
         });
 
         const savedProduct = await newProduct.save();
@@ -64,3 +67,19 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
 });
 
 module.exports = router;
+
+async function generateProductUrl(categoryId,productTitle) {
+    let category = await Category.findById(categoryId).populate('parentCategoryId');
+    const segments = [];
+
+    while (category) {
+        segments.unshift(category.title.replace(/ /g, "_"));
+        category = category.parentCategoryId ? await Category.findById(category.parentCategoryId).populate('parentCategoryId') : null;
+    }
+    // Добавляем название продукта в URL
+    const formattedTitle = productTitle.replace(/ /g, "_");
+    segments.push(formattedTitle);
+
+
+    return segments.join('/');
+}
