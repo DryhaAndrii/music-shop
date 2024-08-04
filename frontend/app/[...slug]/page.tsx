@@ -4,13 +4,14 @@ import { useParams, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import checkIsProduct from '@/functions/checkIsProduct'
 import getBreadCrumps from '@/functions/getBreadCrumps'
+import { toast } from "react-toastify";
 
 const UNDERSCORE_REGEX = /_/g;
 const SPACE_REGEX = / /g;
 
 interface BreadCrumb {
-  title: string;
-  // Добавьте другие необходимые поля
+    title: string;
+    // Добавьте другие необходимые поля
 }
 
 export default function DynamicPage() {
@@ -28,7 +29,7 @@ export default function DynamicPage() {
         try {
             const lastSlug = slugArray[slugArray.length - 1]
             const formattedSlug = lastSlug.replace(UNDERSCORE_REGEX, " ")
-            
+
             const [productCheck, breadCrumps] = await Promise.all([
                 checkIsProduct(formattedSlug),
                 getBreadCrumps(formattedSlug)
@@ -37,7 +38,7 @@ export default function DynamicPage() {
             setIsProduct(productCheck)
             setBreadCrumbs(breadCrumps)
 
-            const link = breadCrumps.map((breadCrumb: BreadCrumb) => 
+            const link = breadCrumps.map((breadCrumb: BreadCrumb) =>
                 breadCrumb.title.replace(SPACE_REGEX, "_")
             ).join('/')
 
@@ -45,9 +46,10 @@ export default function DynamicPage() {
             if (currentPath !== `/${link}`) {
                 router.push(`/${link}`)
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error fetching product data:", error)
-            // Здесь можно добавить обработку ошибок, например, показать сообщение пользователю
+            toast.error('Some error happened during checking if url is product: ' + error.message);
+
         }
     }
 
