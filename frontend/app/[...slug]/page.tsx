@@ -1,29 +1,54 @@
 'use client'
 
+import { useParams, useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import checkIsProduct from '@/functions/checkIsProduct'
 import getBreadCrumps from '@/functions/getBreadCrumps'
-import { useParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+
+const UNDERSCORE_REGEX = /_/g;
+const SPACE_REGEX = / /g;
+
+interface BreadCrumb {
+  title: string;
+  // Добавьте другие необходимые поля
+}
 
 export default function DynamicPage() {
     const params = useParams()
+    const router = useRouter()
     const [isProduct, setIsProduct] = useState(false)
+    const [breadCrumbs, setBreadCrumbs] = useState<BreadCrumb[]>([])
     const slugArray: string[] = Array.isArray(params.slug) ? params.slug : [params.slug];
 
     useEffect(() => {
-        checkIfProduct();
-        setBreadCrumps();
-    }, [slugArray])
+        fetchProductData();
+    }, [])
 
-    async function checkIfProduct() {
-        const lastSlug = slugArray[slugArray.length - 1]
-        const productCheck = await checkIsProduct(lastSlug.replace(/_/g, " "));
-        setIsProduct(productCheck)
-    }
+    async function fetchProductData() {
+        try {
+            const lastSlug = slugArray[slugArray.length - 1]
+            const formattedSlug = lastSlug.replace(UNDERSCORE_REGEX, " ")
+            
+            const [productCheck, breadCrumps] = await Promise.all([
+                checkIsProduct(formattedSlug),
+                getBreadCrumps(formattedSlug)
+            ]);
 
-    async function setBreadCrumps() {
-        const lastSlug = slugArray[slugArray.length - 1]
-        const breadCrumps = await getBreadCrumps(lastSlug.replace(/_/g, " "));
+            setIsProduct(productCheck)
+            setBreadCrumbs(breadCrumps)
+
+            const link = breadCrumps.map((breadCrumb: BreadCrumb) => 
+                breadCrumb.title.replace(SPACE_REGEX, "_")
+            ).join('/')
+
+            const currentPath = window.location.pathname
+            if (currentPath !== `/${link}`) {
+                router.push(`/${link}`)
+            }
+        } catch (error) {
+            console.error("Error fetching product data:", error)
+            // Здесь можно добавить обработку ошибок, например, показать сообщение пользователю
+        }
     }
 
     return (

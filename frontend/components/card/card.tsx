@@ -13,6 +13,8 @@ interface CardProps {
     product?: Product;
 }
 
+const UNDERSCORE_REGEX = / /g;
+
 const cx = classNames.bind(styles);
 
 function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
@@ -22,6 +24,12 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
         card: true,
         [`card--${type}`]: true,
     });
+
+    function handleClick() {
+        if (!product) return;
+        window.location.href = product.title.replace(UNDERSCORE_REGEX, "_");
+    }
+
     switch (type) {
         case CARD_TYPES.PRODUCT:
             if (!product) {
@@ -34,7 +42,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
                     display second picture on hover */}
 
                         {product.pictureCodes.length > 1 ? (
-                            <div className={styles.imageContainer}>
+                            <div className={styles.imageContainer} onClick={handleClick}>
                                 <img
                                     className={styles.firstImage}
                                     src={`data:image/png;base64, ${product.pictureCodes[0]}`}

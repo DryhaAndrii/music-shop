@@ -28,6 +28,7 @@
                 justify-content: center;
                 align-items: center;
                 position: relative;
+                cursor: pointer;
 
                 .image,
                 .firstImage,
@@ -36,7 +37,6 @@
                     max-height: 95%;
                     box-sizing: border-box;
                     -webkit-user-drag: none;
-                    cursor: pointer;
                     transition: all 0.4s ease;
                 }
 
@@ -134,9 +134,11 @@
         }
     }
 }
+
 @media (max-width: 650px) {
     .card {
         width: 45vw;
+
         .top {
             height: 35%;
         }

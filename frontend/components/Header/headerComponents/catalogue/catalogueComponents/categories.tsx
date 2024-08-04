@@ -9,6 +9,9 @@ interface CategoriesProps {
     toggleMenu: () => void
 }
 
+const SPACE_REGEX = / /g;
+
+
 function Categories({ show, categories, toggleMenu }: CategoriesProps) {
     if (!show) return;
     if (categories === undefined) return (
@@ -28,11 +31,11 @@ function Categories({ show, categories, toggleMenu }: CategoriesProps) {
             </MyButton>
             {
                 categories?.map((category, index) => (
-                        //replacing all spaces ' ' in title to '_' because they 
-                        //will replaced to %20l in url
-                        <Link href={`/${category.title.replace(/ /g, "_")}`} className={styles.link} key={index}>
-                            {category.title}
-                        </Link>
+                    //replacing all spaces ' ' in title to '_' because they 
+                    //will replaced to %20l in url
+                    <Link href={`/${category.title.replace(SPACE_REGEX, "_")}`} className={styles.link} key={index}>
+                        {category.title}
+                    </Link>
                 ))
             }
         </div>
