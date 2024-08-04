@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import axios from "axios";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -10,7 +10,7 @@ export default async function getBreadCrumps(title: string) {
         });
         return data.breadCrumps;
     } catch (error: any) {
-        console.log(error)
-        toast.error('Some error happened during getting breadCrumps: ' + error.message);
+        console.log(error.message)
+        // toast.error('Some error happened during getting breadCrumps: ' + error.message);
     }
 }

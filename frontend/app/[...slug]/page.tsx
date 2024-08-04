@@ -5,14 +5,19 @@ import { useState, useEffect } from 'react'
 import checkIsProduct from '@/functions/checkIsProduct'
 import getBreadCrumps from '@/functions/getBreadCrumps'
 import { toast } from "react-toastify";
+import ProductPage from '@/components/ProductPage/productPage'
+import CategoryPage from '@/components/CategoryPage/categoryPage'
 
 const UNDERSCORE_REGEX = /_/g;
 const SPACE_REGEX = / /g;
 
+
+
 interface BreadCrumb {
-    title: string;
-    // Добавьте другие необходимые поля
+    title: string
+    id: string
 }
+
 
 export default function DynamicPage() {
     const params = useParams()
@@ -38,13 +43,15 @@ export default function DynamicPage() {
             setIsProduct(productCheck)
             setBreadCrumbs(breadCrumps)
 
-            const link = breadCrumps.map((breadCrumb: BreadCrumb) =>
+
+            //If user somehow went to wrong url we should redirect him to right url
+            const url = breadCrumps.map((breadCrumb: BreadCrumb) =>
                 breadCrumb.title.replace(SPACE_REGEX, "_")
             ).join('/')
 
             const currentPath = window.location.pathname
-            if (currentPath !== `/${link}`) {
-                router.push(`/${link}`)
+            if (currentPath !== `/${url}`) {
+                router.push(`/${url}`)
             }
         } catch (error: any) {
             console.error("Error fetching product data:", error)
@@ -54,19 +61,11 @@ export default function DynamicPage() {
     }
 
     return (
-        <div>
-            <h1>{isProduct ? 'Product`s page' : 'Category`s page'}</h1>
-            <p>Current path: {slugArray.join(' / ')}</p>
-            <div>
-                <h2>Structure:</h2>
-                <ul>
-                    {slugArray.map((item, index) => (
-                        <li key={index}>
-                            {index === slugArray.length - 1 && isProduct ? 'Product' : 'Category'} {index + 1}: {item}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
+        <>
+            {isProduct
+                ? <ProductPage breadCrumbs={breadCrumbs} />
+                : <CategoryPage breadCrumbs={breadCrumbs} />}
+
+        </>
     )
 }
