@@ -7,6 +7,7 @@ export default interface Category {
     products: Product[];
     subcategories: Category[];
     title: string;
+    url: string;
 }
 
 interface Product {

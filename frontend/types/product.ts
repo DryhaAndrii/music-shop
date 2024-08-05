@@ -12,5 +12,6 @@ export default interface Product {
     pictureCodes: string[];
     price: string;
     title: string;
+    url: string;
     _id: string;
 }

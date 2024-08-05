@@ -27,7 +27,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
 
     function handleClick() {
         if (!product) return;
-        window.location.href = product.title.replace(UNDERSCORE_REGEX, "_");
+        window.location.href = product.url;
     }
 
     switch (type) {
