@@ -20,9 +20,9 @@ function BreadCrumps({ breadCrumps }: { breadCrumps: BreadCrumb[] }) {
 }
 
 export function useBreadCrumps() {
-    const [breadCrumps, setBreadCrumps] = useState([{}]);
+    const [breadCrumps, setBreadCrumps] = useState<BreadCrumb[]>([]);
 
-    return { setBreadCrumps };
+    return { setBreadCrumps, breadCrumps };
 
 }
 

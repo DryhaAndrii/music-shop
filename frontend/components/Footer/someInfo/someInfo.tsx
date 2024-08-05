@@ -17,8 +17,8 @@ function SomeInfo() {
                 </h3>
                 <ul className={showInformation ? "" : styles.hidden}>
                     <li><Link href={"/about/returnAndExchangePolicy"}>Return and Exchange Policy</Link></li>
-                    <li><Link href={"/about-us"}>About us</Link></li>
-                    <li><Link href={"/delivery-and-payment"}>Delivery and payment</Link></li>
+                    <li><Link href={"/about/aboutUs"}>About us</Link></li>
+                    <li><Link href={"/about/deliveryAndPayment"}>Delivery and payment</Link></li>
                 </ul>
             </div>
             <div>
@@ -28,9 +28,9 @@ function SomeInfo() {
                     </span>
                 </h3>
                 <ul className={showForCustomers ? "" : styles.hidden}>
-                    <li><Link href={"/how-do-we-work"}>How do we work?</Link></li>
-                    <li><Link href={"/terms-of-agreement"}>Terms of Agreement</Link></li>
-                    <li><Link href={"/security-policy"}>Security Policy</Link></li>
+                    <li><Link href={"/about/howDoWeWork"}>How do we work?</Link></li>
+                    <li><Link href={"/about/termsAndAgreement"}>Terms of Agreement</Link></li>
+                    <li><Link href={"/about/securityPolicy"}>Security Policy</Link></li>
                 </ul>
             </div>
             <div>
