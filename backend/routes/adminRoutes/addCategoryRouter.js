@@ -4,8 +4,6 @@ const multer = require('multer');
 const Category = require('../../models/categoryModel');
 const authMiddleware = require('../../middlewares/authMiddleware');
 
-
-
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -20,7 +18,6 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
             isSubcategory = true;
             parentCategoryIdToAdd = parentCategoryId;
         }
-        console.log(isSubcategory);
 
         const parsedAttributes = JSON.parse(attributes);
 
@@ -28,13 +25,19 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
             title: categoryTitle,
             pictureCode,
             products: [],
-            attributes:parsedAttributes,
+            attributes: parsedAttributes,
             subcategories: [],
             isSubcategory,
             parentCategoryId: parentCategoryIdToAdd,
         });
 
+        await newCategory.save();
 
+        // Generating the URL for the new category
+        const categoryUrl = await generateCategoryUrl(newCategory);
+        newCategory.url = categoryUrl;
+
+        // Saving the category with the updated URL
         await newCategory.save();
 
         if (parentCategoryId !== 'undefined') {
@@ -45,8 +48,7 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
             }
         }
 
-
-        res.status(201).json({ message: 'Category created successfully' });
+        res.status(201).json({ message: 'Category created successfully', url: categoryUrl });
         console.log('Category created');
     } catch (error) {
         console.error(error);
@@ -56,5 +58,13 @@ router.post('', authMiddleware, upload.single('file'), async (req, res) => {
 
 module.exports = router;
 
+async function generateCategoryUrl(category) {
+    const segments = [];
 
+    while (category) {
+        segments.unshift(category.title.replace(/ /g, "_"));
+        category = category.parentCategoryId ? await Category.findById(category.parentCategoryId).populate('parentCategoryId') : null;
+    }
 
+    return segments.join('/');
+}

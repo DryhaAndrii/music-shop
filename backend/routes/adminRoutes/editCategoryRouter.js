@@ -22,21 +22,23 @@ router.put('/:categoryId', authMiddleware, upload.single('file'), async (req, re
             return res.status(404).json({ message: 'Attributes not found' });
         }
         const parsedAttributes = JSON.parse(attributes);
+
         // Find category
         const category = await Category.findById(categoryId);
         if (!category) {
             return res.status(404).json({ message: 'Category not found' });
         }
+
         // Update category title
         category.title = categoryTitle;
-        // update category image
+        // Update category image
         const pictureCode = req.file.buffer.toString('base64');
         category.pictureCode = pictureCode;
-        // update category attributes
+        // Update category attributes
         category.attributes = parsedAttributes;
 
-        // save category
-        await category.save();
+        // Save category with new URL
+        await updateCategoryAndChildrenUrls(category);
 
         res.status(200).json({ message: 'Category updated successfully' });
         console.log('Category updated');
@@ -47,3 +49,28 @@ router.put('/:categoryId', authMiddleware, upload.single('file'), async (req, re
 });
 
 module.exports = router;
+
+async function generateCategoryUrl(category) {
+    const segments = [];
+
+    while (category) {
+        segments.unshift(category.title.replace(/ /g, "_"));
+        category = category.parentCategoryId ? await Category.findById(category.parentCategoryId).populate('parentCategoryId') : null;
+    }
+
+    return segments.join('/');
+}
+
+async function updateCategoryAndChildrenUrls(category) {
+    category.url = await generateCategoryUrl(category);
+    await category.save();
+
+    if (category.subcategories && category.subcategories.length > 0) {
+        for (const subcategoryId of category.subcategories) {
+            const subcategory = await Category.findById(subcategoryId);
+            if (subcategory) {
+                await updateCategoryAndChildrenUrls(subcategory);
+            }
+        }
+    }
+}

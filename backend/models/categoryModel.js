@@ -14,6 +14,7 @@ const CategorySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
     },
+    url: { type: String },
 });
 
 const Category = mongoose.model('Category', CategorySchema);
