@@ -1,20 +1,22 @@
 'use client'
+
 import { useState, useEffect } from "react";
 import styles from "./styles.module.scss";
 import Product from "@/types/product";
 import ProductCardsContainer from "../productCardsContainer/ProductCardsContainer";
-import getNewProducts from "@/functions/getNewProducts";
 import MyButton from "../myButton/myButton";
+import getNewProducts from "@/functions/getNewProducts";
 
-function NewProducts() {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
+interface NewProductsProps {
+    initialProducts: Product[];
+    initialHasMore: boolean;
+}
+
+export default function NewProducts({ initialProducts, initialHasMore }: NewProductsProps) {
+    const [products, setProducts] = useState<Product[]>(initialProducts);
+    const [page, setPage] = useState(2); // 2 because we already have 1 from the initialProducts
+    const [hasMore, setHasMore] = useState(initialHasMore);
     const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        getProducts();
-    }, []);
 
     const getProducts = async () => {
         if (isLoading || !hasMore) return;
@@ -41,7 +43,7 @@ function NewProducts() {
             <h2 className="container">New Products</h2>
             <ProductCardsContainer products={products} />
 
-            {hasMore && products.length <= 15 && (
+            {hasMore && (
                 <MyButton
                     onClick={getProducts}
                     disabled={isLoading}
@@ -52,5 +54,3 @@ function NewProducts() {
         </div>
     );
 }
-
-export default NewProducts;

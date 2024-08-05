@@ -26,10 +26,9 @@ export default function CategoryPage({ breadCrumbs }: CategoryProps) {
             breadCrumb.title.replace(SPACE_REGEX, "_")
         ).join('/');
 
-        console.log(url);
-
         const currentPath = window.location.pathname
         if (currentPath !== `/${url}`) {
+            console.log('moving to ' + url);
             router.push(`/${url}`)
         }
     }

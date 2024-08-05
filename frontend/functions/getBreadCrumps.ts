@@ -2,7 +2,7 @@ import axios from "axios";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default async function getBreadCrumps(title: string) {
-    console.log('breadCrumps title: ', title);
+   
     if (title === 'ReactToastify.css.map') return []
     if (title === 'react-toastify.esm.mjs.map') return []
 

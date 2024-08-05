@@ -30,10 +30,9 @@ export default function ProductPage({ breadCrumbs }: ProductProps) {
             breadCrumb.title.replace(SPACE_REGEX, "_")
         ).join('/');
 
-        console.log(url);
-
         const currentPath = window.location.pathname
         if (currentPath !== `/${url}`) {
+            console.log('moving to ' + url);
             router.push(`/${url}`)
         }
     }
