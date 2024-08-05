@@ -19,3 +19,4 @@ export default async function Home() {
     </>
   );
 }
+export const revalidate = 60; // Regenerate the page every 60 seconds
