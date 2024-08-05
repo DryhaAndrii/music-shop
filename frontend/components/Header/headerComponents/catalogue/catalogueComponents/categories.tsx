@@ -31,9 +31,7 @@ function Categories({ show, categories, toggleMenu }: CategoriesProps) {
             </MyButton>
             {
                 categories?.map((category, index) => (
-                    //replacing all spaces ' ' in title to '_' because they 
-                    //will replaced to %20l in url
-                    <Link href={`/${category.title.replace(SPACE_REGEX, "_")}`} className={styles.link} key={index}>
+                    <Link href={category.url} className={styles.link} key={index}>
                         {category.title}
                     </Link>
                 ))

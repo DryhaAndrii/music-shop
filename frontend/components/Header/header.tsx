@@ -6,9 +6,11 @@ import Contacts from "./headerComponents/contacts/contacts";
 import styles from "./styles.module.scss";
 import Cart from "./headerComponents/cart/cart";
 import Catalogue from "./headerComponents/catalogue/catalogue";
+import getMainCategories from "@/functions/getMainCategories";
 
 
-function Header() {
+async function Header() {
+    const categories = await getMainCategories();
     return (
 
         <header className={styles.header}>
@@ -16,9 +18,9 @@ function Header() {
                 <div className={styles.outerWrapper} >
                     <Logo />
                     <div className={styles.innerWrapper}>
-                        <Catalogue />
+                        <Catalogue categories={categories} />
                         <Search />
-                        
+
                     </div>
                     <div className={styles.innerWrapper}>
                         <Contacts />
