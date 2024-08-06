@@ -1,8 +1,8 @@
-export default function AboutPage() {
-    return (
+export default function AboutUs() {
+  return (
       <div>
-        <h1>О нашем сайте</h1>
-        <p>Здесь размещена информация о нашем сайте...</p>
+          <h1>About us</h1>
+          <p>Here is info about us...</p>
       </div>
-    )
-  }
+  )
+}

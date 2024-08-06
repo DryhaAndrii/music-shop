@@ -1,30 +1,40 @@
+import Link from 'next/link';
 import styles from "./styles.module.scss";
-import { useCallback, useState } from "react";
 
+interface BreadCrumpsProps {
+    path: string;
+}
 
-type BreadCrumb = {
-    title: string;
-    id: string;
-};
+function BreadCrumps({ path }: BreadCrumpsProps) {
+    const segments = path.split('/').filter(Boolean);
 
-function BreadCrumps({ breadCrumps }: { breadCrumps: BreadCrumb[] }) {
+    const accumulatedPaths = segments.map((segment, index) =>
+        segments.slice(0, index + 1).join('/')
+    );
 
     return (
         <div className={`${styles.breadCrumps} container`}>
-            {breadCrumps.map((breadCrumb, index) => (
-                <p key={index}>{breadCrumb.title}</p>
+            <Link href={`/`}>
+                <span className="material-symbols-outlined">
+                    home
+                </span>/
+            </Link>
+            {accumulatedPaths.map((crumbPath, index) => (
+                <span key={index}>
+                    {index === accumulatedPaths.length - 1 ? (
+                        // If the current path is the last one, then we display the text
+                        <span className={styles.last}>{segments[index].replace(/_/g, " ")}</span>
+                    ) : (
+                        // If the current path is not the last one, then we display the link
+                        <Link href={`/${crumbPath}`}>
+                            {segments[index].replace(/_/g, " ")}
+                        </Link>
+                    )}
+                    {index !== accumulatedPaths.length - 1 && <span>/</span>}
+                </span>
             ))}
         </div>
-    )
-
+    );
 }
-
-export function useBreadCrumps() {
-    const [breadCrumps, setBreadCrumps] = useState<BreadCrumb[]>([]);
-
-    return { setBreadCrumps, breadCrumps };
-
-}
-
 
 export default BreadCrumps;

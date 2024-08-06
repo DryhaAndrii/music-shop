@@ -1,0 +1,20 @@
+.breadCrumps {
+    display: flex;
+    align-items: center;
+    span{
+        display: flex;
+        align-items: center;
+    }
+    a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        &:hover {
+            text-shadow: 0 0 2px rgb(0 29 76 / 68%);
+        }
+    }
+    .last{
+        font-weight: bold;
+    }
+}

@@ -4,13 +4,10 @@ import CategoryPage from '@/components/CategoryPage/categoryPage';
 import getAllPossiblePaths from '@/functions/getAllPossiblePaths';
 import checkIsProductOrCategory from '@/functions/checkProductOrCategory';
 import { notFound } from 'next/navigation';
+import CheckUrl from '@/utils/checkUrl';
+import BreadCrumps from '@/components/breadCrumps/breadCrumps';
 
 const UNDERSCORE_REGEX = /_/g;
-
-interface BreadCrumb {
-    title: string;
-    id: string;
-}
 
 export default async function DynamicPage({ params }: { params: { slug: string[] } }) {
     const slugArray = params.slug;
@@ -23,12 +20,15 @@ export default async function DynamicPage({ params }: { params: { slug: string[]
     }
     const breadCrumbs = await getBreadCrumps(formattedSlug);
 
+    const path = '/' + params.slug.join('/');
     return (
         <>
+            <CheckUrl breadCrumbs={breadCrumbs} />
+            <BreadCrumps path={path}/>
             {productOrCategoryCheck === 'Product found'
-                ? <ProductPage breadCrumbs={breadCrumbs} />
+                ? <ProductPage />
                 : productOrCategoryCheck === 'Category found'
-                    ? <CategoryPage breadCrumbs={breadCrumbs} />
+                    ? <CategoryPage />
                     : <div>Nothing found</div>}
         </>
     );
