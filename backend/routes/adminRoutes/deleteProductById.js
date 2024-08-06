@@ -8,22 +8,22 @@ router.delete('/:productId', authMiddleware, async (req, res) => {
     try {
         const { productId } = req.params;
 
-        // find product
+        // Finding product
         const product = await Product.findById(productId);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        // delete product from category
-        if (product.category) {
+        // Deleting product from category
+        if (product.parentCategoryId) {
             await Category.findByIdAndUpdate(
-                product.category,
+                product.parentCategoryId,
                 { $pull: { products: productId } },
                 { new: true }
             );
         }
 
-        // delete product
+        // Deleting product
         await Product.findByIdAndDelete(productId);
 
         res.status(200).json({ message: 'Product successfully deleted' });
