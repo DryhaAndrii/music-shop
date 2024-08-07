@@ -1,17 +1,15 @@
-import { toast } from "react-toastify";
 import axios from "axios";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export default async function getProductsByIds(productsIds: string[]) {
+export default async function getProductsByIds(productsIds: string[], page: number, limit: number) {
     try {
         const { data } = await axios.get(`${apiUrl}getProductsByIds`, {
-            params: { productsIds },
+            params: { productsIds, page, limit },
             withCredentials: true
         });
-        return data.products;
+        return { products: data.products, pages: data.totalPages };
     } catch (error: any) {
-        console.log(error)
-        toast.error('Some error happened during fetching products: ' + error.message);
+        console.log(error.message)
     }
 }
 

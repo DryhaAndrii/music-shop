@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+
 import axios from "axios";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -11,8 +11,7 @@ export default async function getNewProducts(page: number, limit: number) {
         });
         return { products: data.products, hasMore: data.hasMore };
     } catch (error: any) {
-        console.log(error)
-        toast.error('Some error happened during fetching products: ' + error.message);
+        console.log(error.message);
         return { products: [], hasMore: false };
     }
 }

@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { Roboto_Condensed } from "next/font/google";
-import { ToastContainer } from 'react-toastify';
 
 import Footer from "@/components/Footer/footer";
 import Header from "@/components/Header/header";
 
-import 'react-toastify/dist/ReactToastify.css';
 import "./globals.css";
 
 
@@ -28,7 +26,6 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
       </head>
       <body className={robotoCondensed.className}>
-        <ToastContainer />
         <Header />
         {children}
         <Footer />

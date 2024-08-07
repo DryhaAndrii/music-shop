@@ -1,0 +1,12 @@
+.productDisplayPanel {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+    .attributesPanelWrapper {
+        width: 20%;
+    }
+
+    .productCardsContainerWrapper {
+        width: 80%;
+    }
+}

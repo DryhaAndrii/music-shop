@@ -4,20 +4,13 @@ export default interface Category {
     attributes: CategoryAttribute[];
     isSubcategory: boolean;
     pictureCode: string,
-    products: Product[];
-    subcategories: Category[];
+    products: string[];
+    subcategories: string[];
     title: string;
     url: string;
 }
 
-interface Product {
-    [key: number]: string;
-}
 export interface CategoryAttribute {
     name: string;
-    options: Option[];
+    options: string[];
 }
-export interface Option {
-    [key: number]: string;
-}
-

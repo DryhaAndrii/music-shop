@@ -26,9 +26,9 @@ export default async function DynamicPage({ params }: { params: { slug: string[]
             <CheckUrl breadCrumbs={breadCrumbs} />
             <BreadCrumps path={path}/>
             {productOrCategoryCheck === 'Product found'
-                ? <ProductPage />
+                ? <ProductPage productTitle={formattedSlug}/>
                 : productOrCategoryCheck === 'Category found'
-                    ? <CategoryPage />
+                    ? <CategoryPage categoryTitle={formattedSlug}/>
                     : <div>Nothing found</div>}
         </>
     );

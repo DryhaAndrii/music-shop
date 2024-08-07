@@ -1,6 +1,6 @@
 .card {
     min-height: 500px;
-    width: 18vw;
+    width: 100%;
     border-radius: 10px;
     transition: box-shadow 0.1s ease-in-out;
     user-select: none;
@@ -9,7 +9,7 @@
     overflow: hidden;
     border: 1px solid #80808040;
     box-sizing: border-box;
-
+    grid-column: span 1;
     &:hover {
         box-shadow: 0px 0px 10px 2px #00000073;
     }
@@ -105,8 +105,6 @@
 
 @media (max-width: 1200px) {
     .card {
-        width: 19vw;
-
         &--product {
             .top {
                 height: 35%;
@@ -123,8 +121,6 @@
 
 @media (max-width: 800px) {
     .card {
-        width: 30vw;
-
         .top {
             height: 50%;
         }
@@ -137,8 +133,6 @@
 
 @media (max-width: 650px) {
     .card {
-        width: 45vw;
-
         .top {
             height: 35%;
         }

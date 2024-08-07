@@ -2,17 +2,27 @@ import styles from "./styles.module.scss";
 import Product from "@/types/product";
 import Card from "../card/card";
 import ProductCardsContainerSkeleton from "./ProductCardsContainerSkeleton";
+
+import classNames from 'classnames/bind';
 interface ProductCardsContainerProps {
     products: Product[] | undefined;
-
+    columns?: number;
 }
 
-function ProductCardsContainer({ products }: ProductCardsContainerProps) {
+const cx = classNames.bind(styles);
+
+function ProductCardsContainer({ products, columns }: ProductCardsContainerProps) {
+
+    const className = cx({
+        productCardsContainer: true,
+        [`columns--${columns}`]: true,
+    });
+
     if (products?.length === 0) return (
         <ProductCardsContainerSkeleton />
     )
     return (
-        <div className={styles.productCardsContainer}>
+        <div className={className}>
             {products?.map((product) => (
                 <Card product={product} key={product._id} />
             ))}

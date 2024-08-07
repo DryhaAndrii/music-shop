@@ -41,7 +41,7 @@ export default function NewProducts({ initialProducts, initialHasMore }: NewProd
     return (
         <div className={styles.newProducts}>
             <h2 className="container">New Products</h2>
-            <ProductCardsContainer products={products} />
+            <ProductCardsContainer products={products} columns={5}/>
 
             {hasMore && (
                 <MyButton
