@@ -5,9 +5,10 @@ interface PaginationProps {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
+    loading: boolean;
 }
 
-function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+function Pagination({ currentPage, totalPages, onPageChange, loading }: PaginationProps) {
     const createPageNumbers = () => {
         const pages = [];
         if (currentPage > 3) pages.push(1); // Первая страница
@@ -32,7 +33,7 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
                     <MyButton
                         key={index}
                         onClick={() => onPageChange(page)}
-                        disabled={page === currentPage}
+                        disabled={page === currentPage || loading}
                     >
                         {page}
                     </MyButton>

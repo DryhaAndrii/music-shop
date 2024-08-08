@@ -1,9 +1,7 @@
 
 
 export default interface Product {
-    attributes: [{
-        [key: string]: string
-    }];
+    attributes: ProductAttribute[];
     parentCategoryId: string;
     description: {
         raw: string;
@@ -14,4 +12,7 @@ export default interface Product {
     title: string;
     url: string;
     _id: string;
+}
+export interface ProductAttribute {
+    [key: string]: string
 }

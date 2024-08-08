@@ -5,7 +5,7 @@ import Product from "@/types/product";
 import { useState, useEffect } from "react";
 import AttributesPanel from "./attributesPanel/attributesPanel";
 import { CategoryAttribute } from "@/types/category";
-import Pagination from "./pagination/pagination";
+import Pagination from "../../pagination/pagination";
 import getProductsByIds from "@/functions/getProductsByIds";
 
 interface ProductDisplayPanelProps {
@@ -22,6 +22,7 @@ function ProductDisplayPanel({ idsOfAllProducts, initialProducts, initialPages, 
     const [products, setProducts] = useState<Product[]>(initialProducts);
     const [totalPages, setTotalPages] = useState(initialPages);
     const [currentPage, setCurrentPage] = useState(1); // 2 because we already have 1 from the initialProducts
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         //Avoid useEffect to run at 1 render
@@ -36,9 +37,11 @@ function ProductDisplayPanel({ idsOfAllProducts, initialProducts, initialPages, 
     };
 
     async function fetchProducts() {
+        setLoading(true);
         const data = await getProductsByIds(idsOfAllProducts, currentPage, COUNT_OF_PRODUCTS_AT_PAGE);
         setTotalPages(data?.pages);
         setProducts(data?.products);
+        setLoading(false);
     }
 
     return (
@@ -53,6 +56,7 @@ function ProductDisplayPanel({ idsOfAllProducts, initialProducts, initialPages, 
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
+                    loading={loading}
                 />
             </div>
 
