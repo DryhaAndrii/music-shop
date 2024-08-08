@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
 import Product from '@/types/product';
 import MyButton from '../myButton/myButton';
+import Link from 'next/link';
 
 export enum CARD_TYPES {
     PRODUCT = 'product',
@@ -42,7 +43,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
                     display second picture on hover */}
 
                         {product.pictureCodes.length > 1 ? (
-                            <div className={styles.imageContainer} onClick={handleClick}>
+                            <Link href={product.url} className={styles.imageContainer}>
                                 <img
                                     className={styles.firstImage}
                                     src={`data:image/png;base64, ${product.pictureCodes[0]}`}
@@ -53,19 +54,16 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
                                     src={`data:image/png;base64, ${product.pictureCodes[1]}`}
                                     alt="categoryPicture"
                                 />
-                            </div>
+                            </Link>
                         )
                             : (
-                                <div className={styles.imageContainer}>
+                                <Link href={product.url} className={styles.imageContainer}>
                                     <img
                                         className={styles.image}
                                         src={`data:image/png;base64, ${product.pictureCodes[0]}`}
                                         alt="categoryPicture" />
-                                </div>
+                                </Link>
                             )}
-
-
-
                     </div>
                     <div className={styles.bot}>
                         <h3>{product.title}</h3>
