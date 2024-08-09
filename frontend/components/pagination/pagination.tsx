@@ -5,10 +5,11 @@ interface PaginationProps {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
+    loadMore: () => void;
     loading: boolean;
 }
 
-function Pagination({ currentPage, totalPages, onPageChange, loading }: PaginationProps) {
+function Pagination({ currentPage, totalPages, onPageChange, loadMore, loading }: PaginationProps) {
     const createPageNumbers = () => {
         const pages = [];
         if (currentPage > 3) pages.push(1); // Первая страница
@@ -28,21 +29,32 @@ function Pagination({ currentPage, totalPages, onPageChange, loading }: Paginati
 
     return (
         <div className={styles.pagination}>
-            {pages.map((page, index) =>
-                typeof page === "number" ? (
-                    <MyButton
-                        key={index}
-                        onClick={() => onPageChange(page)}
-                        disabled={page === currentPage || loading}
-                    >
-                        {page}
-                    </MyButton>
-                ) : (
-                    <span key={index} className="material-symbols-outlined">
-                        more_horiz
+            {currentPage !== totalPages &&
+
+                <MyButton onClick={loadMore} disabled={loading}>
+                    <span className="material-symbols-outlined">
+                        refresh
                     </span>
-                )
-            )}
+                </MyButton>
+
+            }
+            <div className={styles.pages}>
+                {pages.map((page, index) =>
+                    typeof page === "number" ? (
+                        <MyButton
+                            key={index}
+                            onClick={() => onPageChange(page)}
+                            disabled={page === currentPage || loading}
+                        >
+                            {page}
+                        </MyButton>
+                    ) : (
+                        <span key={index} className="material-symbols-outlined">
+                            more_horiz
+                        </span>
+                    )
+                )}
+            </div>
         </div>
     );
 }

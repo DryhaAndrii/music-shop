@@ -1,5 +1,6 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from 'next/navigation'
 
 import styles from "./styles.module.scss";
 import MyButton from "@/components/myButton/myButton";
@@ -9,6 +10,11 @@ import Category from "@/types/category";
 
 function Catalogue({ categories }: { categories: Category[] | undefined }) {
     const [show, setShow] = useState(false);
+    const pathname = usePathname();
+
+    useEffect(() => {
+        setShow(false);
+    }, [pathname]);
 
     function toggleMenu() {
         setShow(prev => !prev);

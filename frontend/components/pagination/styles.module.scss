@@ -1,9 +1,10 @@
 .pagination{
     display: flex;
+    flex-direction: column;
     gap: 10px;
-    justify-content: center;
-    span{
+    align-items: center;
+    .pages{
         display: flex;
-        align-items: center;
+        gap: 10px;
     }
 }

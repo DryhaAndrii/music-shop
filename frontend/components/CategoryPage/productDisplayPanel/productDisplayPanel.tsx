@@ -29,11 +29,27 @@ function ProductDisplayPanel({ idsOfAllProducts, initialProducts, initialPages, 
         if (!hasInitialDataLoaded) return setHasInitialDataLoaded(true);
 
         fetchProducts();
-    }, [currentPage]);
+    }, []);
 
     const handlePageChange = async (page: number) => {
-        console.log('page', page);
+        
+
+        setLoading(true);
+        const data = await getProductsByIds(idsOfAllProducts, page, COUNT_OF_PRODUCTS_AT_PAGE);
+        setTotalPages(data?.pages);
+        setProducts(data?.products);
+        setLoading(false);
         setCurrentPage(page);
+        window.scrollTo(0, 0);//Scroll to top
+    };
+
+    const loadMore = async () => {
+        setLoading(true);
+        const data = await getProductsByIds(idsOfAllProducts, currentPage + 1, COUNT_OF_PRODUCTS_AT_PAGE);
+        setTotalPages(data?.pages);
+        setProducts([...products, ...data?.products]);
+        setCurrentPage(currentPage + 1);
+        setLoading(false);
     };
 
     async function fetchProducts() {
@@ -42,13 +58,13 @@ function ProductDisplayPanel({ idsOfAllProducts, initialProducts, initialPages, 
         setTotalPages(data?.pages);
         setProducts(data?.products);
         setLoading(false);
+        window.scrollTo(0, 0);//Scroll to top
     }
 
     return (
         <div className={`container ${styles.productDisplayPanel}`}>
             <div className={styles.attributesPanelWrapper}>
                 <AttributesPanel categoryAttributes={categoryAttributes} />
-
             </div>
             <div className={styles.productCardsContainerWrapper}>
                 <ProductCardsContainer products={products} columns={4} />
@@ -57,6 +73,7 @@ function ProductDisplayPanel({ idsOfAllProducts, initialProducts, initialPages, 
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
                     loading={loading}
+                    loadMore={loadMore}
                 />
             </div>
 
