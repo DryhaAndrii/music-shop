@@ -16,7 +16,12 @@ function AttributeItem({ attribute, value, onValueChange }: AttributeItemProps) 
     }
 
     const handleOptionClick = (option: string) => {
-        onValueChange(option);
+        if (value === option) {
+            // If the selected option is already active, clear the value
+            onValueChange('');
+        } else {
+            onValueChange(option);
+        }
     };
 
     return (
@@ -24,8 +29,7 @@ function AttributeItem({ attribute, value, onValueChange }: AttributeItemProps) 
             <div className={styles.name} onClick={toggleOption}>
                 {attribute.name}
                 <span
-                    className={`material-symbols-outlined styles_rotate__7xEp0 ${!hideOption && styles.rotate
-                        }`}
+                    className={`material-symbols-outlined styles_rotate__7xEp0 ${!hideOption && styles.rotate}`}
                 >
                     keyboard_arrow_down
                 </span>
@@ -36,8 +40,7 @@ function AttributeItem({ attribute, value, onValueChange }: AttributeItemProps) 
                 {attribute.options.map((option) => (
                     <div
                         key={option}
-                        className={`${styles.option} ${value === option ? styles.optionSelected : ""
-                            }`}
+                        className={`${styles.option} ${value === option ? styles.optionSelected : ""}`}
                         onClick={() => handleOptionClick(option)}
                     >
                         {option}

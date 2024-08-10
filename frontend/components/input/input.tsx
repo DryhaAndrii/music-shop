@@ -8,6 +8,7 @@ export enum INPUT_TYPES {
     SUBMIT = "submit",
     PASSWORD = "password",
     EMAIL = "email",
+    NUMBER = "number"
 }
 
 
@@ -17,12 +18,13 @@ interface MyButtonProps {
     placeholder?: string;
     name?: string;
     value?: string;
-    onChangeHandler?: (e: any) => void;
+    onChangeHandler?: (...args: any[]) => void;
+    onBlur?: (...args: any[]) => void;
 }
 
 const cx = classNames.bind(styles);
 
-function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, value }: MyButtonProps) {
+function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, value,onBlur }: MyButtonProps) {
 
 
     const className = cx({
@@ -47,13 +49,23 @@ function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, va
                     name={name}
                     value={value}
                     onChange={onChangeHandler ? (e) => onChangeHandler(e) : undefined}
-
+                    
                     className={className}
                     placeholder={placeholder}
                     type={type}
 
                 />
             );
+        case INPUT_TYPES.NUMBER:
+            return (
+                <input
+                    value={value}
+                    onChange={onChangeHandler && ((e) => onChangeHandler(e, 'min'))}
+                    onBlur={onBlur ? (e) => onBlur(e) : undefined}
+                    className={className}
+                    type={type}
+                />
+            )
 
         default:
             return null;

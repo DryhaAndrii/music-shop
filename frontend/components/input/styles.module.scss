@@ -1,9 +1,12 @@
 .input {
+    
 
     &--text,
     &--email,
+    &--number,
     &--password {
-
+        -webkit-appearance: none;
+        -moz-appearance: textfield;
         width: 200px;
         height: 30px;
         font-family: inherit;

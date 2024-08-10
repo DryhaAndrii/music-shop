@@ -1,0 +1,17 @@
+.thumb{
+    &::before{
+        background-color: #3366D5 !important;
+        border: 3px solid white  !important;
+        box-shadow: none !important;
+    }
+}
+.bar-right{
+    box-shadow: none !important;
+}
+.bar-left{
+    box-shadow: none !important;
+}
+.bar-inner{
+    box-shadow: none !important;
+    border:none !important;
+}
