@@ -32,14 +32,11 @@
         display: flex;
         flex-direction: column;
         gap: 5px 0px;
-        height: auto;
+        max-height: 1000px;
         overflow: hidden;
-        margin-top: 10px;
-        transition: all 0.3s;
 
-        &Hidden {
-            height: 0px;
-            margin-top: 0px;
+        &__hidden {
+            max-height: 0px;
         }
 
         .option {
@@ -49,7 +46,7 @@
             &:hover {
                 background-color: #d1d1d1;
             }
-            &Selected{
+            &__selected{
                 font-weight: bold;
             }
         }

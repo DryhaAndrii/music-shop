@@ -64,6 +64,7 @@ function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, va
                     onBlur={onBlur ? (e) => onBlur(e) : undefined}
                     className={className}
                     type={type}
+                
                 />
             )
 

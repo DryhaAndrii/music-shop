@@ -35,12 +35,12 @@ function AttributeItem({ attribute, value, onValueChange }: AttributeItemProps) 
                 </span>
             </div>
             <div
-                className={`${styles.options} ${hideOption ? styles.optionsHidden : ""}`}
+                className={`${styles.options} ${hideOption ? styles.options__hidden : ""}`}
             >
                 {attribute.options.map((option) => (
                     <div
                         key={option}
-                        className={`${styles.option} ${value === option ? styles.optionSelected : ""}`}
+                        className={`${styles.option} ${value === option ? styles.option__selected : ""}`}
                         onClick={() => handleOptionClick(option)}
                     >
                         {option}

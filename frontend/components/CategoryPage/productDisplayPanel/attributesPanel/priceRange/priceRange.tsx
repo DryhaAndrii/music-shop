@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import MultiRangeSlider from "multi-range-slider-react";
 import styles from "./styles.module.scss";
 import './priceRange.scss';
@@ -8,13 +8,27 @@ interface PriceRangeProps {
     minPrice: number;
     maxPrice: number;
     setPriceRange: (range: { maxPrice: number, minPrice: number }) => void;
+    clearPrices: boolean;
+    setClearPrices: (clear: boolean) => void;
 }
 
-function PriceRange({ minPrice, maxPrice, setPriceRange }: PriceRangeProps) {
+function PriceRange({ minPrice, maxPrice, setPriceRange, clearPrices, setClearPrices }: PriceRangeProps) {
     const [minValue, setMinValue] = useState(minPrice);
     const [maxValue, setMaxValue] = useState(maxPrice);
     const [minInputValue, setMinInputValue] = useState(minPrice);
     const [maxInputValue, setMaxInputValue] = useState(maxPrice);
+
+    useEffect(() => {
+        if (clearPrices) {
+            setClearPrices(false);
+            setMinInputValue(minPrice);
+            setMaxInputValue(maxPrice);
+            setMinValue(minPrice);
+            setMaxValue(maxPrice);
+        }
+    }, [clearPrices])
+
+
 
     const handleSliderInput = (e: { minValue: number; maxValue: number }) => {
         const { minValue, maxValue } = e;
@@ -68,25 +82,25 @@ function PriceRange({ minPrice, maxPrice, setPriceRange }: PriceRangeProps) {
             <div className={styles.inputFields}>
                 <Input
                     type={INPUT_TYPES.NUMBER}
-                    value={minInputValue.toString()}
+                    value={minInputValue?.toString()}
                     onChangeHandler={(e) => handleInputChange(e, 'min')}
                     onBlur={(e) => handleBlur(e, 'min')}
                 />
                 <span>-</span>
                 <Input
                     type={INPUT_TYPES.NUMBER}
-                    value={maxInputValue.toString()}
+                    value={maxInputValue?.toString()}
                     onChangeHandler={(e) => handleInputChange(e, 'max')}
                     onBlur={(e) => handleBlur(e, 'max')}
                 />
                 <span>USD</span>
             </div>
             <MultiRangeSlider
-                min={minPrice}
-                max={maxPrice}
-                step={1000}
-                minValue={minValue}
-                maxValue={maxValue}
+                min={minPrice ?? 0} // Use 0 as default value if null
+                max={maxPrice ?? 10000} // Use 10000 as default value if null
+                step={10}
+                minValue={minValue ?? 0} // Use 0 as default value if null
+                maxValue={maxValue ?? 10000} // Use 10000 as default value if null
                 onChange={handleSliderInput}
                 label={false}
                 ruler={false}
