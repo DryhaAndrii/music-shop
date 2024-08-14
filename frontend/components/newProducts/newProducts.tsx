@@ -43,7 +43,11 @@ export default function NewProducts({ initialProducts, initialHasMore }: NewProd
         <div className={styles.newProducts}>
             {isLoading && <Loading />}
             <h2 className="container">New Products</h2>
-            <ProductCardsContainer products={products} columns={5} />
+            {products.length === 0
+                ? <h2 className="container">No products found</h2>
+                : <ProductCardsContainer products={products} columns={5} />
+            }
+
 
             {hasMore && (
                 <MyButton

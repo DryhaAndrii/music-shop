@@ -131,16 +131,23 @@ function ProductDisplayPanel({
                             isFiltersInitial={isFiltersInitial}
                         />
                     </div>
-                    <div className={styles.productCardsContainerWrapper}>
-                        <ProductCardsContainer products={products} columns={4} />
-                        <Pagination
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            onPageChange={handlePageChange}
-                            loading={loading}
-                            loadMore={loadMore}
-                        />
-                    </div>
+                    {products.length === 0
+                        ?
+                        <h2>No products found</h2>
+                        :
+                        <div className={styles.productCardsContainerWrapper}>
+                            <ProductCardsContainer products={products} columns={4} />
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
+                                loading={loading}
+                                loadMore={loadMore}
+                            />
+                        </div>
+                    }
+
+
                 </div>
             </div>
         </div>
