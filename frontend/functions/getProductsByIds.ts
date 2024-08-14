@@ -12,6 +12,7 @@ interface Filters {
     };
 }
 
+
 export default async function getProductsByIds(
     productsIds: string[],
     page: number,

@@ -9,10 +9,10 @@ interface AttributeItemProps {
 }
 
 function AttributeItem({ attribute, value, onValueChange }: AttributeItemProps) {
-    const [hideOption, setHideOption] = useState(true);
+    const [showOption, setShowOption] = useState(false);
 
     function toggleOption() {
-        setHideOption(!hideOption);
+        setShowOption(!showOption);
     }
 
     const handleOptionClick = (option: string) => {
@@ -29,24 +29,27 @@ function AttributeItem({ attribute, value, onValueChange }: AttributeItemProps) 
             <div className={styles.name} onClick={toggleOption}>
                 {attribute.name}
                 <span
-                    className={`material-symbols-outlined styles_rotate__7xEp0 ${!hideOption && styles.rotate}`}
+                    className={`material-symbols-outlined styles_rotate__7xEp0 ${showOption && styles.rotate}`}
                 >
                     keyboard_arrow_down
                 </span>
             </div>
-            <div
-                className={`${styles.options} ${hideOption ? styles.options__hidden : ""}`}
-            >
-                {attribute.options.map((option) => (
-                    <div
-                        key={option}
-                        className={`${styles.option} ${value === option ? styles.option__selected : ""}`}
-                        onClick={() => handleOptionClick(option)}
-                    >
-                        {option}
-                    </div>
-                ))}
+            <div className={`${styles.wrapper} ${showOption ? styles.wrapper__show : ""}`}>
+                <div
+                    className={styles.options}
+                >
+                    {attribute.options.map((option) => (
+                        <div
+                            key={option}
+                            className={`${styles.option} ${value === option ? styles.option__selected : ""}`}
+                            onClick={() => handleOptionClick(option)}
+                        >
+                            {option}
+                        </div>
+                    ))}
+                </div>
             </div>
+
         </div>
     );
 }

@@ -12,15 +12,13 @@ router.get('', async (req, res) => {
 
         const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
 
-        console.log('filters:',filters);
-
         if (!Array.isArray(productsIds)) {
             return res.status(400).json({ message: 'productsIds is not an array' });
         }
 
         let query = { _id: { $in: productsIds } };
 
-        // Добавляем фильтр по цене, если он есть
+        // Adding price filter if it exists
         if (filters.priceRange) {
             query.price = {
                 $gte: filters.priceRange.minPrice.toString(),
@@ -28,7 +26,7 @@ router.get('', async (req, res) => {
             };
         }
 
-        // Добавляем фильтры по атрибутам, только если они есть
+        // Adding attributes filter if it exists
         if (filters.attributes && Object.keys(filters.attributes).length > 0) {
             Object.entries(filters.attributes).forEach(([key, value]) => {
                 query[`attributes.${key}`] = value;
@@ -36,7 +34,7 @@ router.get('', async (req, res) => {
         }
 
 
-        // Остальной код остается без изменений
+        
         const totalProducts = await Product.countDocuments(query);
         const products = await Product.find(query)
             .skip(skip)
