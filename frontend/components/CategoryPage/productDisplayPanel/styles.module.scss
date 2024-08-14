@@ -1,15 +1,21 @@
-.productDisplayPanel {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0px;
-    .attributesPanelWrapper {
-        width: 20%;
+.wrapper {
+    position: relative;
+    .productDisplayPanel {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0px;
+        position: relative;
+
+        .attributesPanelWrapper {
+            width: 20%;
+        }
+
+        .productCardsContainerWrapper {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
     }
 
-    .productCardsContainerWrapper {
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
 }

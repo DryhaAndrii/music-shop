@@ -8,6 +8,7 @@ import AttributesPanel from "./attributesPanel/attributesPanel";
 import { CategoryAttribute } from "@/types/category";
 import Pagination from "../../pagination/pagination";
 import getProductsByIds from "@/functions/getProductsByIds";
+import Loading from "@/components/loading/loading";
 
 interface ProductDisplayPanelProps {
     initialProducts: Product[];
@@ -108,27 +109,34 @@ function ProductDisplayPanel({
         window.scrollTo(0, 0);
     }
     return (
-        <div className={`container ${styles.productDisplayPanel}`}>
-            <div className={styles.attributesPanelWrapper}>
-                <AttributesPanel
-                    categoryAttributes={categoryAttributes}
-                    filters={filters}
-                    setFilters={setFilters}
-                    maxPricePossible={maxPricePossible}
-                    minPricePossible={minPricePossible}
-                    clearFilters={clearFilters}
-                    isFiltersInitial={isFiltersInitial}
-                />
-            </div>
-            <div className={styles.productCardsContainerWrapper}>
-                <ProductCardsContainer products={products} columns={4} />
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                    loading={loading}
-                    loadMore={loadMore}
-                />
+        <div className={styles.wrapper}>
+            {loading && <Loading />}
+
+            <div className="container">
+                <div className={styles.productDisplayPanel}>
+
+                    <div className={styles.attributesPanelWrapper}>
+                        <AttributesPanel
+                            categoryAttributes={categoryAttributes}
+                            filters={filters}
+                            setFilters={setFilters}
+                            maxPricePossible={maxPricePossible}
+                            minPricePossible={minPricePossible}
+                            clearFilters={clearFilters}
+                            isFiltersInitial={isFiltersInitial}
+                        />
+                    </div>
+                    <div className={styles.productCardsContainerWrapper}>
+                        <ProductCardsContainer products={products} columns={4} />
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                            loading={loading}
+                            loadMore={loadMore}
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     );
