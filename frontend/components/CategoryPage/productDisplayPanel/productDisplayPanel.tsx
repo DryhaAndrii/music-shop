@@ -9,6 +9,7 @@ import { CategoryAttribute } from "@/types/category";
 import Pagination from "../../pagination/pagination";
 import getProductsByIds from "@/functions/getProductsByIds";
 import Loading from "@/components/loading/loading";
+import MyButton from "@/components/myButton/myButton";
 
 interface ProductDisplayPanelProps {
     initialProducts: Product[];
@@ -40,6 +41,7 @@ function ProductDisplayPanel({
     const [loading, setLoading] = useState(false);
     const [isFiltersInitial, setIsFiltersInitial] = useState(true);
     const [isInitialRender, setIsInitialRender] = useState(true);
+    const [showAttributesPanel, setShowAttributesPanel] = useState(false);
 
     const initialFilters = {
         priceRange: { minPrice: minPricePossible, maxPrice: maxPricePossible },
@@ -108,14 +110,17 @@ function ProductDisplayPanel({
         setCurrentPage(1);
         window.scrollTo(0, 0);
     }
+    const toggleAttributesPanel = () => {
+        setShowAttributesPanel(!showAttributesPanel);
+    }
     return (
         <div className={styles.wrapper}>
             {loading && <Loading />}
 
             <div className="container">
                 <div className={styles.productDisplayPanel}>
-
-                    <div className={styles.attributesPanelWrapper}>
+                    <MyButton onClick={toggleAttributesPanel} >Filters</MyButton>
+                    <div className={`${styles.attributesPanelWrapper} ${showAttributesPanel ? styles.attributesPanelWrapper__show : ""}`}>
                         <AttributesPanel
                             categoryAttributes={categoryAttributes}
                             filters={filters}

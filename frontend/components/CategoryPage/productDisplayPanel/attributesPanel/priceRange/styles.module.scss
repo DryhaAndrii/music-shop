@@ -18,3 +18,24 @@
         }
     }
 }
+
+@media (max-width: 1200px) {
+    .priceRange {
+        .inputFields {
+            input {
+                width: 35%;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .priceRange {
+        font-size: 1.1rem;
+        .inputFields {
+            input {
+                font-size: 1.1rem;
+            }
+        }
+    }
+}

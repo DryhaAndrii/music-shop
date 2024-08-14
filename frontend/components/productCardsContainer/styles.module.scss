@@ -20,16 +20,20 @@
 
 @media (max-width: 1200px) {
     .columns {
-        &--4 {
-            grid-template-columns: repeat(3, 1fr);
-        }
         &--5{
             grid-template-columns: repeat(4, 1fr);
         }
     
     }
 }
-
+@media (max-width: 1000px) {
+    .columns {
+        &--4 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    
+    }
+}
 @media (max-width: 800px) {
     .columns {
         &--4 {

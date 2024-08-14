@@ -6,6 +6,7 @@ import Product from "@/types/product";
 import ProductCardsContainer from "../productCardsContainer/ProductCardsContainer";
 import MyButton from "../myButton/myButton";
 import getNewProducts from "@/functions/getNewProducts";
+import Loading from "../loading/loading";
 
 interface NewProductsProps {
     initialProducts: Product[];
@@ -40,8 +41,9 @@ export default function NewProducts({ initialProducts, initialHasMore }: NewProd
 
     return (
         <div className={styles.newProducts}>
+            {isLoading && <Loading />}
             <h2 className="container">New Products</h2>
-            <ProductCardsContainer products={products} columns={5}/>
+            <ProductCardsContainer products={products} columns={5} />
 
             {hasMore && (
                 <MyButton

@@ -5,12 +5,31 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  .buttons{
+  box-sizing: border-box;
+  .buttons {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    button{
+
+    button {
       flex-grow: 1;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .attributesPanel {
+    width: clamp(200px, 70%, 100%);
+    margin: 0 auto;
+    .buttons{
+      >button{
+          font-size: 1.1rem;
+      }
+  }
+  }
+}
+@media (max-width: 550px) {
+  .attributesPanel {
+    width: 100%
   }
 }
