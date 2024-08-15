@@ -31,7 +31,7 @@ function Categories({ show, categories, toggleMenu }: CategoriesProps) {
             </MyButton>
             {
                 categories?.map((category, index) => (
-                    <Link href={category.url} className={styles.link} key={index}>
+                    <Link href={`/${category.url}`} className={styles.link} key={index}>
                         {category.title}
                     </Link>
                 ))

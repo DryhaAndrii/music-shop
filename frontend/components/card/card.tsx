@@ -43,7 +43,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
                     display second picture on hover */}
 
                         {product.pictureCodes.length > 1 ? (
-                            <Link href={product.url} className={styles.imageContainer}>
+                            <Link href={`/${product.url}`} className={styles.imageContainer}>
                                 <img
                                     className={styles.firstImage}
                                     src={`data:image/png;base64, ${product.pictureCodes[0]}`}
@@ -57,7 +57,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
                             </Link>
                         )
                             : (
-                                <Link href={product.url} className={styles.imageContainer}>
+                                <Link href={`/${product.url}`} className={styles.imageContainer}>
                                     <img
                                         className={styles.image}
                                         src={`data:image/png;base64, ${product.pictureCodes[0]}`}
