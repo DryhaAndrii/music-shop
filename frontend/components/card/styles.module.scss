@@ -10,11 +10,13 @@
     border: 1px solid #80808040;
     box-sizing: border-box;
     grid-column: span 1;
+
     &:hover {
         box-shadow: 0px 0px 10px 2px #00000073;
     }
 
-    &--product {
+    &--product,
+    &--category {
         flex-direction: column;
         justify-content: space-between;
 
@@ -100,6 +102,16 @@
             }
         }
     }
+
+    &--category {
+        .top {
+            flex-grow: 1;
+        }
+
+        .bot {
+            height: unset;
+        }
+    }
 }
 
 
@@ -116,29 +128,36 @@
 
             }
         }
+
+        &--category {}
     }
 }
 
 @media (max-width: 800px) {
     .card {
-        .top {
-            height: 50%;
-        }
+        &--product {
 
-        .bot {
-            height: 50%;
+            .top {
+                height: 50%;
+            }
+
+            .bot {
+                height: 50%;
+            }
         }
     }
 }
 
 @media (max-width: 650px) {
     .card {
-        .top {
-            height: 35%;
-        }
+        &--product {
+            .top {
+                height: 35%;
+            }
 
-        .bot {
-            height: 65%;
+            .bot {
+                height: 65%;
+            }
         }
     }
 }

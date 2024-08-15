@@ -8,6 +8,7 @@ export default interface Category {
     subcategories: string[];
     title: string;
     url: string;
+    _id: string;
 }
 
 export interface CategoryAttribute {

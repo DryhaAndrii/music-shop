@@ -5,31 +5,29 @@ import classNames from 'classnames/bind';
 import Product from '@/types/product';
 import MyButton from '../myButton/myButton';
 import Link from 'next/link';
+import Category from '@/types/category';
 
 export enum CARD_TYPES {
     PRODUCT = 'product',
+    CATEGORY = 'category'
 }
 interface CardProps {
     type?: CARD_TYPES;
     product?: Product;
+    category?: Category;
 }
 
 const UNDERSCORE_REGEX = / /g;
 
 const cx = classNames.bind(styles);
 
-function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
+function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
 
 
     const className = cx({
         card: true,
         [`card--${type}`]: true,
     });
-
-    function handleClick() {
-        if (!product) return;
-        window.location.href = product.url;
-    }
 
     switch (type) {
         case CARD_TYPES.PRODUCT:
@@ -78,6 +76,23 @@ function Card({ type = CARD_TYPES.PRODUCT, product }: CardProps) {
                             </MyButton>
                         </div>
 
+                    </div>
+                </div >
+            );
+        case CARD_TYPES.CATEGORY:
+            if (!category) return null;
+            return (
+                <div className={className}>
+                    <div className={styles.top}>
+                        <Link href={`/${category.url}`} className={styles.imageContainer}>
+                            <img
+                                className={styles.image}
+                                src={`data:image/png;base64, ${category.pictureCode}`}
+                                alt="categoryPicture" />
+                        </Link>
+                    </div>
+                    <div className={styles.bot}>
+                        <h3>{category.title}({category.subcategories.length+category.products.length})</h3>
                     </div>
                 </div >
             );

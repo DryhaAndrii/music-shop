@@ -4,6 +4,8 @@ import getCategoryByTitle from "@/functions/getCategoryByTitle";
 import getProductsByIds from "@/functions/getProductsByIds";
 import ProductDisplayPanel from "./productDisplayPanel/productDisplayPanel";
 import Product from "@/types/product";
+import getCategoriesByIds from "@/functions/getCategoriesByIds";
+import CategoriesDisplayPanel from "./categoriesDisplayPanel/categoriesDisplayPanel";
 
 const SPACE_REGEX = / /g;
 const INITIAL_PAGE_NUMBER = 1;
@@ -34,6 +36,12 @@ export default async function CategoryPage({ categoryTitle }: { categoryTitle: s
                 maxPricePossible={maxPricePossible}
             />
         );
+    }
+    if (category.subcategories.length > 0) {
+        const categories = await getCategoriesByIds(category.subcategories);
+        if (categories) return (
+            <CategoriesDisplayPanel categories={categories} categoryTitle={category.title}/>
+        )
     }
     return (
         <div>
