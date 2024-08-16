@@ -49,4 +49,4 @@ export default async function CategoryPage({ categoryTitle }: { categoryTitle: s
         </div>
     )
 }
-export const revalidate = 60; // Regenerate the page every minute
+export const revalidate = 10; // Regenerate the page every minute
