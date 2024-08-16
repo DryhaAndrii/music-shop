@@ -38,4 +38,4 @@ export async function generateStaticParams() {
     const slugs = await getAllPossiblePaths();
     return slugs;
 }
-export const revalidate = 10; // Regenerate the page every 10 seconds
+export const revalidate = 3600; // Regenerate the page every hour
