@@ -39,4 +39,4 @@ function Catalogue({ categories }: { categories: Category[] | undefined }) {
 
 export default Catalogue;
 
-export const revalidate = 3600; // Regenerate the page every hour
+export const revalidate = 3600; // Regenerate the component every hour
