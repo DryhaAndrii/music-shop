@@ -27,3 +27,5 @@ export default function CategoriesDisplayPanel({ categories, categoryTitle }: Ca
 
     )
 }
+
+export const revalidate = 3600; // Regenerate the page every hour
