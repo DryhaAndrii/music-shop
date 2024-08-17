@@ -6,11 +6,11 @@ import Contacts from "./headerComponents/contacts/contacts";
 import styles from "./styles.module.scss";
 import Cart from "./headerComponents/cart/cart";
 import Catalogue from "./headerComponents/catalogue/catalogue";
-import getMainCategories from "@/functions/getMainCategories";
+import Category from "@/types/category";
 
 
-async function Header() {
-    const categories = await getMainCategories();
+async function Header({ categories }: { categories: Category[] }) {
+
     return (
 
         <header className={styles.header}>
