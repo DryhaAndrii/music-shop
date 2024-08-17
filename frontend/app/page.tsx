@@ -19,4 +19,4 @@ export default async function Home() {
     </>
   );
 }
-export const revalidate = 3600; // Regenerate the page every hour
+
