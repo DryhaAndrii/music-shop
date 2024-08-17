@@ -35,6 +35,6 @@ export default async function RootLayout({
     </html>
   );
 }
-export const revalidate = 3600; // Regenerate the page every hour
+export const revalidate = 10; // Regenerate the page every hour
 
 
