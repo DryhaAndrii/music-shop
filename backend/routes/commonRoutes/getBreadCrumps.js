@@ -7,7 +7,7 @@ require('dotenv').config();
 router.get('', async (req, res) => {
     try {
         const { title } = req.query;
-
+        console.log('Constructing bread crumps for ', title);
         // Checking if it's a product
         let entity = await Product.findOne({ title }).populate('parentCategoryId');
 

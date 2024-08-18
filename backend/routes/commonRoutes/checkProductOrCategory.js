@@ -7,7 +7,7 @@ require('dotenv').config();
 router.get('', async (req, res) => {
     try {
         const { title } = req.query;
-
+        console.log('Checking if ', title, 'is a product or a category');
         // Search for product
         const product = await Product.findOne({ title });
         if (product) {

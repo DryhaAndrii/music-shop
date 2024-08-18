@@ -5,6 +5,7 @@ require('dotenv').config();
 
 router.get('', async (req, res) => {
     try {
+        console.log('Get query for products by ids');
         const productsIds = req.query.productsIds;
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 5;

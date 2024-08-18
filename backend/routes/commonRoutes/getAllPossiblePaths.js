@@ -10,6 +10,7 @@ router.get('', async (req, res) => {
         const products = await Product.find({}).lean();
 
         const paths = [];
+        console.log('Get query for all possible paths');
 
         // function for recursively traversing categories
         const traverseCategories = (category, currentPath) => {

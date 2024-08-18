@@ -9,7 +9,7 @@ router.get('', async (req, res) => {
         if (!Array.isArray(categoriesIds)) {
             return res.status(400).json({ message: 'ids is not an array ' });
         }
-
+        console.log('Get query to get categories by ids');
         const categories = await Category.find({ _id: { $in: categoriesIds } }).lean();
         for (let i = 0; i < categories.length; i++) {
             categories[i].handledSubcategories = [];

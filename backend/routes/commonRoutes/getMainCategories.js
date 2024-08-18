@@ -5,6 +5,7 @@ require('dotenv').config();
 
 router.get('', async (req, res) => {
     try {
+        console.log('Get query for main categories');
         const categories = await Category.find({ isSubcategory: false });
         res.status(200).json({ categories });
     } catch (error) {

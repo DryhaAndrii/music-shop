@@ -7,6 +7,8 @@ import Header from "@/components/Header/header";
 import "./globals.css";
 import getMainCategories from "@/functions/getMainCategories";
 
+const revalidationTime = Number(process.env.NEXT_PUBLIC_REVALIDATION_TIME);
+
 
 const robotoCondensed = Roboto_Condensed({ subsets: ["latin"] });
 
@@ -35,6 +37,6 @@ export default async function RootLayout({
     </html>
   );
 }
-export const revalidate = 86400; // Regenerate the page every day
+export const revalidate = revalidationTime; // Regenerate the page every hour
 
 
