@@ -1,0 +1,43 @@
+.productPage {
+    padding: 10px 0px;
+
+    h1 {
+        margin: 0px;
+        font-weight: 300;
+    }
+
+    .wrapper {
+        max-height: 400px;
+        display: flex;
+        justify-content: space-between;
+
+        div {
+            box-sizing: border-box;
+        }
+
+        .productThumbnailsWrapper {
+            width: 60%;
+        }
+
+        .productPurchasingWrapper {
+            width: 40%;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .productPage {
+        .wrapper {
+            display: flex;
+            max-height: unset;
+            flex-direction: column;
+            .productThumbnailsWrapper {
+                width: 100%;
+            }
+
+            .productPurchasingWrapper {
+                width: 100%;
+            }
+        }
+    }
+}

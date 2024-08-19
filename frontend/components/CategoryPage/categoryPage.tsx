@@ -46,7 +46,6 @@ export default async function CategoryPage({ categoryTitle }: { categoryTitle: s
     return (
         <div>
             <h1>{category.title}</h1>
-            <div>Last updated: {new Date().toISOString()}</div>
         </div>
     )
 }

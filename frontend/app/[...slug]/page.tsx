@@ -24,7 +24,6 @@ export default async function DynamicPage({ params }: { params: { slug: string[]
     return (
         <>
             <CheckUrl breadCrumbs={breadCrumbs} />
-            <div>Last updated: {new Date().toISOString()}</div>
             <BreadCrumps path={path}/>
             {productOrCategoryCheck === 'Product found'
                 ? <ProductPage productTitle={formattedSlug}/>

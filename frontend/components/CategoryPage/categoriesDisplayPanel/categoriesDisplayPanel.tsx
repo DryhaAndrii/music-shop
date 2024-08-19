@@ -15,7 +15,6 @@ export default function CategoriesDisplayPanel({ categories, categoryTitle }: Ca
 
     return (
         <div className={styles.categoriesDisplayPanel}>
-            <div>Last updated: {new Date().toISOString()}</div>
             <h1 className='container'>{categoryTitle}</h1>
             <div className={styles.cardsContainer}>
                 {categories.map((category) => {

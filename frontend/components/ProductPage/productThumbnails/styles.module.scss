@@ -1,0 +1,23 @@
+.productThumbnails {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+    .scrollWrapper {
+        width: 20%;
+        height: 100%;
+    }
+
+    .imageWrapper {
+        width: 80%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            max-width: 95%;
+            height: 95%;
+        }
+    }
+}

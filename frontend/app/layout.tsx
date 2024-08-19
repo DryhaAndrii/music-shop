@@ -31,6 +31,10 @@ export default async function RootLayout({
       </head>
       <body className={robotoCondensed.className}>
         <Header categories={categories} />
+        <div>Last updated: {new Date().getFullYear()}.
+          {new Date().getMonth()+1}.
+          {new Date().getDate()}-
+          {new Date().getHours()}:{new Date().getMinutes()}:{new Date().getSeconds()}</div>
         {children}
         <Footer />
       </body>

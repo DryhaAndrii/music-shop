@@ -9,6 +9,7 @@ const getBreadCrumps = require('./getBreadCrumps');
 const getAllPossiblePaths = require('./getAllPossiblePaths');
 const getCategoryByTitle = require('./getCategoryByTitle');
 const getCategoriesByIds = require('./getCategoriesByIds');
+const getProductByTitle = require('./getProductByTitle');
 
 router.use('/getMainCategories', getMainCategories);
 router.use('/getProductsByIds', getProductsByIds);
@@ -18,5 +19,6 @@ router.use('/getBreadCrumps', getBreadCrumps);
 router.use('/getAllPossiblePaths', getAllPossiblePaths);
 router.use('/getCategoryByTitle', getCategoryByTitle);
 router.use('/getCategoriesByIds', getCategoriesByIds);
+router.use('/getProductByTitle', getProductByTitle);
 
 module.exports = router;
