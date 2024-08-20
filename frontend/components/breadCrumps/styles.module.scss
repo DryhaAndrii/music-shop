@@ -2,21 +2,31 @@
     display: flex;
     align-items: center;
     height: 40px;
-    font-size: 0.75rem;
-    span{
+    font-size: 1.2rem;
+
+    span {
         display: flex;
         align-items: center;
     }
+
     a {
         text-decoration: none;
         color: inherit;
         display: flex;
         align-items: center;
+
         &:hover {
             text-shadow: 0 0 2px rgb(0 29 76 / 68%);
         }
     }
-    .last{
+
+    .last {
         font-weight: bold;
+    }
+}
+
+@media (max-width: 768px) {
+    .breadCrumps {
+        font-size: 0.75rem;
     }
 }

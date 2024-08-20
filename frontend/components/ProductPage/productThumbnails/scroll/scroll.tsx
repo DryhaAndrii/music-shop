@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./styles.module.scss";
 import MyButton from "@/components/myButton/myButton";
 
@@ -11,24 +11,15 @@ interface Props {
 
 export default function Scroll({ images, setBigImage }: Props) {
     const [firstImage, setFirstImage] = useState(0);
-    const [isAnimating, setIsAnimating] = useState(false);
 
     function upButtonHandler() {
-        if (firstImage === 0 || isAnimating) return;
-        setIsAnimating(true);
-        setTimeout(() => {
-            setFirstImage(prev => prev - 1);
-            setIsAnimating(false);
-        }, 300);
+        if (firstImage === 0) return;
+        setFirstImage(prev => prev - 1);
     }
 
     function downButtonHandler() {
-        if (firstImage === images.length - 4 || isAnimating) return;
-        setIsAnimating(true);
-        setTimeout(() => {
-            setFirstImage(prev => prev + 1);
-            setIsAnimating(false);
-        }, 300);
+        if (firstImage === images.length - 4) return;
+        setFirstImage(prev => prev + 1);
     }
 
     return (
@@ -44,7 +35,7 @@ export default function Scroll({ images, setBigImage }: Props) {
 
             <div className={styles.wrapper}>
                 <div
-                    className={`${styles.thumbnails} ${isAnimating ? styles.animating : ''}`}
+                    className={styles.thumbnails}
                     style={{ transform: `translateY(-${firstImage * 70}px)` }}
                 >
                     {images.map((image, index) => (
