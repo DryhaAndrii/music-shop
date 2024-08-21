@@ -13,7 +13,7 @@ const upload = multer({ storage });
 router.put('/:productId', authMiddleware, upload.array('images', 15), async (req, res) => {
     try {
         const { productId } = req.params;
-        const { productTitle, productPrice, productDescription, productAttributes } = req.body;
+        const { productTitle, productPrice, productDescription, productAttributes,productDiscount } = req.body;
 
         const parsedAttributes = JSON.parse(productAttributes);
 
@@ -29,6 +29,7 @@ router.put('/:productId', authMiddleware, upload.array('images', 15), async (req
         product.title = productTitle;
         product.price = productPrice;
         product.attributes = parsedAttributes;
+        product.discount = productDiscount;
 
         const contentState = convertFromRaw(JSON.parse(productDescription));
         const htmlDescription = stateToHTML(contentState);
@@ -41,7 +42,7 @@ router.put('/:productId', authMiddleware, upload.array('images', 15), async (req
             product.pictureCodes = req.files.map(file => file.buffer.toString('base64'));
         }
 
-        // Генерируем URL для продукта
+        // Generating the product URL
         product.url = await generateProductUrl(product);
 
         await product.save();

@@ -19,13 +19,16 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const NO_SPACE_AT_THE_START_REGEXP = /^\s+/;
 const NO_MULTIPLE_SPACES_REGEXP = /\s\s+/g;
 const ONLY_DIGITS_REGEXP = /\D/g;
+const NO_ZERO_AT_THE_START = /^0+/;
 
 const TITLE = 'title';
 const PRICE = 'price';
+const DISCOUNT = 'discount';
 
 function EditProductPage() {
     const [productTitle, setProductTitle] = useState('');
     const [productPrice, setProductPrice] = useState('');
+    const [productDiscount, setProductDiscount] = useState('0');
     const [parentCategoryId, setParentCategoryId] = useState('');
     const [productAttributes, setProductAttributes] = useState({});
     const [attributesOptions, setAttributeOptions] = useState([]);
@@ -43,7 +46,7 @@ function EditProductPage() {
         fetchCategory();
     }, [parentCategoryId]);
     async function fetchCategory() {
-        if (parentCategoryId === ''||!parentCategoryId) return;
+        if (parentCategoryId === '' || !parentCategoryId) return;
         const categories = await fetchCategoriesByIds([parentCategoryId]);
         if (!categories || categories.length === 0) {
             return;
@@ -66,9 +69,10 @@ function EditProductPage() {
         }
 
         const product = products[0];
-       
+
         setProductTitle(product.title);
         setProductPrice(product.price);
+        setProductDiscount(product.discount);
         setParentCategoryId(product.parentCategoryId);
         setProductAttributes(product.attributes);
 
@@ -104,6 +108,21 @@ function EditProductPage() {
                 .replace(ONLY_DIGITS_REGEXP, '')
                 .slice(0, 10);
             setProductPrice(newValue);
+            return;
+        }
+        if (name === DISCOUNT) {
+            let newValue = e.target.value
+                .replace(ONLY_DIGITS_REGEXP, '')
+                .replace(NO_ZERO_AT_THE_START, '');
+
+            if (newValue === '') {
+                return setProductDiscount(0);
+            }
+
+            // limit the value to a number between 0 and 100
+            newValue = Math.min(Math.max(parseInt(newValue, 10), 0), 100);
+
+            setProductDiscount(newValue);
             return;
         }
 
@@ -161,6 +180,7 @@ function EditProductPage() {
             });
             data.append('productTitle', productTitle);
             data.append('productPrice', productPrice);
+            data.append('productDiscount', productDiscount);
             data.append('productAttributes', JSON.stringify(productAttributes));
             data.append('productDescription', JSON.stringify(convertToRaw(editorState.getCurrentContent())));
 
@@ -191,7 +211,9 @@ function EditProductPage() {
                         <div className='inputsWrapper'>
                             <Input type={INPUT_TYPES.TEXT} name={TITLE} placeholder={'Product title'} value={productTitle} onChangeHandler={onInputChange} />
                             <Input type={INPUT_TYPES.TEXT} name={PRICE} placeholder={'Product price'} value={productPrice} onChangeHandler={onInputChange} />
+                            <Input type={INPUT_TYPES.TEXT} name={DISCOUNT} placeholder={'Product discount'} value={productDiscount} onChangeHandler={onInputChange} />
                             <Input type={INPUT_TYPES.SUBMIT} value="Update product" />
+
                         </div>
                         <div className='textEditorWrapper'>
                             <h3>Description</h3>

@@ -1,0 +1,8 @@
+.discountBadge {
+    background-color: red;
+    padding: 3px 3px 3px 10px;
+    border-radius: 5px;
+    color: white;
+    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+    font-weight: 600;
+}

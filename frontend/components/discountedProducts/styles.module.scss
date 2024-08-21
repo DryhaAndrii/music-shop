@@ -1,0 +1,17 @@
+.discountedProducts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0px;
+    position: relative;
+    h2 {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+
+    button {
+        width: 200px;
+        margin: 0 auto;
+    }
+}

@@ -31,7 +31,7 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
 
         const pictureCodes = req.files.map(file => file.buffer.toString('base64'));
 
-        const url = await generateProductUrl(categoryId,productTitle);
+        const url = await generateProductUrl(categoryId, productTitle);
 
         const newProduct = new Product({
             title: productTitle,
@@ -44,6 +44,7 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
             },
             pictureCodes,
             price: productPrice,
+            discount: 0,
             url
         });
 
@@ -68,7 +69,7 @@ router.post('', authMiddleware, upload.array('images', 15), async (req, res) => 
 
 module.exports = router;
 
-async function generateProductUrl(categoryId,productTitle) {
+async function generateProductUrl(categoryId, productTitle) {
     let category = await Category.findById(categoryId).populate('parentCategoryId');
     const segments = [];
 

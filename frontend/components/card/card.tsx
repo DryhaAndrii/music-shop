@@ -6,6 +6,7 @@ import Product from '@/types/product';
 import MyButton from '../myButton/myButton';
 import Link from 'next/link';
 import Category from '@/types/category';
+import DiscountBadge from '../discountBadge/discountBadge';
 
 export enum CARD_TYPES {
     PRODUCT = 'product',
@@ -68,7 +69,22 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
                         {/* Getting first paragraph of description */}
                         <p>{`${product?.description.html.split('<p>').join('').split('</p>')[0].substring(0, 120)}...`}</p>
                         <div>
-                            <p>{`${product.price}$`}</p>
+                            {product.discount && product.discount > 0
+                                ? <div>
+                                    <span>
+                                        <span className={styles.oldPrice}>{`${product.price}$`}</span>
+                                        <span className={styles.discount}>
+                                            <DiscountBadge>
+                                                {` - ${product.discount}%`}
+                                            </DiscountBadge>
+
+                                        </span>
+                                    </span>
+                                    <p>{`${Math.round(+product.price * (100 - product.discount) / 100)}$`}</p>
+                                </div>
+                                : <p>{`${product.price}$`}</p>
+                            }
+
                             <MyButton>
                                 <span className="material-symbols-outlined">
                                     add_shopping_cart
@@ -92,7 +108,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
                         </Link>
                     </div>
                     <div className={styles.bot}>
-                        <h3>{category.title}({category.subcategories.length+category.products.length})</h3>
+                        <h3>{category.title}({category.subcategories.length + category.products.length})</h3>
                     </div>
                 </div >
             );

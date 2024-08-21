@@ -23,7 +23,13 @@
                 margin-top: 10px;
                 gap: 20px;
                 display: flex;
-                justify-content: space-around;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                width: 90%;
+                input{
+                    width: 20%;
+                    flex-shrink: 0;
+                }
             }
 
             .textEditorWrapper {
