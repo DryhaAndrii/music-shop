@@ -24,7 +24,7 @@ export default function NewProducts({ initialProducts, initialHasMore }: NewProd
 
         setIsLoading(true);
         try {
-            const { products: newProducts, hasMore: moreProducts } = await getNewProducts(page, 5);
+            const { newProducts, hasMoreNewProducts: moreProducts } = await getNewProducts(page, 5);
 
             if (newProducts && newProducts.length > 0) {
                 setProducts(prevProducts => [...prevProducts, ...newProducts]);
