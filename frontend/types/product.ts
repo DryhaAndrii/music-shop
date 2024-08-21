@@ -12,7 +12,7 @@ export default interface Product {
     title: string;
     url: string;
     _id: string;
-    discount?: number
+    discount?: string
 }
 export interface ProductAttribute {
     [key: string]: string

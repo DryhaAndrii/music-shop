@@ -16,18 +16,20 @@
         }
 
         .productThumbnailsWrapper {
-            width: 60%;
+            width: 50%;
         }
 
         .productPurchasingWrapper {
-            width: 40%;
+            width: 50%;
         }
     }
 }
 
 @media (max-width: 768px) {
     .productPage {
+        padding: 20px 0px;
         .wrapper {
+            gap: 20px;
             display: flex;
             max-height: unset;
             flex-direction: column;

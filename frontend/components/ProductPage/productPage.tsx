@@ -23,7 +23,10 @@ export default async function ProductPage({ productTitle }: { productTitle: stri
                         <ProductThumbnails images={product.pictureCodes} />
                     </div>
                     <div className={styles.productPurchasingWrapper}>
-                        <ProductPurchasing price={+product.price}/>
+                        <ProductPurchasing
+                            price={+product.price}
+                            discount={product.discount}
+                        />
                     </div>
                 </div>
             </div>

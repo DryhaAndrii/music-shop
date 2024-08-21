@@ -69,7 +69,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
                         {/* Getting first paragraph of description */}
                         <p>{`${product?.description.html.split('<p>').join('').split('</p>')[0].substring(0, 120)}...`}</p>
                         <div>
-                            {product.discount && product.discount > 0
+                            {product.discount && +product.discount > 0
                                 ? <div>
                                     <span>
                                         <span className={styles.oldPrice}>{`${product.price}$`}</span>
@@ -80,7 +80,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
 
                                         </span>
                                     </span>
-                                    <p>{`${Math.round(+product.price * (100 - product.discount) / 100)}$`}</p>
+                                    <p>{`${Math.round(+product.price * (100 - +product.discount) / 100)}$`}</p>
                                 </div>
                                 : <p>{`${product.price}$`}</p>
                             }
