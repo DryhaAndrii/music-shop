@@ -1,16 +1,17 @@
 .productPurchasing {
     box-shadow: inset 0 0 3px 0px black;
-    min-height: 300px;
     border-radius: 10px;
     padding: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 20px;
+
     .buttonsWrapper {
         display: flex;
         gap: 20px;
         height: 50px;
+
         .countManager {
             display: flex;
             align-items: stretch;
@@ -37,38 +38,67 @@
             display: flex;
             flex-grow: 1;
             gap: 20px;
-            button{
+
+            button {
                 height: 100%;
                 font-size: 20px;
             }
+
             >button:first-child {
                 width: 100px;
                 background-color: #00a8e8;
                 color: white;
                 flex-grow: 1;
             }
+
             >button:nth-child(2) {
                 width: 100px;
                 flex-grow: 1;
             }
-            
+
         }
 
     }
 }
 
 @media (max-width: 1200px) {
-    .productPurchasing{
+    .productPurchasing {
         padding: 10px;
-        button{
+
+        button {
             font-size: 16px !important;
         }
-        .buttonsWrapper{
+
+        .buttonsWrapper {
             gap: 5px;
-            .buttons{
+
+            .buttons {
                 gap: 5px;
             }
         }
     }
-    
 }
+@media (max-width: 400px) {
+    .productPurchasing {
+        .buttonsWrapper {
+            .countManager{
+                button{
+                    width: 15px;
+                }
+                input{
+                    width: 15px;
+                }
+            }
+            .buttons{
+                button{
+                    flex-grow: 0;
+                    width: unset !important;
+                }
+                button:last-child{
+                    width: 40px !important; 
+                }
+            }
+        }
+    }
+}
+
