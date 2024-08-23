@@ -176,7 +176,19 @@
             }
 
             .bot {
+                padding: 10px;
                 height: 65%;
+                h3{
+                    font-size: 1rem;
+                }
+                p{
+                    font-size: 0.9rem;
+                }
+                .discount{
+                    >div{
+                        padding: 2px 3px 2px 5px;
+                    }
+                }
             }
         }
     }

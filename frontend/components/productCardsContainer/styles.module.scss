@@ -47,6 +47,9 @@
 }
 
 @media (max-width: 650px) {
+    .productCardsContainer{
+        gap: 10px;
+    }
     .columns {
         &--5{
             grid-template-columns: repeat(2, 1fr);
