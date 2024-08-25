@@ -18,17 +18,17 @@ router.get('', async (req, res) => {
             return res.status(400).json({ message: 'productsIds is not an array' });
         }
 
-        // Основной запрос для поиска продуктов по ID и другим фильтрам (кроме цены)
+        // query for search products without priceRange
         let query = { _id: { $in: productsIds } };
 
-        // Добавляем фильтрацию по атрибутам, если они есть
+        // Adding filters if they exist
         if (filters.attributes && Object.keys(filters.attributes).length > 0) {
             Object.entries(filters.attributes).forEach(([key, value]) => {
                 query[`attributes.${key}`] = value;
             });
         }
 
-        // Выполняем поиск продуктов без учета фильтра по цене
+        // Searching products with query
         const filteredProducts = await Product.find(query);
 
         // Фильтрация по диапазону цен (после получения продуктов)

@@ -40,11 +40,11 @@ export default function DiscountedProducts({ initialProducts, initialHasMore }: 
     };
 
     return (
-        <div className={styles.discountedProducts}>
+        <div className={`${styles.discountedProducts} container`}>
             {isLoading && <Loading />}
-            <h2 className="container">Discounted products</h2>
+            <h2>Discounted products</h2>
             {products.length === 0
-                ? <h2 className="container">No products found</h2>
+                ? <h2>No products found</h2>
                 : <ProductCardsContainer products={products} columns={5} />
             }
 
