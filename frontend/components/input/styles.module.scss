@@ -11,8 +11,8 @@
         &::-webkit-outer-spin-button{
             display: none;
         }
-        -moz-appearance: none;
-
+        -moz-appearance: textfield;
+        appearance: textfield;
         width: 200px;
         height: 30px;
         font-family: inherit;

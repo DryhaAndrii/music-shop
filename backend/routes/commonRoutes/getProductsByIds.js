@@ -12,38 +12,40 @@ router.get('', async (req, res) => {
         const skip = (page - 1) * limit;
 
         const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
+        console.log('filters:', filters);
 
         if (!Array.isArray(productsIds)) {
             return res.status(400).json({ message: 'productsIds is not an array' });
         }
 
+        // Основной запрос для поиска продуктов по ID и другим фильтрам (кроме цены)
         let query = { _id: { $in: productsIds } };
 
-        // Adding price filter if it exists
-        if (filters.priceRange) {
-            query.price = {
-                $gte: filters.priceRange.minPrice.toString(),
-                $lte: filters.priceRange.maxPrice.toString()
-            };
-        }
-
-        // Adding attributes filter if it exists
+        // Добавляем фильтрацию по атрибутам, если они есть
         if (filters.attributes && Object.keys(filters.attributes).length > 0) {
             Object.entries(filters.attributes).forEach(([key, value]) => {
                 query[`attributes.${key}`] = value;
             });
         }
 
+        // Выполняем поиск продуктов без учета фильтра по цене
+        const filteredProducts = await Product.find(query);
 
-        
-        const totalProducts = await Product.countDocuments(query);
-        const products = await Product.find(query)
-            .skip(skip)
-            .limit(limit)
-            .lean();
+        // Фильтрация по диапазону цен (после получения продуктов)
+        const productsWithinPriceRange = filteredProducts.filter(product => {
+            if (!filters.priceRange) return true; // Если фильтр по цене не указан, возвращаем все продукты
+            const productPrice = +product.price;
+            return productPrice >= filters.priceRange.minPrice && productPrice <= filters.priceRange.maxPrice;
+        });
+
+        const totalProducts = productsWithinPriceRange.length;
+
+        // Применяем skip и limit
+        const paginatedProducts = productsWithinPriceRange.slice(skip, skip + limit);
+
         const totalPages = Math.ceil(totalProducts / limit);
 
-        res.status(200).json({ products, totalProducts, totalPages });
+        res.status(200).json({ products: paginatedProducts, totalProducts, totalPages });
     } catch (error) {
         console.error('Error in getProductsByIds:', error);
         res.status(500).json({ message: 'Server error', error: error.toString() });
