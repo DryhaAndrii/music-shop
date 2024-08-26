@@ -66,12 +66,13 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
                     </div>
                     <div className={styles.bot}>
                         <h3>
+                            {/* Getting first 25 letters of title */}
                             {product.title.length > 25
                                 ? `${product.title.substring(0, product.title.substring(0, 25).lastIndexOf(' '))}...`
                                 : product.title}
                         </h3>
                         {/* Getting first paragraph of description */}
-                        <p>{`${product?.description.html.split('<p>').join('').split('</p>')[0].substring(0, 120)}...`}</p>
+                        <p>{`${product?.description.html.split('<p>').join('').split('</p>').join('').substring(0, 120)}`}</p>
                         <div>
                             {product.discount && +product.discount > 0
                                 ? <div>

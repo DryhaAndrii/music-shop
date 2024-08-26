@@ -40,23 +40,27 @@ export default function NewProducts({ initialProducts, initialHasMore }: NewProd
     };
 
     return (
-        <div className={`${styles.newProducts} container`}>
+        <div className={styles.wrapper}>
+
             {isLoading && <Loading />}
-            <h2>New Products</h2>
-            {products.length === 0
-                ? <h2>No products found</h2>
-                : <ProductCardsContainer products={products} columns={5} />
-            }
+            <div className={`${styles.newProducts} container`}>
+
+                <h2>New Products</h2>
+                {products.length === 0
+                    ? <h2>No products found</h2>
+                    : <ProductCardsContainer products={products} columns={5} />
+                }
 
 
-            {hasMore && (
-                <MyButton
-                    onClick={getProducts}
-                    disabled={isLoading}
-                >
-                    {isLoading ? 'Loading...' : 'Load More'}
-                </MyButton>
-            )}
+                {hasMore && (
+                    <MyButton
+                        onClick={getProducts}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Loading...' : 'Load More'}
+                    </MyButton>
+                )}
+            </div>
         </div>
     );
 }

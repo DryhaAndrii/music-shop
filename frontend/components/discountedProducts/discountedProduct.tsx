@@ -40,23 +40,26 @@ export default function DiscountedProducts({ initialProducts, initialHasMore }: 
     };
 
     return (
-        <div className={`${styles.discountedProducts} container`}>
+        <div className={styles.wrapper}>
             {isLoading && <Loading />}
-            <h2>Discounted products</h2>
-            {products.length === 0
-                ? <h2>No products found</h2>
-                : <ProductCardsContainer products={products} columns={5} />
-            }
+            <div className={`${styles.discountedProducts} container`}>
+
+                <h2>Discounted products</h2>
+                {products.length === 0
+                    ? <h2>No products found</h2>
+                    : <ProductCardsContainer products={products} columns={5} />
+                }
 
 
-            {hasMore && (
-                <MyButton
-                    onClick={getProducts}
-                    disabled={isLoading}
-                >
-                    {isLoading ? 'Loading...' : 'Load More'}
-                </MyButton>
-            )}
+                {hasMore && (
+                    <MyButton
+                        onClick={getProducts}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Loading...' : 'Load More'}
+                    </MyButton>
+                )}
+            </div>
         </div>
     );
 }

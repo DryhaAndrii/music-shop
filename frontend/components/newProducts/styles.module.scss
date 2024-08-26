@@ -1,20 +1,27 @@
-.newProducts {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px 0px;
+.wrapper {
+
     position: relative;
-    >div{
-        padding: 0px;
-    }
-    h2 {
-        margin-top: 0px;
-        margin-bottom: 0px;
-    }
+
+    .newProducts {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 0px;
 
 
-    button {
-        width: 200px;
-        margin: 0 auto;
+        >div {
+            padding: 0px;
+        }
+
+        h2 {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+
+        button {
+            width: 200px;
+            margin: 0 auto;
+        }
     }
 }
