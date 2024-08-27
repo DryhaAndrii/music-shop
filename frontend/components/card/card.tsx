@@ -19,6 +19,7 @@ interface CardProps {
 }
 
 const UNDERSCORE_REGEX = / /g;
+const ONLY_LETTERS = /<[^>]+>/g;
 
 const cx = classNames.bind(styles);
 
@@ -72,7 +73,7 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
                                 : product.title}
                         </h3>
                         {/* Getting first paragraph of description */}
-                        <p>{`${product?.description.html.split('<p>').join('').split('</p>').join('').substring(0, 120)}`}</p>
+                        <p>{`${product?.description.html.replace(ONLY_LETTERS, '').substring(0, 120)}`}...</p>
                         <div>
                             {product.discount && +product.discount > 0
                                 ? <div>

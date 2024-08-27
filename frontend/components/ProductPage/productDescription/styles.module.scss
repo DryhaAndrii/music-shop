@@ -5,5 +5,12 @@
 
     .description {
         font-size: 1.1rem;
+        figure{
+            max-width: 100%;
+            margin: 5px;
+            img{
+                max-width: 100%;
+            }
+        }
     }
 }

@@ -1,5 +1,8 @@
 .productPage {
     padding: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
     h1 {
         margin: 0px;
@@ -23,17 +26,19 @@
             width: 50%;
         }
     }
-    
+
 }
 
 @media (max-width: 768px) {
     .productPage {
         padding: 20px 0px;
+
         .wrapper {
             gap: 20px;
             display: flex;
             max-height: unset;
             flex-direction: column;
+
             .productThumbnailsWrapper {
                 width: 100%;
             }
