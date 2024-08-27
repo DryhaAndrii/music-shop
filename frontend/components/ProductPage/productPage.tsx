@@ -5,6 +5,7 @@ import ProductThumbnails from "./productThumbnails/productThumbnails";
 
 import Product from "@/types/product";
 import ProductPurchasing from "./productPurchasing/productPurchasing";
+import ProductDescription from "./productDescription/productDescription";
 
 const UNDERSCORE_REGEX = /_/g;
 const SPACE_REGEX = / /g;
@@ -28,6 +29,9 @@ export default async function ProductPage({ productTitle }: { productTitle: stri
                             discount={product.discount}
                         />
                     </div>
+                </div>
+                <div className={styles.descriptionWrapper} >
+                    <ProductDescription productDescription={product.description} />
                 </div>
             </div>
         </div>

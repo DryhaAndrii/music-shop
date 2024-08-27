@@ -3,10 +3,7 @@
 export default interface Product {
     attributes: ProductAttribute[];
     parentCategoryId: string;
-    description: {
-        raw: string;
-        html: string;
-    },
+    description: ProductDescriptions
     pictureCodes: string[];
     price: string;
     title: string;
@@ -16,4 +13,8 @@ export default interface Product {
 }
 export interface ProductAttribute {
     [key: string]: string
+}
+export interface ProductDescriptions {
+    raw: string;
+    html: string;
 }
