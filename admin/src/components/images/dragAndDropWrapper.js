@@ -1,5 +1,6 @@
 import React from 'react';
 import DragAndDrop from "../dragAndDrop/dragAndDrop";
+import Button from '../button/button';
 
 function DragAndDropWrapper({ onFileAdd, onFileRemove, index, image }) {
     function handleFilesAdded(file) {
@@ -12,12 +13,12 @@ function DragAndDropWrapper({ onFileAdd, onFileRemove, index, image }) {
 
     return (
         <div className='dragAndDropWrapper'>
-            <DragAndDrop 
-                onFilesAdded={handleFilesAdded} 
-                defaultImage={image} 
-                id={`drag${index}`} 
+            <Button buttonText={'Remove'} onClick={handleRemove} />
+            <DragAndDrop
+                onFilesAdded={handleFilesAdded}
+                defaultImage={image}
+                id={`drag${index}`}
             />
-            <button onClick={handleRemove}>Remove</button>
         </div>
     );
 }

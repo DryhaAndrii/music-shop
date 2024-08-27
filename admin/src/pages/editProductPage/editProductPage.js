@@ -72,7 +72,7 @@ function EditProductPage() {
 
         setProductTitle(product.title);
         setProductPrice(product.price);
-        setProductDiscount(product.discount);
+        setProductDiscount(product.discount === undefined ? '0' : product.discount);
         setParentCategoryId(product.parentCategoryId);
         setProductAttributes(product.attributes);
 
