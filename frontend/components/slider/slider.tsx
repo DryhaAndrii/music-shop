@@ -34,11 +34,23 @@ export default function Slider() {
 
     >
       <SwiperSlide>
-        <img src="/images/SliderBanners/slider3.jpg">
+        <img src="/images/SliderBanners/banner1.jpg">
         </img>
       </SwiperSlide>
       <SwiperSlide>
-        <img src="/images/SliderBanners/slider4.jpg">
+        <img src="/images/SliderBanners/banner2.jpg">
+        </img>
+      </SwiperSlide>
+      <SwiperSlide>
+        <img src="/images/SliderBanners/banner3.jpg">
+        </img>
+      </SwiperSlide>
+      <SwiperSlide>
+        <img src="/images/SliderBanners/banner4.jpg">
+        </img>
+      </SwiperSlide>
+      <SwiperSlide>
+        <img src="/images/SliderBanners/banner5.jpg">
         </img>
       </SwiperSlide>
       <div className="swiper-button-backward">

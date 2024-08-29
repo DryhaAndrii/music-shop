@@ -7,7 +7,7 @@ import classNames from 'classnames/bind';
 
 interface MyButtonProps {
     children: React.ReactNode;
-    onClick?: () => void;
+    onClick?: ((...args: any[]) => void) | (() => void);
     disabled?: boolean;
 }
 
