@@ -7,8 +7,15 @@ interface Props {
 }
 
 import styles from "./styles.module.scss"
+import googleAuth from "@/functions/googleAuth";
 
 function AuthForm({ loggingIn }: Props) {
+
+    const handleGoogleAuth = async (event: any) => {
+        event.preventDefault();
+        googleAuth();
+    };
+
     return (
         <form className={styles.authForm}>
             {loggingIn
@@ -17,8 +24,8 @@ function AuthForm({ loggingIn }: Props) {
                 :
                 <SignIn />
             }
-            <MyButton color={BUTTON_COLOR.DARK}>Google</MyButton>
-            
+            <MyButton onClick={handleGoogleAuth} color={BUTTON_COLOR.DARK}>Google</MyButton>
+
         </form>
     );
 }

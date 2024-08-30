@@ -11,6 +11,9 @@ const getCategoryByTitle = require('./getCategoryByTitle');
 const getCategoriesByIds = require('./getCategoriesByIds');
 const getProductByTitle = require('./getProductByTitle');
 const getDiscountedProducts = require('./getDiscountedProducts');
+const googleAuth = require('./googleAuth');
+const checkAuth = require('./checkAuth');
+const logout = require('./logout');
 
 router.use('/getMainCategories', getMainCategories);
 router.use('/getProductsByIds', getProductsByIds);
@@ -22,5 +25,8 @@ router.use('/getCategoryByTitle', getCategoryByTitle);
 router.use('/getCategoriesByIds', getCategoriesByIds);
 router.use('/getProductByTitle', getProductByTitle);
 router.use('/getDiscountedProducts', getDiscountedProducts);
+router.use('/googleAuth', googleAuth);
+router.use('/checkAuth', checkAuth);
+router.use('/logout', logout);
 
 module.exports = router;
