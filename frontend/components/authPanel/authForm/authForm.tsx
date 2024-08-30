@@ -18,6 +18,7 @@ function AuthForm({ loggingIn }: Props) {
                 <SignIn />
             }
             <MyButton color={BUTTON_COLOR.DARK}>Google</MyButton>
+            
         </form>
     );
 }
