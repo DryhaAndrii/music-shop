@@ -16,6 +16,7 @@ function AuthForm({ loggingIn }: Props) {
         googleAuth();
     };
 
+    
     return (
         <form className={styles.authForm}>
             {loggingIn
