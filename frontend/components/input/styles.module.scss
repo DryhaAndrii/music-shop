@@ -5,12 +5,14 @@
     &--email,
     &--number,
     &--password {
-        &::-webkit-inner-spin-button{
+        &::-webkit-inner-spin-button {
             display: none;
         }
-        &::-webkit-outer-spin-button{
+
+        &::-webkit-outer-spin-button {
             display: none;
         }
+
         -moz-appearance: textfield;
         appearance: textfield;
         width: 200px;
@@ -25,6 +27,17 @@
         border-radius: 5px;
         box-sizing: border-box;
         padding: 0px 10px;
+    }
+
+    &--dark {
+        background-color: #1c364e;
+        border: none;
+        color: white;
+
+        &::placeholder {
+            color: rgb(182, 182, 182);
+
+        }
     }
 
     &--submit {

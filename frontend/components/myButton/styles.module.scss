@@ -18,6 +18,16 @@
     &:active {
         box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
     }
+
+    &--dark {
+        background-color: #1c364e;
+        color: white;
+        border: none;
+
+        &:active {
+            box-shadow: inset 0px 0px 8px 2px black;
+        }
+    }
 }
 
 .disabled {

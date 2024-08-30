@@ -3,9 +3,8 @@ import { createPortal } from "react-dom";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import Switcher from "./switcher/switcher";
-import LogIn from "./logIn/logIn";
-import SignIn from "./signIn/signIn";
-import MyButton from "../myButton/myButton";
+import MyButton, { BUTTON_COLOR } from "../myButton/myButton";
+import AuthForm from "./authForm/authForm";
 
 interface Props {
     hideAuthPanel: () => void
@@ -21,19 +20,21 @@ function AuthPanel({ hideAuthPanel }: Props) {
         createPortal(
             <div className={styles.wrapper}>
                 <div className={styles.authPanel}>
-                    <MyButton onClick={hideAuthPanel}>
+                    <MyButton onClick={hideAuthPanel} color={BUTTON_COLOR.DARK}>
                         <span className="material-symbols-outlined">close</span>
                     </MyButton>
                     <Switcher loggingIn={loggingIn} setLoggingIn={setLoggingIn} />
-                    {loggingIn
-                        ?
-                        <LogIn />
-                        :
-                        <SignIn />
-                    }
+                    <h2>
+                        {loggingIn
+                            ?
+                            "Log in"
+                            :
+                            "Sign in"
+                        }
+                    </h2>
+                    <AuthForm loggingIn={loggingIn} />
                 </div>
             </div>
-
             ,
             body
         )

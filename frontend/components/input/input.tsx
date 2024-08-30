@@ -10,11 +10,13 @@ export enum INPUT_TYPES {
     EMAIL = "email",
     NUMBER = "number"
 }
-
-
-
-interface MyButtonProps {
+export enum INPUT_COLOR {
+    LIGHT = "light",
+    DARK = "dark"
+}
+interface InputProps {
     type?: INPUT_TYPES;
+    color?: INPUT_COLOR;
     placeholder?: string;
     name?: string;
     value?: string;
@@ -24,12 +26,13 @@ interface MyButtonProps {
 
 const cx = classNames.bind(styles);
 
-function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, value,onBlur }: MyButtonProps) {
+function Input({ type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
 
 
     const className = cx({
         input: true,
         [`input--${type}`]: true,
+        [`input--${color}`]: true,
     });
     switch (type) {
         case INPUT_TYPES.SUBMIT:
@@ -49,7 +52,7 @@ function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, va
                     name={name}
                     value={value}
                     onChange={onChangeHandler ? (e) => onChangeHandler(e) : undefined}
-                    
+
                     className={className}
                     placeholder={placeholder}
                     type={type}
@@ -64,7 +67,7 @@ function Input({ type = INPUT_TYPES.TEXT, placeholder, onChangeHandler, name, va
                     onBlur={onBlur ? (e) => onBlur(e) : undefined}
                     className={className}
                     type={type}
-                
+
                 />
             )
 
