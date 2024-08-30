@@ -4,6 +4,7 @@ import NewProducts from "@/components/newProducts/newProducts";
 import getNewProducts from "@/functions/getNewProducts";
 import getDiscountedProducts from "@/functions/getDiscountedProducts";
 import DiscountedProducts from "@/components/discountedProducts/discountedProduct";
+import CheckAuth from "@/utils/checkAuth";
 
 
 export default async function Home() {
@@ -21,6 +22,7 @@ export default async function Home() {
           initialHasMore={hasMoreDiscountedProducts}
           initialProducts={discountedProducts}
         />
+        <CheckAuth />
       </main>
     </>
   );

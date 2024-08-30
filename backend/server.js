@@ -37,9 +37,8 @@ const oauth2Client = new OAuth2Client(
     process.env.GOOGLE_CLIENT_SECRET,
     process.env.GOOGLE_REDIRECT_URI
 );
-console.log(oauth2Client);
 
-// Добавляем oauth2Client в объект req для доступа в роутах
+// Adding oauth2Client to request so it can be used in routes
 app.use((req, res, next) => {
     req.oauth2Client = oauth2Client;
     next();

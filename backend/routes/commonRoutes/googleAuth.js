@@ -7,7 +7,7 @@ require('dotenv').config();
 // Function to generate a token
 const generateToken = (user) => {
     return jwt.sign(
-        { id: user._id, email: user.email, role: user.role },
+        { id: user._id, email: user.email, name: user.name },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
     );
@@ -25,7 +25,6 @@ router.get('', (req, res) => {
 // Rout to handle Google callback
 router.get('/callback', async (req, res) => {
     const { code } = req.query;
-    console.log('callback googla');
     try {
         const { tokens } = await req.oauth2Client.getToken(code);
         req.oauth2Client.setCredentials(tokens);
@@ -38,6 +37,7 @@ router.get('/callback', async (req, res) => {
         const payload = ticket.getPayload();
         const { email, name, sub: googleId, } = payload;
 
+
         // Searching by email or googleId
         let user = await User.findOne({ $or: [{ email }, { googleId }] });
 
@@ -48,9 +48,11 @@ router.get('/callback', async (req, res) => {
                 name,
                 googleId,
             });
+            console.log('New user created, Name:', name, 'Email:', email, 'GoogleId:', googleId);
             await user.save();
         } else {
             // If exist in database, update user
+            console.log('User exist, Name:', name, 'Email:', email, 'GoogleId:', googleId);
             user.name = name;
             user.lastLogin = new Date();
             await user.save();
@@ -58,9 +60,9 @@ router.get('/callback', async (req, res) => {
 
         // Generate token
         const token = generateToken(user);
-
+        console.log('Generating token');
         // Send token to client
-        res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // 1 час
+        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', path: '/' });
         res.redirect(`${process.env.CLIENT_URL}`);
     } catch (error) {
         console.error('Error during Google auth:', error);
