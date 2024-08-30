@@ -22,11 +22,10 @@ router.get('', (req, res) => {
     res.json({ url });
 });
 
-
-
 // Rout to handle Google callback
 router.get('/callback', async (req, res) => {
     const { code } = req.query;
+    console.log('callback googla');
     try {
         const { tokens } = await req.oauth2Client.getToken(code);
         req.oauth2Client.setCredentials(tokens);
