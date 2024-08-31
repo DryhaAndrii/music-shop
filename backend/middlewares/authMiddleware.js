@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const authMiddleware = (req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies.adminToken;
 
     if (!token) {
         console.log('he has no token');
@@ -10,7 +10,7 @@ const authMiddleware = (req, res, next) => {
     }
 
     try {
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET_ADMIN);
         console.log('token is good');
         next();
     } catch (error) {

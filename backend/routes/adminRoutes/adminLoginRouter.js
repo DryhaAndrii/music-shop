@@ -24,11 +24,17 @@ router.post('', async (req, res) => {
         console.log('login is nice, creating token');
 
         const payload = { id: admin.id, role: 'admin' };
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET_ADMIN, { expiresIn: '1h' });
 
         console.log('created token, sending it to the client');
 
-        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', path: '/' });
+        res.cookie('adminToken', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            path: '/',
+        });
+
         res.status(200).json({ message: 'Success login',ok: true });
         
     } catch (error) {

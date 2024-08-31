@@ -3,7 +3,7 @@ const router = express.Router();
 require('dotenv').config();
 
 router.post('', (req, res) => {
-    res.clearCookie('token');
+    res.clearCookie('clientToken');
     res.json({ message: 'Logged out successfully' });
 });
 

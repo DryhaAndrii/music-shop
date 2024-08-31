@@ -13,14 +13,14 @@ const generateToken = (user) => {
 };
 
 router.get('', (req, res) => {
-    const token = req.cookies.token;
+    const token = req.cookies.clientToken;
 
     if (!token) {
         return res.status(401).json({ message: 'No token provided' });
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_CLIENT);
 
         // Token is valid, check if it's close to expiration (e.g., less than 5 minutes left)
         const now = Math.floor(Date.now() / 1000);
@@ -29,7 +29,7 @@ router.get('', (req, res) => {
             const newToken = generateToken(decoded);
             console.log('Token expiring soon, generating new token');
             // Set the new token in a cookie
-            res.cookie('token', newToken, { httpOnly: true, secure: true, sameSite: 'none', path: '/', maxAge: 3600000 });
+            res.cookie('clientToken', newToken, { httpOnly: true, secure: true, sameSite: 'none', path: '/', maxAge: 3600000 });
         }
 
         res.json({ message: 'token is ok' });

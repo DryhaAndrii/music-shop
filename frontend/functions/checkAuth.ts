@@ -1,7 +1,7 @@
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export default async function checkAuth() {
     try {
-        const response = await fetch(`${apiUrl}/checkAuth`, {
+        const response = await fetch(`${apiUrl}checkAuth`, {
             method: 'GET',
             credentials: 'include',
         });

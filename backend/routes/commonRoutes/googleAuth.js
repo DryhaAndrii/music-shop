@@ -8,7 +8,7 @@ require('dotenv').config();
 const generateToken = (user) => {
     return jwt.sign(
         { id: user._id, email: user.email, name: user.name },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET_CLIENT,
         { expiresIn: '1h' }
     );
 };
@@ -62,7 +62,8 @@ router.get('/callback', async (req, res) => {
         const token = generateToken(user);
         console.log('Generating token');
         // Send token to client
-        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', path: '/' });
+        //res.cookie('clientToken', token);
+        res.cookie('testirovka', 'voroniny');
         res.redirect(`${process.env.CLIENT_URL}`);
     } catch (error) {
         console.error('Error during Google auth:', error);

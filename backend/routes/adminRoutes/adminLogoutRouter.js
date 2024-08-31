@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 router.get('', (req, res) => {
-    const token = req.cookies.token;
+    const token = req.cookies.adminToken;
     if (!token) {
         console.log('he has no token');
         return res.status(401).json({ message: 'You have no token', isToken: false });
