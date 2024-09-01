@@ -63,7 +63,7 @@ router.get('/callback', async (req, res) => {
         console.log('Generating token');
         // Send token to client
         //res.cookie('clientToken', token);
-        res.cookie('testirovka', 'voroniny');
+        res.cookie('clientToken', token,);
         res.redirect(`${process.env.CLIENT_URL}`);
     } catch (error) {
         console.error('Error during Google auth:', error);

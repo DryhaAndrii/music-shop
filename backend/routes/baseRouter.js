@@ -4,9 +4,9 @@ require('dotenv').config();
 
 router.get('', (req, res) => {
     try {
-        res.json({ message:'KEK'});
+        res.json({ message:'If you read this message, api is working' });
     } catch (error) {
-        res.status(401).json({ message: 'Invalid token' });
+        res.status(401).json({ message: 'api is not working :(' });
     }
 });
 
