@@ -6,6 +6,7 @@ import Header from "@/components/Header/header";
 
 import "./globals.css";
 import getMainCategories from "@/functions/getMainCategories";
+import CheckAuth from "@/utils/checkAuth";
 
 const revalidationTime = Number(process.env.NEXT_PUBLIC_REVALIDATION_TIME);
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
           {new Date().getHours()}:{new Date().getMinutes()}:{new Date().getSeconds()}</div>
         {children}
         <Footer />
+        <CheckAuth />
       </body>
     </html>
   );

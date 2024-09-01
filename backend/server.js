@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const { OAuth2Client } = require('google-auth-library');
-
+const session = require('express-session');
 
 require('dotenv').config();
 
@@ -43,6 +43,14 @@ app.use((req, res, next) => {
     req.oauth2Client = oauth2Client;
     next();
 });
+
+app.use(session({
+    secret: `${process.env.SECRET_SESSION_KEY}`, 
+    resave: true,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}));
+
 
 app.use('/api', require('./routes/api'));
 

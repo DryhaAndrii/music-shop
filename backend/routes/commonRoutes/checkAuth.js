@@ -15,6 +15,9 @@ const generateToken = (user) => {
 router.get('', (req, res) => {
     const token = req.cookies.clientToken;
 
+    req.session.test = 'test';
+
+
     if (!token) {
         return res.status(401).json({ message: 'No token provided' });
     }

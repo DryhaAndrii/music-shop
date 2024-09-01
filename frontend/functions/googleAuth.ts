@@ -1,7 +1,7 @@
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export default async function googleAuth() {
     try {
-        const response = await fetch(`${apiUrl}/googleAuth`, {
+        const response = await fetch(`${apiUrl}googleAuth`, {
             method: 'GET',
             credentials: 'include',
         });
@@ -16,3 +16,18 @@ export default async function googleAuth() {
         console.error('Error initiating Google auth:', error);
     }
 };
+
+export async function secondQuery() {
+    try {
+        const response = await fetch(`${apiUrl}secondQueryGoogleAuth`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        const data = await response.json();
+        if (data.message) {
+            console.log(data.message);
+        }
+    } catch (error) {
+        console.error('Error during second query google auth:', error);
+    }
+}
