@@ -1,7 +1,7 @@
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export default async function googleAuth() {
     try {
-        const response = await fetch(`${apiUrl}googleAuth`, {
+        const response = await fetch(`${apiUrl}googleAuth/auth`, {
             method: 'GET',
             credentials: 'include',
         });
@@ -17,17 +17,15 @@ export default async function googleAuth() {
     }
 };
 
-export async function secondQuery() {
+export async function exchangeCode(code: string) {
     try {
-        const response = await fetch(`${apiUrl}secondQueryGoogleAuth`, {
+        const response = await fetch(`${apiUrl}googleAuth/auth/exchange?code=${code}`, {
             method: 'GET',
             credentials: 'include',
         });
         const data = await response.json();
-        if (data.message) {
-            console.log(data.message);
-        }
+        //window.location.href = '/'; 
     } catch (error) {
-        console.error('Error during second query google auth:', error);
+        console.error('Error during exchange code:', error);
     }
 }

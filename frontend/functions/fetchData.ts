@@ -9,7 +9,7 @@ export default async function fetchData(endpoint: string, params?: Record<string
             url.searchParams.append(key, value);
         });
     }
-    
+
     try {
         const res = await fetch(url.toString(), {
             next: {

@@ -15,7 +15,6 @@ const generateToken = (user) => {
 router.get('', (req, res) => {
     const token = req.cookies.clientToken;
 
-    req.session.test = 'test';
 
 
     if (!token) {
