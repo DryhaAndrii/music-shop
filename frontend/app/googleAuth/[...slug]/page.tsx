@@ -14,8 +14,7 @@ export default function GoogleAuth({ params }: { params: { slug: string[] } }) {
     }
     return (
         <div>
-            <h1>GoogleAuth</h1>
-            <p>{params.slug[0]}</p>
+            <h1 style={{ textAlign: 'center' }}>Logging you in...</h1>
         </div>
     )
 }

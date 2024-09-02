@@ -24,7 +24,7 @@ export async function exchangeCode(code: string) {
             credentials: 'include',
         });
         const data = await response.json();
-        //window.location.href = '/'; 
+        window.location.href = '/'; 
     } catch (error) {
         console.error('Error during exchange code:', error);
     }

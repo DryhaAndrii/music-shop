@@ -67,14 +67,9 @@ router.get('/auth/callback', async (req, res) => {
 
         setTimeout(() => {
             tempCodes.delete(tempCode);
-        }, 5 * 60 * 1000);
+        }, 1 * 60 * 1000);// 1 minute
 
-        res.redirect(`${process.env.CLIENT_URL}/googleAuth?code=${tempCode}`);
-        // Send token to client
-        //res.cookie('clientToken', token);
-        //res.cookie('KEK', 'KEK');
-        //res.json({ message: 'ok' });
-        res.redirect(`${process.env.CLIENT_URL}/googleAuthentication`);
+        res.redirect(`${process.env.CLIENT_URL}/googleAuth/${tempCode}`);
     } catch (error) {
         console.error('Error during Google auth:', error);
         res.status(500).json({ message: 'Server error', error: error.toString() });
@@ -83,6 +78,8 @@ router.get('/auth/callback', async (req, res) => {
 
 router.get('/auth/exchange', (req, res) => {
     const { code } = req.query;
+    console.log('tempCodes:', tempCodes);
+    console.log('code url:', code);
 
     if (!code || !tempCodes.has(code)) {
         return res.status(400).json({ error: 'Invalid or expired code' });
@@ -90,7 +87,12 @@ router.get('/auth/exchange', (req, res) => {
 
     const token = tempCodes.get(code);
     tempCodes.delete(code);
-
+    res.cookie('clientToken', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        path: '/',
+    });
     res.json({ token });
 });
 

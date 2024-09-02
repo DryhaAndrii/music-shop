@@ -39,7 +39,7 @@ router.get('', (req, res) => {
         if (error.name === 'TokenExpiredError') {
             // Token has expired, clear the cookie
             console.log('Token has expired,deleting it');
-            res.clearCookie('token');
+            res.clearCookie('clientToken');
             return res.status(401).json({ message: 'Token expired' });
         }
         res.status(401).json({ message: 'Invalid token' });
