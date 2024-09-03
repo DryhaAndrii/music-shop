@@ -31,7 +31,12 @@ router.get('', (req, res) => {
             const newToken = generateToken(decoded);
             console.log('Token expiring soon, generating new token');
             // Set the new token in a cookie
-            res.cookie('clientToken', newToken, { httpOnly: true, secure: true, sameSite: 'none', path: '/', maxAge: 3600000 });
+            res.cookie('clientToken', newToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+                path: '/'
+            });
         }
 
         res.json({ message: 'token is ok', user: decoded });
