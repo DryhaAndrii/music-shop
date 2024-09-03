@@ -22,6 +22,7 @@ function UserPanel({ hideUserPanel }: Props) {
         if (success) {
             setUser(null);
             hideUserPanel();
+            //window.location.reload(); 
         }
     }
     return (
