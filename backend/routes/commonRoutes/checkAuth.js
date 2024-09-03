@@ -34,7 +34,7 @@ router.get('', (req, res) => {
             res.cookie('clientToken', newToken, { httpOnly: true, secure: true, sameSite: 'none', path: '/', maxAge: 3600000 });
         }
 
-        res.json({ message: 'token is ok' });
+        res.json({ message: 'token is ok', user: decoded });
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
             // Token has expired, clear the cookie

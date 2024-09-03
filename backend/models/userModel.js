@@ -25,7 +25,9 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    updatedAt: Date
+    updatedAt: Date,
+    card: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+    bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
 });
 
 // Before save updating updatedAt

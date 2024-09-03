@@ -3,9 +3,22 @@ import { useState } from 'react';
 import MyButton from '@/components/myButton/myButton';
 import styles from '../../styles.module.scss';
 import AuthPanel from '@/components/authPanel/authPanel';
-
+import { userAtom } from '@/atoms';
+import { useAtom } from 'jotai';
+import UserPanel from '@/components/userPanel/userPanel';
 function Cart() {
-    const [isAuthPanelOpen, setIsAuthPanelOpen] = useState(false);
+    const [showAuthPanel, setShowAuthPanel] = useState(false);
+    const [showUserPanel, setShowUserPanel] = useState(false);
+    const [user] = useAtom(userAtom);
+    function userButtonHandler() {
+        if (user === null) {
+            return setShowAuthPanel(!showAuthPanel);
+        }
+        if (user) {
+            return setShowUserPanel(!showUserPanel)
+        }
+
+    }
 
     return (
         <div className={styles.cart}>
@@ -17,12 +30,13 @@ function Cart() {
                     shopping_cart
                 </span>
             </MyButton>
-            <MyButton onClick={() => setIsAuthPanelOpen(!isAuthPanelOpen)}>
+            <MyButton onClick={userButtonHandler}>
                 <span className="material-symbols-outlined">
                     person
                 </span>
             </MyButton>
-            {isAuthPanelOpen && <AuthPanel hideAuthPanel={() => setIsAuthPanelOpen(false)}/>}
+            {showAuthPanel && <AuthPanel hideAuthPanel={() => setShowAuthPanel(false)} />}
+            {showUserPanel && <UserPanel hideUserPanel={() => setShowUserPanel(false)} />}
         </div>
     );
 }

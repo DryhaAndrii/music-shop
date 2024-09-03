@@ -5,9 +5,18 @@ export default async function checkAuth() {
             method: 'GET',
             credentials: 'include',
         });
-        const data = await response.json();
-        console.log(data.message);
+
+        const status = response.status;
+
+        if (status === 401) {
+            return console.log('token is not provided or expired or invalid');
+        }
+        if (status === 200) {
+            const data = await response.json();
+            console.log(data.message);
+            return data.user;
+        }
     } catch (error) {
-        console.error('Error initiating Google auth:', error);
-    } 
+        console.error('Error checking auth:', error);
+    }
 };

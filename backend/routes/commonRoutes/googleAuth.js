@@ -51,13 +51,8 @@ router.get('/auth/callback', async (req, res) => {
             });
             console.log('New user created, Name:', name, 'Email:', email, 'GoogleId:', googleId);
             await user.save();
-        } else {
-            // If exist in database, update user
-            console.log('User exist, Name:', name, 'Email:', email, 'GoogleId:', googleId);
-            user.name = name;
-            user.lastLogin = new Date();
-            await user.save();
         }
+        console.log('User exist, Name:', name, 'Email:', email, 'GoogleId:', googleId);
 
         // Generate token
         const token = generateToken(user);
