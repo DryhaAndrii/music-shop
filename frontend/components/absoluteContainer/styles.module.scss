@@ -9,7 +9,7 @@
     align-items: center;
     z-index: 50;
     animation: fadeIn 0.150s forwards linear;
-    backdrop-filter: contrast(0.5) brightness(0.8);
+    background-color: rgba(0, 0, 0, 0.25);
     &.fadeOut {
         animation: fadeOut 0.150s forwards linear;
     }
@@ -24,6 +24,7 @@
 
     to {
         opacity: 1;
+        
     }
 }
 
