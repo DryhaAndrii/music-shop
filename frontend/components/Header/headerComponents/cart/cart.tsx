@@ -17,9 +17,7 @@ function Cart() {
         if (user) {
             return setShowUserPanel(!showUserPanel)
         }
-
     }
-
     return (
         <div className={styles.cart}>
             <MyButton >

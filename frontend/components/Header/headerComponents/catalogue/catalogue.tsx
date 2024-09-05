@@ -10,6 +10,7 @@ import Category from "@/types/category";
 
 function Catalogue({ categories }: { categories: Category[] | undefined }) {
     const [show, setShow] = useState(false);
+    const [animationStart, setAnimationStart] = useState(false);
     const pathname = usePathname();
 
     useEffect(() => {
@@ -17,7 +18,16 @@ function Catalogue({ categories }: { categories: Category[] | undefined }) {
     }, [pathname]);
 
     function toggleMenu() {
-        setShow(prev => !prev);
+        if (show) {
+            setAnimationStart(true);
+            setTimeout(() => {
+                setShow(false);
+                setAnimationStart(false);
+            }, 150);
+        }
+        else {
+            setShow(true);
+        }
     }
     return (
         <div className={styles.catalogue}>
@@ -28,7 +38,7 @@ function Catalogue({ categories }: { categories: Category[] | undefined }) {
 
             {typeof window !== 'undefined'
                 ? reactDom.createPortal(
-                    <Categories show={show} categories={categories} toggleMenu={toggleMenu} />,
+                    <Categories animationStart={animationStart} show={show} categories={categories} toggleMenu={toggleMenu} />,
                     document.querySelector<HTMLElement>('header') ?? document.createDocumentFragment()
                 )
                 : null

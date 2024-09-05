@@ -5,6 +5,7 @@ import Category from '@/types/category';
 import CategoriesSkeleton from './categoriesSkeleton';
 interface CategoriesProps {
     show: boolean,
+    animationStart: boolean,
     categories: Category[] | undefined,
     toggleMenu: () => void
 }
@@ -12,7 +13,7 @@ interface CategoriesProps {
 const SPACE_REGEX = / /g;
 
 
-function Categories({ show, categories, toggleMenu }: CategoriesProps) {
+function Categories({ show, animationStart, categories, toggleMenu }: CategoriesProps) {
     if (!show) return;
     if (categories === undefined) return (
         <>
@@ -25,7 +26,7 @@ function Categories({ show, categories, toggleMenu }: CategoriesProps) {
         </>
     )
     return (
-        <div className={`${styles.categories}`} >
+        <div className={`${styles.categories} ${animationStart ? styles.fadeOut : ''}`} >
             <MyButton>
                 <span className="material-symbols-outlined" onClick={toggleMenu}>close</span>
             </MyButton>

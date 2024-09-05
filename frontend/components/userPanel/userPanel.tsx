@@ -1,10 +1,11 @@
 'use client'
-import { createPortal } from "react-dom";
 import styles from "./styles.module.scss";
 import MyButton, { BUTTON_COLOR } from "../myButton/myButton";
 import { userAtom } from '@/atoms';
 import { useAtom } from 'jotai';
 import logout from "@/functions/logout";
+import AbsoluteContainer from "../absoluteContainer/absoluteContainer";
+import { useState } from "react";
 
 interface Props {
     hideUserPanel: () => void
@@ -12,41 +13,44 @@ interface Props {
 
 function UserPanel({ hideUserPanel }: Props) {
     const [user, setUser] = useAtom(userAtom)
-    const body = document.querySelector<HTMLElement>("body");
-    if (body === null) {
-        throw new Error("No body element found");
+    const [isVisible, setIsVisible] = useState(true);
+    function hideButtonHandler() {
+        setIsVisible(false);
+        setTimeout(() => {
+            hideUserPanel();
+        }, 150);
     }
+
 
     async function logoutButtonHandler() {
         const success = await logout();
         if (success) {
-            setUser(null);
-            hideUserPanel();
+            setIsVisible(false);
+            setTimeout(() => {
+                hideUserPanel();
+                setUser(null);
+            }, 150);
             //window.location.reload(); 
         }
     }
     return (
-        createPortal(
-            <div className={styles.wrapper}>
-                <div className={styles.userPanel}>
-                    <MyButton onClick={hideUserPanel} color={BUTTON_COLOR.DARK}>
-                        <span className="material-symbols-outlined">close</span>
-                    </MyButton>
-                    <div className={styles.headers}>
-                        <h2>{user?.name}`s</h2>
-                        <h3>User Panel</h3>
-                    </div>
-                    <div className={styles.buttonWrapper}>
-                        <MyButton onClick={logoutButtonHandler} color={BUTTON_COLOR.DARK}>
-                            Logout
-                        </MyButton>
-                    </div>
-
+        <AbsoluteContainer isVisible={isVisible}>
+            <div className={styles.userPanel}>
+                <MyButton onClick={hideButtonHandler} color={BUTTON_COLOR.DARK}>
+                    <span className="material-symbols-outlined">close</span>
+                </MyButton>
+                <div className={styles.headers}>
+                    <h2>{user?.name}`s</h2>
+                    <h3>User Panel</h3>
                 </div>
+                <div className={styles.buttonWrapper}>
+                    <MyButton onClick={logoutButtonHandler} color={BUTTON_COLOR.DARK}>
+                        Logout
+                    </MyButton>
+                </div>
+
             </div>
-            ,
-            body
-        )
+        </AbsoluteContainer>
     );
 }
 
