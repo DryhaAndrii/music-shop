@@ -5,18 +5,22 @@ import { useAtom } from 'jotai';
 import { addToastAtom } from "@/atoms/toasts";
 import { TOAST_TYPES } from "@/types/toastTypes";
 import { useRef } from "react";
+import login from "@/functions/login";
+import { userAtom } from '@/atoms/user';
+
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const PASSWORD_REGEX = /^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{8,64}$/;
 
 export default function LogIn() {
     const [, addToast] = useAtom(addToastAtom);
+    const [user, setUser] = useAtom(userAtom);
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
 
-    function handleSubmit(event: any) {
+    async function handleSubmit(event: any) {
         event.preventDefault();
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
@@ -31,7 +35,12 @@ export default function LogIn() {
             return;
         }
 
-        addToast({ message: `Email: ${email}, Password: ${password}`, type: TOAST_TYPES.SUCCESS });
+        const response = await login(email, password);
+        if (response.error) {
+            return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
+        }
+        addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+        setUser(response.user);
     }
     return (
         <>

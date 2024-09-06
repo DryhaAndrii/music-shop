@@ -24,7 +24,19 @@ export async function exchangeCode(code: string) {
             credentials: 'include',
         });
         const data = await response.json();
-        window.location.href = '/'; 
+        window.location.href = '/';
+    } catch (error) {
+        console.error('Error during exchange code:', error);
+    }
+}
+export async function exchangeCodeMessage(code: string) {
+    try {
+        const response = await fetch(`${apiUrl}googleAuth/auth/exchange/message?code=${code}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.error('Error during exchange code:', error);
     }

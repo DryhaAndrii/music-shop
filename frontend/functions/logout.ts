@@ -12,9 +12,6 @@ export default async function logout() {
         }
 
         const data = await response.json();
-        if (data.message) {
-            console.log(data.message);
-        }
         return true;
     } catch (error) {
         console.error('Error during logout:', error);

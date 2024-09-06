@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MyButton from '@/components/myButton/myButton';
 import styles from '../../styles.module.scss';
 import AuthPanel from '@/components/authPanel/authPanel';
@@ -10,6 +10,10 @@ function Cart() {
     const [showAuthPanel, setShowAuthPanel] = useState(false);
     const [showUserPanel, setShowUserPanel] = useState(false);
     const [user] = useAtom(userAtom);
+    useEffect(() => {
+        setShowAuthPanel(false);
+        setShowUserPanel(false);
+    }, [user])
     function userButtonHandler() {
         if (user === null) {
             return setShowAuthPanel(!showAuthPanel);
