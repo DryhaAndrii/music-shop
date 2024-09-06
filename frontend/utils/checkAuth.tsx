@@ -4,7 +4,7 @@ import checkAuth from '@/functions/checkAuth';
 import { useEffect } from 'react';
 
 import { useAtom } from 'jotai';
-import { userAtom } from '@/atoms';
+import { userAtom } from '@/atoms/user';
 
 const CheckAuth = () => {
     const [user, setUser] = useAtom(userAtom);

@@ -22,11 +22,12 @@ interface InputProps {
     value?: string;
     onChangeHandler?: (...args: any[]) => void;
     onBlur?: (...args: any[]) => void;
+    reference?: any;
 }
 
 const cx = classNames.bind(styles);
 
-function Input({ type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
+function Input({ reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
 
 
     const className = cx({
@@ -41,6 +42,7 @@ function Input({ type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder
                     type={type}
                     value={value}
                     className={className}
+                    ref={reference}
                 />
             );
 
@@ -49,6 +51,7 @@ function Input({ type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder
         case INPUT_TYPES.PASSWORD:
             return (
                 <input
+                    ref={reference}
                     name={name}
                     value={value}
                     onChange={onChangeHandler ? (e) => onChangeHandler(e) : undefined}
@@ -62,6 +65,7 @@ function Input({ type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder
         case INPUT_TYPES.NUMBER:
             return (
                 <input
+                    ref={reference}
                     value={value}
                     onChange={onChangeHandler && ((e) => onChangeHandler(e, 'min'))}
                     onBlur={onBlur ? (e) => onBlur(e) : undefined}

@@ -7,6 +7,8 @@ import Header from "@/components/Header/header";
 import "./globals.css";
 import getMainCategories from "@/functions/getMainCategories";
 import CheckAuth from "@/utils/checkAuth";
+import AbsoluteContainer from "@/components/absoluteContainer/absoluteContainer";
+import { ToastContainer } from "@/components/toast/toast";
 
 const revalidationTime = Number(process.env.NEXT_PUBLIC_REVALIDATION_TIME);
 
@@ -32,10 +34,12 @@ export default async function RootLayout({
       </head>
       <body className={robotoCondensed.className}>
         <Header categories={categories} />
+        <ToastContainer />
         <div>Last updated: {new Date().getFullYear()}.
-          {new Date().getMonth()+1}.
+          {new Date().getMonth() + 1}.
           {new Date().getDate()}-
-          {new Date().getHours()}:{new Date().getMinutes()}:{new Date().getSeconds()}</div>
+          {new Date().getHours()}:{new Date().getMinutes()}:{new Date().getSeconds()}
+        </div>
         {children}
         <Footer />
         <CheckAuth />

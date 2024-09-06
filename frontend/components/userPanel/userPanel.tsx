@@ -1,7 +1,7 @@
 'use client'
 import styles from "./styles.module.scss";
 import MyButton, { BUTTON_COLOR } from "../myButton/myButton";
-import { userAtom } from '@/atoms';
+import { userAtom } from "@/atoms/user";
 import { useAtom } from 'jotai';
 import logout from "@/functions/logout";
 import AbsoluteContainer from "../absoluteContainer/absoluteContainer";

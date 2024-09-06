@@ -3,7 +3,7 @@ import { useState } from 'react';
 import MyButton from '@/components/myButton/myButton';
 import styles from '../../styles.module.scss';
 import AuthPanel from '@/components/authPanel/authPanel';
-import { userAtom } from '@/atoms';
+import { userAtom } from '@/atoms/user';
 import { useAtom } from 'jotai';
 import UserPanel from '@/components/userPanel/userPanel';
 function Cart() {
