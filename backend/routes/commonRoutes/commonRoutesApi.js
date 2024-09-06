@@ -14,6 +14,8 @@ const getDiscountedProducts = require('./getDiscountedProducts');
 const googleAuth = require('./googleAuth');
 const checkAuth = require('./checkAuth');
 const logout = require('./logout');
+const login = require('./login');
+const signup = require('./signup');
 
 router.use('/getMainCategories', getMainCategories);
 router.use('/getProductsByIds', getProductsByIds);
@@ -28,5 +30,7 @@ router.use('/getDiscountedProducts', getDiscountedProducts);
 router.use('/googleAuth', googleAuth);
 router.use('/checkAuth', checkAuth);
 router.use('/logout', logout);
+router.use('/login', login);
+router.use('/signup', signup);
 
 module.exports = router;

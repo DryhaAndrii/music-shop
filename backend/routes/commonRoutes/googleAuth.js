@@ -10,7 +10,7 @@ const tempCodes = new Map();
 
 const generateToken = (user) => {
     return jwt.sign(
-        { id: user._id, email: user.email, name: user.name },
+        { id: user._id, email: user.email, name: user.name, googleId: user.googleId },
         process.env.JWT_SECRET_CLIENT,
         { expiresIn: '1h' }
     );
@@ -41,7 +41,14 @@ router.get('/auth/callback', async (req, res) => {
 
         // Searching by email or googleId
         let user = await User.findOne({ $or: [{ email }, { googleId }] });
-
+        if (user) {
+            if (!user.googleId) {//If we have user but he registered without google
+                //we send message to him that he should authenticate with his email and password
+                const tempCode = crypto.randomBytes(32).toString('hex');
+                tempCodes.set(tempCode, "You've been registered with this email but without google services. Please login with your email and password.");
+                return res.redirect(`${process.env.CLIENT_URL}/googleAuth/message/${tempCode}`);
+            }
+        }
         if (!user) {
             // If user is not exist in database, create new user
             user = new User({
@@ -89,6 +96,19 @@ router.get('/auth/exchange', (req, res) => {
         path: '/',
     });
     res.json({ token });
+});
+router.get('/auth/exchange/message', (req, res) => {
+    const { code } = req.query;
+    console.log('tempMessageCode:', tempCodes);
+    console.log('code url:', code);
+
+    if (!code || !tempCodes.has(code)) {
+        return res.status(400).json({ error: 'Invalid or expired code' });
+    }
+
+    const message = tempCodes.get(code);
+    tempCodes.delete(code);
+    res.json({ message });
 });
 
 module.exports = router;
