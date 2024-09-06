@@ -38,8 +38,6 @@ function ModalWindow({
         <div className='modalWindowWrapper'>
             <div className="modalWindow">
                 <div className={modalWindowClassNames}>
-
-
                     {type === WINDOW_TYPES.CONFIRMATION && (
                         <>
                             <p>{confirmationText}</p>
