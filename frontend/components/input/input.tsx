@@ -22,12 +22,14 @@ interface InputProps {
     value?: string;
     onChangeHandler?: (...args: any[]) => void;
     onBlur?: (...args: any[]) => void;
+    keyDownHandler?: (...args: any[]) => void;
     reference?: any;
+    maximumLength?: number;
 }
 
 const cx = classNames.bind(styles);
 
-function Input({ reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
+function Input({ maximumLength, keyDownHandler, reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
 
 
     const className = cx({
@@ -54,12 +56,12 @@ function Input({ reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, 
                     ref={reference}
                     name={name}
                     value={value}
-                    onChange={onChangeHandler ? (e) => onChangeHandler(e) : undefined}
-
+                    onChange={onChangeHandler}
+                    onKeyDown={keyDownHandler}
                     className={className}
                     placeholder={placeholder}
                     type={type}
-
+                    maxLength={maximumLength}
                 />
             );
         case INPUT_TYPES.NUMBER:
@@ -67,11 +69,12 @@ function Input({ reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, 
                 <input
                     ref={reference}
                     value={value}
-                    onChange={onChangeHandler && ((e) => onChangeHandler(e, 'min'))}
+                    onChange={onChangeHandler}
+                    onKeyDown={keyDownHandler}
                     onBlur={onBlur ? (e) => onBlur(e) : undefined}
                     className={className}
                     type={type}
-
+                    maxLength={maximumLength}
                 />
             )
 

@@ -8,8 +8,8 @@ import signUp from "@/functions/signUp";
 import { userAtom } from '@/atoms/user';
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-export const PASSWORD_REGEX = /^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{8,64}$/;
-export const NAME_REGEX = /^[a-zA-Z\s]{3,30}$/;  // Name 3-30 characters, space allowed
+export const PASSWORD_REGEX = /^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{6,64}$/;  
+export const NAME_REGEX = /^[a-zA-Z0-9\s]{3,30}$/;  
 
 
 export default function SignIn() {
@@ -51,11 +51,12 @@ export default function SignIn() {
 
         const response = await signUp(email, firstPasswordValue, name);
         if (response.error) {
-            addToast({ message: response.error, type: TOAST_TYPES.ERROR });
-        } else {
-            addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
-            setUser(response.user);
+            return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
         }
+        addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+        window.location.href = '/signup/'; 
+        //setUser(response.user);
+
     }
 
     return (
