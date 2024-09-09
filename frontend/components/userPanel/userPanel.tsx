@@ -6,12 +6,14 @@ import { useAtom } from 'jotai';
 import logout from "@/functions/logout";
 import AbsoluteContainer from "../absoluteContainer/absoluteContainer";
 import { useState } from "react";
+import Loading from "../loading/loading";
 
 interface Props {
     hideUserPanel: () => void
 }
 
 function UserPanel({ hideUserPanel }: Props) {
+    const [loading, setLoading] = useState(false)
     const [user, setUser] = useAtom(userAtom)
     const [isVisible, setIsVisible] = useState(true);
     function hideButtonHandler() {
@@ -23,10 +25,12 @@ function UserPanel({ hideUserPanel }: Props) {
 
 
     async function logoutButtonHandler() {
+        setLoading(true)
         const success = await logout();
         if (success) {
             setIsVisible(false);
             setTimeout(() => {
+                setLoading(false)
                 hideUserPanel();
                 setUser(null);
             }, 150);
@@ -36,9 +40,11 @@ function UserPanel({ hideUserPanel }: Props) {
     return (
         <AbsoluteContainer isVisible={isVisible}>
             <div className={styles.userPanel}>
+                {!loading && <Loading/>}
                 <MyButton onClick={hideButtonHandler} color={BUTTON_COLOR.DARK}>
                     <span className="material-symbols-outlined">close</span>
                 </MyButton>
+
                 <div className={styles.headers}>
                     <h2>{user?.name}`s</h2>
                     <h3>User Panel</h3>
@@ -48,7 +54,6 @@ function UserPanel({ hideUserPanel }: Props) {
                         Logout
                     </MyButton>
                 </div>
-
             </div>
         </AbsoluteContainer>
     );

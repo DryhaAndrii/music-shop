@@ -22,7 +22,7 @@ router.post('', async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({ message: 'Wrong email or password' });
         }
 
         // Checking if user is linked with Google
@@ -32,7 +32,7 @@ router.post('', async (req, res) => {
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(400).json({ message: 'Invalid password' });
+            return res.status(400).json({ message: 'Wrong email or password' });
         }
 
         // Генерируем токен и устанавливаем его в куки

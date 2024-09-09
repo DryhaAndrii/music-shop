@@ -12,7 +12,7 @@ import { userAtom } from '@/atoms/user';
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const PASSWORD_REGEX = /^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{8,64}$/;
 
-export default function LogIn() {
+export default function LogIn({setLoading}: any) {
     const [, addToast] = useAtom(addToastAtom);
     const [user, setUser] = useAtom(userAtom);
 
@@ -21,7 +21,7 @@ export default function LogIn() {
 
 
     async function handleSubmit(event: any) {
-        event.preventDefault();
+        event.preventDefault()
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
 
@@ -34,11 +34,13 @@ export default function LogIn() {
             addToast({ message: 'Password must be 8-64 characters long, contain at least one letter and one number, and cannot contain spaces.', type: TOAST_TYPES.ERROR });
             return;
         }
-
+        setLoading(true);
         const response = await login(email, password);
         if (response.error) {
+            setLoading(false);
             return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
         }
+        setLoading(false);
         addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
         setUser(response.user);
     }

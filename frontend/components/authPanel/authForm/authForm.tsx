@@ -3,13 +3,14 @@ import LogIn from "../logIn/logIn";
 import SignIn from "../signIn/signIn";
 
 interface Props {
-    loggingIn: boolean
+    loggingIn: boolean,
+    setLoading: (loading: boolean) => void
 }
 
 import styles from "./styles.module.scss"
 import googleAuth from "@/functions/googleAuth";
 
-function AuthForm({ loggingIn }: Props) {
+function AuthForm({ loggingIn,setLoading }: Props) {
 
     const handleGoogleAuth = async (event: any) => {
         event.preventDefault();
@@ -21,9 +22,9 @@ function AuthForm({ loggingIn }: Props) {
         <form className={styles.authForm}>
             {loggingIn
                 ?
-                <LogIn />
+                <LogIn setLoading={setLoading}/>
                 :
-                <SignIn />
+                <SignIn setLoading={setLoading}/>
             }
             <MyButton onClick={handleGoogleAuth} color={BUTTON_COLOR.DARK}>Google</MyButton>
 

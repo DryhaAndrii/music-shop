@@ -12,9 +12,13 @@
     box-sizing: border-box;
     align-items: center;
     box-shadow: 0px 0px 2px 0px #bfbfbf;
-
+    >div{//styles for loading component
+        &:first-of-type{
+            border-radius: 20px;
+        }
+    }
     >button {
-        &:first-child {
+        &:first-of-type {
             position: absolute;
             top: -50px;
             right: 0px;

@@ -5,16 +5,14 @@ import { useAtom } from 'jotai';
 import { addToastAtom } from "@/atoms/toasts";
 import { TOAST_TYPES } from "@/types/toastTypes";
 import signUp from "@/functions/signUp";
-import { userAtom } from '@/atoms/user';
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const PASSWORD_REGEX = /^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{6,64}$/;  
 export const NAME_REGEX = /^[a-zA-Z0-9\s]{3,30}$/;  
 
 
-export default function SignIn() {
+export default function SignIn({setLoading}: any) {
     const [, addToast] = useAtom(addToastAtom);
-    const [user, setUser] = useAtom(userAtom);
 
     const emailRef = useRef<HTMLInputElement>(null);
     const nameRef = useRef<HTMLInputElement>(null);
@@ -48,14 +46,15 @@ export default function SignIn() {
             addToast({ message: 'Passwords do not match.', type: TOAST_TYPES.ERROR });
             return;
         }
-
+        setLoading(true);
         const response = await signUp(email, firstPasswordValue, name);
         if (response.error) {
+            setLoading(false);
             return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
         }
+        setLoading(false);
         addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
-        window.location.href = '/signup/'; 
-        //setUser(response.user);
+        window.location.href = '/verifyEmail/'; 
 
     }
 

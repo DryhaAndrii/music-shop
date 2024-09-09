@@ -23,13 +23,14 @@ interface InputProps {
     onChangeHandler?: (...args: any[]) => void;
     onBlur?: (...args: any[]) => void;
     keyDownHandler?: (...args: any[]) => void;
+    onPasteHandler?: (...args: any[]) => void;
     reference?: any;
     maximumLength?: number;
 }
 
 const cx = classNames.bind(styles);
 
-function Input({ maximumLength, keyDownHandler, reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
+function Input({ onPasteHandler, maximumLength, keyDownHandler, reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
 
 
     const className = cx({
@@ -53,6 +54,7 @@ function Input({ maximumLength, keyDownHandler, reference, type = INPUT_TYPES.TE
         case INPUT_TYPES.PASSWORD:
             return (
                 <input
+                    onPaste={onPasteHandler}
                     ref={reference}
                     name={name}
                     value={value}
@@ -67,6 +69,7 @@ function Input({ maximumLength, keyDownHandler, reference, type = INPUT_TYPES.TE
         case INPUT_TYPES.NUMBER:
             return (
                 <input
+                    onPaste={onPasteHandler}
                     ref={reference}
                     value={value}
                     onChange={onChangeHandler}
