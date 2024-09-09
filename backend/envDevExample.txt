@@ -1,0 +1,15 @@
+MONGODB_URI="Your Mongo DB connection string"
+JWT_SECRET_ADMIN=same secret as in env production
+JWT_SECRET_CLIENT=same secret as in env production
+
+ADMIN_URL=http://localhost:3002 here is my admin url dev
+CLIENT_URL=http://localhost:3000 here is my client url dev
+
+GOOGLE_CLIENT_ID=The same id as in env production
+GOOGLE_CLIENT_SECRET=The same secret as in env production
+GOOGLE_REDIRECT_URI=https://c7fd-176-101-196-11.ngrok-free.app/api/common/googleAuth/callback here is my google callback url in ngrok
+
+SMTP_HOST= smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=Your google email
+SMTP_PASS=your password

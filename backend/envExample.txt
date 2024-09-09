@@ -1,0 +1,15 @@
+MONGODB_URI="mongodb+srv://yourMongoDBString"
+JWT_SECRET_ADMIN=somesecretstring
+JWT_SECRET_CLIENT=somesecretstring
+
+ADMIN_URL=https://music-shop-admin-panel.netlify.app url of admin panel
+CLIENT_URL=https://music-shop-client.vercel.app url of music shop client
+
+GOOGLE_CLIENT_ID=your google id
+GOOGLE_CLIENT_SECRET=your google secret
+GOOGLE_REDIRECT_URI=https://music-shop-v1x5.onrender.com/api/common/googleAuth/callback some adress to handle google
+
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=Your email
+SMTP_PASS=Your password
