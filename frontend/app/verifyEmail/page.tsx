@@ -81,7 +81,7 @@ export default function SignUp() {
 
     if (verified === true) {
         return (
-            <div className={styles.wrapper}>
+            <div className={`${styles.wrapper} ${styles.messaged}`}>
                 <div className="container">
                     <h3>Code verified. You can now sign in with your email and password</h3>
                     <MyButton onClick={okButtonHandler}>Ok</MyButton>
@@ -91,7 +91,7 @@ export default function SignUp() {
     }
     if (verified === false) {
         return (
-            <div className={styles.wrapper}>
+            <div className={`${styles.wrapper} ${styles.messaged}`}>
                 <div className="container">
                     <h3>Your code expired or invalid</h3>
                     <MyButton onClick={okButtonHandler}>Ok</MyButton>

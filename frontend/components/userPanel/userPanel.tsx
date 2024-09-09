@@ -40,7 +40,7 @@ function UserPanel({ hideUserPanel }: Props) {
     return (
         <AbsoluteContainer isVisible={isVisible}>
             <div className={styles.userPanel}>
-                {!loading && <Loading/>}
+                {loading && <Loading/>}
                 <MyButton onClick={hideButtonHandler} color={BUTTON_COLOR.DARK}>
                     <span className="material-symbols-outlined">close</span>
                 </MyButton>

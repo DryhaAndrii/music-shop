@@ -1,11 +1,17 @@
+.wrapperWrapper {
+    position: relative;
+}
+
 .wrapper {
     height: 200px;
     padding: 10px;
     background: rgb(243, 243, 243);
     background: linear-gradient(180deg, rgba(243, 243, 243, 1) 0%, rgba(13, 29, 44, 1) 50%, rgba(248, 249, 250, 1) 100%);
     color: #fff;
+
     >div {
         position: relative;
+
         h3 {
             margin: 0px;
             text-align: center;
@@ -42,4 +48,21 @@
         }
     }
 
+    &.messaged {
+        >div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            h3 {
+                position: unset;
+                transform: unset;
+            }
+
+            button {
+                position: unset;
+                transform: unset;
+            }
+        }
+    }
 }
