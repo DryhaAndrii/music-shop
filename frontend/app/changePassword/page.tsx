@@ -10,8 +10,8 @@ import { addToastAtom } from "@/atoms/toasts";
 import { TOAST_TYPES } from "@/types/toastTypes";
 import changePassword, { checkCodeForPasswordChanging, setNewPassword } from '@/functions/changePassword';
 
-export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-export const PASSWORD_REGEX = /^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{6,64}$/;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PASSWORD_REGEX = /^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{6,64}$/;
 
 export default function ChangePassword() {
     const [user] = useAtom(userAtom);
