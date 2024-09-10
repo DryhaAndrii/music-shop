@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/userModel');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 require('dotenv').config();
@@ -115,9 +114,9 @@ const sendVerificationEmail = (email, code) => {
             </h1>
         </div>
         <div class="header">Your Verification Code</div>
-        <p>Your verification code is <span class="code">${code}</span>. It will expire in 5 minutes.</p>
-        <p>You should use this code to verify your email here:
-            <a href="${process.env.CLIENT_URL}/signup">VerifyEmail</a>
+        <p>Here is your link to change password:
+            <a href="${process.env.CLIENT_URL}/changePassword?code=${code}">Link to change password</a>
+            It will expire if 5 minutes
         </p>
         <div class="footer">If you did not request this, please ignore this email.</div>
     </div>
@@ -130,41 +129,23 @@ const sendVerificationEmail = (email, code) => {
     return transporter.sendMail(mailOptions);
 };
 
-const generateTempCode = (length = 6) => {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let code = '';
-    const bytes = crypto.randomBytes(length); // generating random bytes
-    // Turn bytes into characters
-    for (let i = 0; i < length; i++) {
-        const randomIndex = bytes[i] % characters.length;
-        code += characters[randomIndex];
-    }
-    return code;
-};
+
 
 router.post('', async (req, res) => {
-    const { password, email, name } = req.body;
+    const email = req.body.email;
 
     try {
         const existingUser = await User.findOne({ email });
 
-        if (existingUser) {
-            if (existingUser.googleId) {
-                return res.status(400).json({ message: 'This email is linked with Google account. Please use Google login.' });
-            }
-            return res.status(400).json({ message: 'User with this email already exists. Please login.' });
+        if (!existingUser) {
+            return res.status(400).json({ message: 'User with this email does not exist' });
+        }
+        if (existingUser.googleId) {
+            return res.status(400).json({ message: 'This email is linked with Google account. Please use Google login.' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newUser = new User({
-            email,
-            name,
-            password: hashedPassword,
-        });
-
-        const tempCode = generateTempCode();
-        tempCodes.set(tempCode, newUser);
+        const tempCode = crypto.randomBytes(32).toString('hex');
+        tempCodes.set(tempCode, existingUser);
 
         // Send verification email
         await sendVerificationEmail(email, tempCode);
@@ -180,19 +161,35 @@ router.post('', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
-router.post('/verify', async (req, res) => {
+router.post('/checkCode', async (req, res) => {
     try {
         const { code } = req.body;
         if (!code || !tempCodes.has(code)) {
             return res.status(400).json({ error: 'Invalid or expired code' });
         }
-        console.log('user verificated')
+        console.log('code checked');
+        res.status(200).json({ message: 'Code is ok' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+router.post('/setNewPassword', async (req, res) => {
+    try {
+        const { code, newPassword } = req.body;
+        if (!code || !tempCodes.has(code)) {
+            return res.status(400).json({ error: 'Invalid or expired code' });
+        }
         const user = tempCodes.get(code);
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
+
         await user.save();
-        console.log('verificated user saved');
+        console.log('Password changed');
         tempCodes.delete(code);
 
-        res.status(201).json({ message: 'Verification successful, now you can try to login it' });
+        res.status(201).json({ message: 'Password changed, try to login with new password' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

@@ -7,12 +7,13 @@ import { TOAST_TYPES } from "@/types/toastTypes";
 import { useRef } from "react";
 import login from "@/functions/login";
 import { userAtom } from '@/atoms/user';
+import Link from "next/link";
 
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const PASSWORD_REGEX = /^(?!.*\s)(?=.*\d)(?=.*[a-zA-Z]).{8,64}$/;
 
-export default function LogIn({setLoading}: any) {
+export default function LogIn({ setLoading, hideAuthPanel }: any) {
     const [, addToast] = useAtom(addToastAtom);
     const [user, setUser] = useAtom(userAtom);
 
@@ -49,6 +50,7 @@ export default function LogIn({setLoading}: any) {
             <Input reference={emailRef} type={INPUT_TYPES.EMAIL} color={INPUT_COLOR.DARK} placeholder="Email" />
             <Input reference={passwordRef} type={INPUT_TYPES.PASSWORD} color={INPUT_COLOR.DARK} placeholder="Password" />
             <MyButton onClick={handleSubmit} color={BUTTON_COLOR.DARK}>Log in</MyButton>
+            <Link href="/changePassword" onClick={hideAuthPanel}>Forgot password?</Link>
         </>
     );
 }

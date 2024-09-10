@@ -38,7 +38,8 @@ function AuthPanel({ hideAuthPanel }: Props) {
                         "Sign in"
                     }
                 </h2>
-                <AuthForm loggingIn={loggingIn} setLoading={setLoading}/>
+                <AuthForm hideAuthPanel={hideButtonHandler} loggingIn={loggingIn} setLoading={setLoading}/>
+
             </div>
         </AbsoluteContainer>
     );
