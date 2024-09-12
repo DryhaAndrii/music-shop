@@ -8,7 +8,7 @@ require('dotenv').config();
 // Generate JWT token
 const generateToken = (user) => {
     return jwt.sign(
-        { id: user._id, email: user.email, name: user.name, googleId: user.googleId },
+        { id: user._id, email: user.email, name: user.name, googleId: user.googleId, cart: user.cart, bookmarks: user.bookmarks },
         process.env.JWT_SECRET_CLIENT,
         { expiresIn: '1h' }
     );
@@ -16,7 +16,7 @@ const generateToken = (user) => {
 
 // Route to handle login
 router.post('', async (req, res) => {
-    const { password, email } = req.body;
+    const { password, email, bookmarks } = req.body;
 
     try {
         const user = await User.findOne({ email });
@@ -35,7 +35,13 @@ router.post('', async (req, res) => {
             return res.status(400).json({ message: 'Wrong email or password' });
         }
 
-        // Генерируем токен и устанавливаем его в куки
+        // Synchronizing userBookmarks with bookmarks
+        const userBookmarks = new Set(user.bookmarks);
+        bookmarks.forEach(bookmark => userBookmarks.add(bookmark));
+        user.bookmarks = Array.from(userBookmarks);
+        await User.updateOne({ _id: user.id }, { $set: { bookmarks: user.bookmarks } });
+        
+        // Generating token and setting it in a cookie
         const token = generateToken(user);
         res.cookie('clientToken', token, {
             httpOnly: true,
@@ -44,7 +50,7 @@ router.post('', async (req, res) => {
             path: '/'
         });
 
-        res.json({ message: 'Login successful', user: { email: user.email, name: user.name } });
+        res.json({ message: 'Login successful', user: { email: user.email, name: user.name, cart: user.cart, bookmarks: user.bookmarks, id: user._id } });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

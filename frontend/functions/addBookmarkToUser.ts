@@ -1,27 +1,23 @@
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export default async function login(email: string, password: string) {
+export default async function addBookmarkToUser(productId: string) {
     try {
-        //Get bookmarks from localStorage to sync them with data from database
-        const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-
-        const response = await fetch(`${apiUrl}login`, {
+        const response = await fetch(`${apiUrl}bookmark/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             credentials: 'include',
-            body: JSON.stringify({ email, password, bookmarks }),
+            body: JSON.stringify({ productId }),
         });
 
         const status = response.status;
 
-        if (status === 200) {
+        if (status === 201) {
             const data = await response.json();
-            localStorage.setItem('bookmarks', JSON.stringify(data.user.bookmarks));
-
-            return { user: data.user, message: data.message };
-        }
+            return { message: data.message };
+        } 
+        
 
         const errorData = await response.json();
         return { error: errorData.message || 'Unknown error occurred' };

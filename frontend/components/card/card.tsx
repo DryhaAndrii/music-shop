@@ -1,4 +1,4 @@
-
+'use client';
 import React from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
@@ -7,6 +7,13 @@ import MyButton from '../myButton/myButton';
 import Link from 'next/link';
 import Category from '@/types/category';
 import DiscountBadge from '../discountBadge/discountBadge';
+
+import { userAtom } from '@/atoms/user';
+import { useAtom } from 'jotai';
+import { addToastAtom } from "@/atoms/toasts";
+import addBookmarkToUser from '@/functions/addBookmarkToUser';
+import { TOAST_TYPES } from '@/types/toastTypes';
+
 
 export enum CARD_TYPES {
     PRODUCT = 'product',
@@ -24,12 +31,45 @@ const ONLY_LETTERS = /<[^>]+>/g;
 const cx = classNames.bind(styles);
 
 function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
-
+    const [user] = useAtom(userAtom);
+    const [, addToast] = useAtom(addToastAtom);
 
     const className = cx({
         card: true,
         [`card--${type}`]: true,
     });
+
+    async function addToBookmarksHandler() {
+        if (!product) return;
+        const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+        if (bookmarks.includes(product._id)) {
+            return addToast({ message: "This product is already bookmarked", type: TOAST_TYPES.INFO });
+        }
+
+        localStorage.setItem('bookmarks', JSON.stringify([...bookmarks, product?._id]));
+        if (user && !user.bookmarks.includes(product._id)) {
+            const response = await addBookmarkToUser(product._id);
+            if (response.message) {
+                console.log('adding to user bookmarks');
+                return addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+            }
+            return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
+        }
+        addToast({ message: 'Bookmark added', type: TOAST_TYPES.SUCCESS });
+    }
+    async function addToCartHandler() {
+        if (!product) return;
+        console.log('user:', user);
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+
+        if (!cart.includes(product._id)) {
+            console.log('adding to local cart');
+            localStorage.setItem('cart', JSON.stringify([...cart, product._id]));
+        }
+        if (user && !user.cart.includes(product._id)) {
+            console.log('adding to user cart');
+        }
+    }
 
     switch (type) {
         case CARD_TYPES.PRODUCT:
@@ -91,11 +131,19 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
                                 : <p>{`${product.price}$`}</p>
                             }
 
-                            <MyButton>
-                                <span className="material-symbols-outlined">
-                                    add_shopping_cart
-                                </span>
-                            </MyButton>
+                            <div>
+                                <MyButton onClick={addToCartHandler}>
+                                    <span className="material-symbols-outlined">
+                                        add_shopping_cart
+                                    </span>
+                                </MyButton>
+                                <MyButton onClick={addToBookmarksHandler}>
+                                    <span className="material-symbols-outlined">
+                                        bookmark_add
+                                    </span>
+                                </MyButton>
+                            </div>
+
                         </div>
 
                     </div>

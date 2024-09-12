@@ -26,7 +26,7 @@ const userSchema = new Schema({
         default: Date.now
     },
     updatedAt: Date,
-    card: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
+    cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
     bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
 });
 

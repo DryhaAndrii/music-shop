@@ -19,11 +19,18 @@ export default async function googleAuth() {
 
 export async function exchangeCode(code: string) {
     try {
-        const response = await fetch(`${apiUrl}googleAuth/auth/exchange?code=${code}`, {
-            method: 'GET',
+        //Get bookmarks from localStorage to sync them with data from database
+        const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+        const response = await fetch(`${apiUrl}googleAuth/auth/exchange`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             credentials: 'include',
+            body: JSON.stringify({ bookmarks: bookmarks, code }),
         });
         const data = await response.json();
+        localStorage.setItem('bookmarks', JSON.stringify(data.bookmarks));
         window.location.href = '/';
     } catch (error) {
         console.error('Error during exchange code:', error);
