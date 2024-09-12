@@ -1,7 +1,6 @@
 import styles from "./styles.module.scss";
 import Product from "@/types/product";
 import Card from "../card/card";
-import ProductCardsContainerSkeleton from "./ProductCardsContainerSkeleton";
 
 import classNames from 'classnames/bind';
 interface ProductCardsContainerProps {
@@ -17,10 +16,6 @@ function ProductCardsContainer({ products, columns }: ProductCardsContainerProps
         productCardsContainer: true,
         [`columns--${columns}`]: true,
     });
-
-    if (products?.length === 0) return (
-        <ProductCardsContainerSkeleton />
-    )
     return (
         <div className={className}>
             {products?.map((product) => (

@@ -1,10 +1,9 @@
 
-import Link from "next/link"
+import Category from "@/types/category";
+import styles from "./styles.module.scss";
+import Card from "@/components/card/card";
+import { CARD_TYPES } from "@/components/card/cardTypes";
 
-import Category from "@/types/category"
-import styles from "./styles.module.scss"
-import Card, { CARD_TYPES } from "@/components/card/card"
-CARD_TYPES
 
 interface CategoriesDisplayPanelProps {
     categories: Category[],

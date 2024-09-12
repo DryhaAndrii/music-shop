@@ -15,6 +15,7 @@ export default async function addBookmarkToUser(productId: string) {
 
         if (status === 201) {
             const data = await response.json();
+            localStorage.setItem
             return { message: data.message };
         } 
         

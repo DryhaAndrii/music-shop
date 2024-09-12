@@ -13,12 +13,10 @@ import { useAtom } from 'jotai';
 import { addToastAtom } from "@/atoms/toasts";
 import addBookmarkToUser from '@/functions/addBookmarkToUser';
 import { TOAST_TYPES } from '@/types/toastTypes';
+import { CARD_TYPES } from './cardTypes';
 
 
-export enum CARD_TYPES {
-    PRODUCT = 'product',
-    CATEGORY = 'category'
-}
+
 interface CardProps {
     type?: CARD_TYPES;
     product?: Product;
