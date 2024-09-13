@@ -17,7 +17,8 @@ const logout = require('./logout');
 const login = require('./login');
 const signup = require('./signup');
 const changePassword = require('./changePassword');
-const bookmark= require('./bookmark');
+const bookmark = require('./bookmark');
+const cart = require('./cart');
 
 router.use('/getMainCategories', getMainCategories);
 router.use('/getProductsByIds', getProductsByIds);
@@ -36,5 +37,6 @@ router.use('/login', login);
 router.use('/signup', signup);
 router.use('/changePassword', changePassword);
 router.use('/bookmark', bookmark);
+router.use('/cart', cart);
 
 module.exports = router;

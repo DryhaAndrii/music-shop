@@ -21,16 +21,23 @@ export async function exchangeCode(code: string) {
     try {
         //Get bookmarks from localStorage to sync them with data from database
         const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        
+
         const response = await fetch(`${apiUrl}googleAuth/auth/exchange`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             credentials: 'include',
-            body: JSON.stringify({ bookmarks: bookmarks, code }),
+            body: JSON.stringify({ bookmarks: bookmarks, code, cart }),
         });
         const data = await response.json();
+
         localStorage.setItem('bookmarks', JSON.stringify(data.bookmarks));
+        localStorage.setItem('cart', JSON.stringify(data.cart));
+        window.dispatchEvent(new Event("storage"));// Send event to refresh bookmarks
+        
         window.location.href = '/';
     } catch (error) {
         console.error('Error during exchange code:', error);

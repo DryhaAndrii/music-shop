@@ -16,7 +16,7 @@ const generateToken = (user) => {
 
 // Route to handle login
 router.post('', async (req, res) => {
-    const { password, email, bookmarks } = req.body;
+    const { password, email, bookmarks, cart } = req.body;
 
     try {
         const user = await User.findOne({ email });
@@ -35,12 +35,18 @@ router.post('', async (req, res) => {
             return res.status(400).json({ message: 'Wrong email or password' });
         }
 
-        // Synchronizing userBookmarks with bookmarks
+        // Synchronizing user's bookmarks and cart with database
         const userBookmarks = new Set(user.bookmarks);
+        const userCart = new Set(user.cart);
+
         bookmarks.forEach(bookmark => userBookmarks.add(bookmark));
+        cart.forEach(item => userCart.add(item));
+
         user.bookmarks = Array.from(userBookmarks);
-        await User.updateOne({ _id: user.id }, { $set: { bookmarks: user.bookmarks } });
+        user.cart = Array.from(userCart);
         
+        await User.updateOne({ _id: user.id }, { $set: { bookmarks: user.bookmarks, cart: user.cart } });
+
         // Generating token and setting it in a cookie
         const token = generateToken(user);
         res.cookie('clientToken', token, {

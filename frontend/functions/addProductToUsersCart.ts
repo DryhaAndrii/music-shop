@@ -1,8 +1,8 @@
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export default async function addBookmarkToUser(productId: string) {
+export default async function addProductToUsersCart(productId: string) {
     try {
-        const response = await fetch(`${apiUrl}bookmark/add`, {
+        const response = await fetch(`${apiUrl}cart/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

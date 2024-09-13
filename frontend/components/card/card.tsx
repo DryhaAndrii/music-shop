@@ -14,6 +14,7 @@ import { addToastAtom } from "@/atoms/toasts";
 import addBookmarkToUser from '@/functions/addBookmarkToUser';
 import { TOAST_TYPES } from '@/types/toastTypes';
 import { CARD_TYPES } from './cardTypes';
+import addProductToUsersCart from '@/functions/addProductToUsersCart';
 
 
 
@@ -45,10 +46,11 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
         }
 
         localStorage.setItem('bookmarks', JSON.stringify([...bookmarks, product?._id]));
+        window.dispatchEvent(new Event("storage"));// Send event to refresh storage
+
         if (user && !user.bookmarks.includes(product._id)) {
             const response = await addBookmarkToUser(product._id);
             if (response.message) {
-                console.log('adding to user bookmarks');
                 return addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
             }
             return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
@@ -57,16 +59,22 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
     }
     async function addToCartHandler() {
         if (!product) return;
-        console.log('user:', user);
         const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        if (cart.includes(product._id)) {
+            return addToast({ message: "This product is already in your cart", type: TOAST_TYPES.INFO });
+        }
 
-        if (!cart.includes(product._id)) {
-            console.log('adding to local cart');
-            localStorage.setItem('cart', JSON.stringify([...cart, product._id]));
-        }
+        localStorage.setItem('cart', JSON.stringify([...cart, product?._id]));
+        window.dispatchEvent(new Event("storage"));// Send event to refresh storage
+
         if (user && !user.cart.includes(product._id)) {
-            console.log('adding to user cart');
+            const response = await addProductToUsersCart(product._id);
+            if (response.message) {
+                return addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+            }
+            return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
         }
+        addToast({ message: 'Product added to cart', type: TOAST_TYPES.SUCCESS });
     }
 
     switch (type) {

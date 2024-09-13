@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { useState, useEffect } from 'react';
 import MyButton from '@/components/myButton/myButton';
 import styles from '../../styles.module.scss';
@@ -6,36 +6,66 @@ import AuthPanel from '@/components/authPanel/authPanel';
 import { userAtom } from '@/atoms/user';
 import { useAtom } from 'jotai';
 import UserPanel from '@/components/userPanel/userPanel';
+
 function Cart() {
     const [showAuthPanel, setShowAuthPanel] = useState(false);
     const [showUserPanel, setShowUserPanel] = useState(false);
     const [user] = useAtom(userAtom);
+    const [bookmarkCount, setBookmarkCount] = useState(0);
+    const [cartCount, setCartCount] = useState(0);
+
     useEffect(() => {
         setShowAuthPanel(false);
         setShowUserPanel(false);
-    }, [user])
+    }, [user]);
+
+    useEffect(() => {
+        function updateCounts() {
+            if (typeof window !== 'undefined') {
+                const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+                setBookmarkCount(bookmarks.length > 0 ? bookmarks.length : '');
+                const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                setCartCount(cart.length > 0 ? cart.length : '');
+            }
+        }
+
+        updateCounts();
+
+        window.addEventListener('storage', updateCounts);
+
+        return () => {
+            window.removeEventListener('storage', updateCounts);
+        };
+
+    }, []);
+
     function userButtonHandler() {
         if (user === null) {
             return setShowAuthPanel(!showAuthPanel);
         }
         if (user) {
-            return setShowUserPanel(!showUserPanel)
+            return setShowUserPanel(!showUserPanel);
         }
     }
+
     return (
         <div className={styles.cart}>
-            <MyButton >
+            <MyButton>
                 <span className="material-symbols-outlined">bookmark</span>
+                {bookmarkCount > 0
+                    ? <span className={styles.count}>{bookmarkCount}</span>
+                    : ''
+                }
             </MyButton>
-            <MyButton >
-                <span className="material-symbols-outlined">
-                    shopping_cart
-                </span>
+            <MyButton>
+                <span className="material-symbols-outlined">shopping_cart</span>
+                {cartCount > 0
+                    ? <span className={styles.count}>{cartCount}</span>
+                    : ''
+                }
             </MyButton>
             <MyButton onClick={userButtonHandler}>
-                <span className="material-symbols-outlined">
-                    person
-                </span>
+                <span className="material-symbols-outlined">person</span>
             </MyButton>
             {showAuthPanel && <AuthPanel hideAuthPanel={() => setShowAuthPanel(false)} />}
             {showUserPanel && <UserPanel hideUserPanel={() => setShowUserPanel(false)} />}

@@ -81,20 +81,24 @@ router.get('/auth/callback', async (req, res) => {
 });
 
 router.post('/auth/exchange', async (req, res) => {
-    const { code, bookmarks } = req.body;
+    const { code, bookmarks, cart } = req.body;
     if (!code || !tempCodes.has(code)) {
         return res.status(400).json({ error: 'Invalid or expired code' });
     }
     const token = tempCodes.get(code);
 
     const decodedUser = jwt.verify(token, process.env.JWT_SECRET_CLIENT);
-    console.log('decodedUser:', decodedUser);
 
-    // Synchronizing userBookmarks with bookmarks
+
+    // Synchronizing user's bookmarks and cart with database
     const userBookmarks = new Set(decodedUser.bookmarks);
+    const userCart = new Set(decodedUser.cart);
+
     bookmarks.forEach(bookmark => userBookmarks.add(bookmark));
-    await User.updateOne({ _id: decodedUser.id }, { $set: { bookmarks: Array.from(userBookmarks) } });
-    console.log("userBookmarks:", Array.from(userBookmarks));
+    cart.forEach(item => userCart.add(item));
+
+    await User.updateOne({ _id: decodedUser.id }, { $set: { bookmarks: Array.from(userBookmarks), cart: Array.from(userCart) } });
+
 
     // Generating token and setting it in a cookie
     tempCodes.delete(code);
@@ -104,7 +108,7 @@ router.post('/auth/exchange', async (req, res) => {
         sameSite: 'none',
         path: '/',
     });
-    res.json({ token, bookmarks: Array.from(userBookmarks) });
+    res.json({ token, bookmarks: Array.from(userBookmarks), cart: Array.from(userCart) });
 });
 
 router.get('/auth/exchange/message', (req, res) => {
