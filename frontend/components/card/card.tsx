@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import classNames from 'classnames/bind';
 import Product from '@/types/product';
@@ -32,6 +32,7 @@ const cx = classNames.bind(styles);
 function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
     const [user] = useAtom(userAtom);
     const [, addToast] = useAtom(addToastAtom);
+    const [loading, setLoading] = useState(false);
 
     const className = cx({
         card: true,
@@ -40,41 +41,63 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
 
     async function addToBookmarksHandler() {
         if (!product) return;
-        const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-        if (bookmarks.includes(product._id)) {
-            return addToast({ message: "This product is already bookmarked", type: TOAST_TYPES.INFO });
-        }
 
-        localStorage.setItem('bookmarks', JSON.stringify([...bookmarks, product?._id]));
-        window.dispatchEvent(new Event("storage"));// Send event to refresh storage
+        try {
+            setLoading(true);
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            if (bookmarks.includes(product._id)) {
 
-        if (user && !user.bookmarks.includes(product._id)) {
-            const response = await addBookmarkToUser(product._id);
-            if (response.message) {
-                return addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+                return addToast({ message: "This product is already bookmarked", type: TOAST_TYPES.INFO });
             }
-            return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
+
+            localStorage.setItem('bookmarks', JSON.stringify([...bookmarks, product?._id]));
+            window.dispatchEvent(new Event("storage"));// Send event to refresh storage
+
+            if (user && !user.bookmarks.includes(product._id)) {
+                const response = await addBookmarkToUser(product._id);
+                if (response.message) {
+                    return addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+                }
+                return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
+            }
+            addToast({ message: 'Bookmark added', type: TOAST_TYPES.SUCCESS });
         }
-        addToast({ message: 'Bookmark added', type: TOAST_TYPES.SUCCESS });
+        catch (error) {
+            console.error(error);
+        }
+        finally {
+            setLoading(false);
+        }
+
     }
     async function addToCartHandler() {
         if (!product) return;
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-        if (cart.includes(product._id)) {
-            return addToast({ message: "This product is already in your cart", type: TOAST_TYPES.INFO });
-        }
-
-        localStorage.setItem('cart', JSON.stringify([...cart, product?._id]));
-        window.dispatchEvent(new Event("storage"));// Send event to refresh storage
-
-        if (user && !user.cart.includes(product._id)) {
-            const response = await addProductToUsersCart(product._id);
-            if (response.message) {
-                return addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+        try {
+            setLoading(true);
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            if (cart.includes(product._id)) {
+                return addToast({ message: "This product is already in your cart", type: TOAST_TYPES.INFO });
             }
-            return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
+
+            localStorage.setItem('cart', JSON.stringify([...cart, product?._id]));
+            window.dispatchEvent(new Event("storage"));// Send event to refresh storage
+
+            if (user && !user.cart.includes(product._id)) {
+                const response = await addProductToUsersCart(product._id);
+                if (response.message) {
+                    return addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+                }
+                return addToast({ message: response.error, type: TOAST_TYPES.ERROR });
+            }
+            addToast({ message: 'Product added to cart', type: TOAST_TYPES.SUCCESS });
         }
-        addToast({ message: 'Product added to cart', type: TOAST_TYPES.SUCCESS });
+        catch (error) {
+            console.error(error);
+        }
+        finally {
+            setLoading(false);
+        }
+
     }
 
     switch (type) {
@@ -138,12 +161,12 @@ function Card({ type = CARD_TYPES.PRODUCT, product, category }: CardProps) {
                             }
 
                             <div>
-                                <MyButton onClick={addToCartHandler}>
+                                <MyButton disabled={loading} onClick={addToCartHandler}>
                                     <span className="material-symbols-outlined">
                                         add_shopping_cart
                                     </span>
                                 </MyButton>
-                                <MyButton onClick={addToBookmarksHandler}>
+                                <MyButton disabled={loading} onClick={addToBookmarksHandler}>
                                     <span className="material-symbols-outlined">
                                         bookmark_add
                                     </span>
