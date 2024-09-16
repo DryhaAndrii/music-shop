@@ -33,8 +33,9 @@ export default function Bookmarks() {
     }
     if (!products) {
         return (
-            <div className="container">
-                <p>No bookmarks</p>
+            <div className="container" style={{ textAlign: 'center' }}>
+                <h2>Bookmarks</h2>
+                <h3>You don't have any bookmarks</h3>
             </div>
         )
     }
