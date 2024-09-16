@@ -41,13 +41,28 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.post('/delete', (req, res) => {
-
-    const { code } = req.query;
+router.post('/delete', async (req, res) => {
+    const token = req.cookies.clientToken;
+    const { productId } = req.body;
+    const decodedUser = jwt.verify(token, process.env.JWT_SECRET_CLIENT);
     try {
+        const newBookmarks = decodedUser.bookmarks.filter(id => id !== productId);
+        await User.updateOne({ _id: decodedUser.id }, { $set: { bookmarks: newBookmarks } });
 
+        decodedUser.bookmarks = newBookmarks;
+
+        const newToken = generateToken(decodedUser);
+        // Set the new token in a cookie
+        res.cookie('clientToken', newToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            path: '/'
+        });
+
+        res.status(201).json({ message: 'Product deleted from bookmarks', user: decodedUser });
     } catch (error) {
-        console.error('Error during deleting bookmark:', error);
+        console.error('Error during deleting from bookmarks:', error);
         res.status(500).json({ message: 'Server error', error: error.toString() });
     }
 });

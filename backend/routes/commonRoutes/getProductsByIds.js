@@ -30,17 +30,17 @@ router.get('', async (req, res) => {
 
         // Searching products with query
         const filteredProducts = await Product.find(query);
-
-        // Фильтрация по диапазону цен (после получения продуктов)
+        //Filtering products with priceRange (after getting products)
         const productsWithinPriceRange = filteredProducts.filter(product => {
-            if (!filters.priceRange) return true; // Если фильтр по цене не указан, возвращаем все продукты
+            
+            if (!filters.priceRange) return true; //If priceRange not specified, return all products
             const productPrice = +product.price;
             return productPrice >= filters.priceRange.minPrice && productPrice <= filters.priceRange.maxPrice;
         });
 
         const totalProducts = productsWithinPriceRange.length;
 
-        // Применяем skip и limit
+        //using skip and limit
         const paginatedProducts = productsWithinPriceRange.slice(skip, skip + limit);
 
         const totalPages = Math.ceil(totalProducts / limit);

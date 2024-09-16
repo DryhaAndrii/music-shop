@@ -17,7 +17,7 @@ router.post('/add', async (req, res) => {
     const { productId } = req.body;
     const decodedUser = jwt.verify(token, process.env.JWT_SECRET_CLIENT);
     try {
-        if (decodedUser.bookmarks.includes(productId)) {
+        if (decodedUser.cart.includes(productId)) {
             return res.status(400).json({ message: 'Product already added to cart' });
         }
 
@@ -34,9 +34,9 @@ router.post('/add', async (req, res) => {
             path: '/'
         });
 
-        res.status(201).json({ message: 'Product added to bookmarks', user: decodedUser });
+        res.status(201).json({ message: 'Product added to cart', user: decodedUser });
     } catch (error) {
-        console.error('Error during adding bookmark:', error);
+        console.error('Error during adding cart:', error);
         res.status(500).json({ message: 'Server error', error: error.toString() });
     }
 });

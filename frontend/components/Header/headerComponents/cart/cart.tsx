@@ -6,6 +6,7 @@ import AuthPanel from '@/components/authPanel/authPanel';
 import { userAtom } from '@/atoms/user';
 import { useAtom } from 'jotai';
 import UserPanel from '@/components/userPanel/userPanel';
+import Link from 'next/link';
 
 function Cart() {
     const [showAuthPanel, setShowAuthPanel] = useState(false);
@@ -50,13 +51,16 @@ function Cart() {
 
     return (
         <div className={styles.cart}>
-            <MyButton>
-                <span className="material-symbols-outlined">bookmark</span>
-                {bookmarkCount > 0
-                    ? <span className={styles.count}>{bookmarkCount}</span>
-                    : ''
-                }
-            </MyButton>
+            <Link href={'/bookmarks'} style={{ textDecoration: 'none' }}>
+                <MyButton>
+                    <span className="material-symbols-outlined">bookmark</span>
+                    {bookmarkCount > 0
+                        ? <span className={styles.count}>{bookmarkCount}</span>
+                        : ''
+                    }
+                </MyButton>
+            </Link>
+
             <MyButton>
                 <span className="material-symbols-outlined">shopping_cart</span>
                 {cartCount > 0
