@@ -4,6 +4,7 @@ require('dotenv').config();
 const crypto = require('crypto');
 const User = require('../../models/userModel');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 // Rout to auth with Google
 
 const tempCodes = new Map();
@@ -80,6 +81,28 @@ router.get('/auth/callback', async (req, res) => {
     }
 });
 
+const mergeCartArrays = (dbCart, clientCart) => {
+    const cartMap = new Map();
+
+    dbCart.forEach(item => {
+        cartMap.set(item.product.toString(), item.quantity);
+    });
+
+    clientCart.forEach(item => {
+        const itemId = item.product.toString();
+        if (cartMap.has(itemId)) {
+            cartMap.set(itemId, Math.max(cartMap.get(itemId), item.quantity));
+        } else {
+            cartMap.set(itemId, item.quantity);
+        }
+    });
+
+    return Array.from(cartMap, ([product, quantity]) => ({
+        product: new mongoose.Types.ObjectId(product),
+        quantity
+    }));
+};
+
 router.post('/auth/exchange', async (req, res) => {
     const { code, bookmarks, cart } = req.body;
     if (!code || !tempCodes.has(code)) {
@@ -89,18 +112,13 @@ router.post('/auth/exchange', async (req, res) => {
 
     const decodedUser = jwt.verify(token, process.env.JWT_SECRET_CLIENT);
 
-
-    // Synchronizing user's bookmarks and cart with database
     const userBookmarks = new Set(decodedUser.bookmarks);
-    const userCart = new Set(decodedUser.cart);
-
     bookmarks.forEach(bookmark => userBookmarks.add(bookmark));
-    cart.forEach(item => userCart.add(item));
 
-    await User.updateOne({ _id: decodedUser.id }, { $set: { bookmarks: Array.from(userBookmarks), cart: Array.from(userCart) } });
+    const mergedCart = mergeCartArrays(decodedUser.cart, cart);
 
+    await User.updateOne({ _id: decodedUser.id }, { $set: { bookmarks: Array.from(userBookmarks), cart: mergedCart } });
 
-    // Generating token and setting it in a cookie
     tempCodes.delete(code);
     res.cookie('clientToken', token, {
         httpOnly: true,
@@ -108,7 +126,8 @@ router.post('/auth/exchange', async (req, res) => {
         sameSite: 'none',
         path: '/',
     });
-    res.json({ token, bookmarks: Array.from(userBookmarks), cart: Array.from(userCart) });
+
+    res.json({ token, bookmarks: Array.from(userBookmarks), cart: mergedCart });
 });
 
 router.get('/auth/exchange/message', (req, res) => {
@@ -118,8 +137,6 @@ router.get('/auth/exchange/message', (req, res) => {
     if (!code || !tempCodes.has(code)) {
         return res.status(400).json({ error: 'Invalid or expired code' });
     }
-
-
 
     const message = tempCodes.get(code);
     tempCodes.delete(code);

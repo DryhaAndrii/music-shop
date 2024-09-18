@@ -35,7 +35,7 @@ export default async function RootLayout({
       <body className={robotoCondensed.className}>
         <Header categories={categories} />
         <ToastContainer />
-        <div>Last updated: {new Date().getFullYear()}.
+        <div style={{ position: "absolute", top: 0, zIndex: 100 }}>Last updated: {new Date().getFullYear()}.
           {new Date().getMonth() + 1}.
           {new Date().getDate()}-
           {new Date().getHours()}:{new Date().getMinutes()}:{new Date().getSeconds()}

@@ -29,40 +29,67 @@ const mergeArrays = (dbArray, clientArray) => {
     return Array.from(mergedSet).map(id => toObjectId(id)).filter(id => id !== null);
 };
 
+// Helper function to merge cart arrays and select the maximum quantity for identical items
+const mergeCartArrays = (dbCart, clientCart) => {
+    const cartMap = new Map();
+
+    // Add items from the database cart
+    dbCart.forEach(item => {
+        cartMap.set(item.product.toString(), item.quantity);
+    });
+
+    // Merge with client cart, keeping the max quantity for each item
+    clientCart.forEach(item => {
+        const itemId = item.product.toString();
+        if (cartMap.has(itemId)) {
+            cartMap.set(itemId, Math.max(cartMap.get(itemId), item.quantity));
+        } else {
+            cartMap.set(itemId, item.quantity);
+        }
+    });
+
+    // Convert the map back to an array of items
+    return Array.from(cartMap, ([product, quantity]) => ({
+        product: toObjectId(product),
+        quantity
+    }));
+};
+
 // Route to handle login
 router.post('', async (req, res) => {
     const { password, email, bookmarks, cart } = req.body;
-    console.log('bookmarks req.body:', bookmarks);
-    
+    console.log('cart req.body:', cart);
+
     try {
         const user = await User.findOne({ email });
-        
+
         if (!user) {
             return res.status(404).json({ message: 'Wrong email or password' });
         }
-        
+
         // Checking if user is linked with Google
         if (user.googleId) {
             return res.status(400).json({ message: 'This email is linked with Google login. Please use Google login.' });
         }
-        
+
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(400).json({ message: 'Wrong email or password' });
         }
-        console.log('bookmarks from DB:', user.bookmarks);
-        
-        // Merge and deduplicate bookmarks and cart
+
+        console.log('cart from DB:', user.cart);
+
+        // Merge and deduplicate bookmarks and merge cart with max quantity for duplicates
         const mergedBookmarks = mergeArrays(user.bookmarks, bookmarks);
-        const mergedCart = mergeArrays(user.cart, cart);
-        
-        console.log('merged bookmarks:', mergedBookmarks);
-        
+        const mergedCart = mergeCartArrays(user.cart, cart);
+
+        console.log('merged cart:', mergedCart);
+
         user.bookmarks = mergedBookmarks;
         user.cart = mergedCart;
-        
+
         await User.updateOne({ _id: user._id }, { $set: { bookmarks: user.bookmarks, cart: user.cart } });
-        
+
         // Generating token and setting it in a cookie
         const token = generateToken(user);
         res.cookie('clientToken', token, {
@@ -71,7 +98,7 @@ router.post('', async (req, res) => {
             sameSite: 'none',
             path: '/'
         });
-        
+
         res.json({ message: 'Login successful', user: { email: user.email, name: user.name, cart: user.cart, bookmarks: user.bookmarks, id: user._id } });
     } catch (error) {
         console.error(error);

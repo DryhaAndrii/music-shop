@@ -26,7 +26,6 @@ export default function Bookmarks() {
 
         setLoading(true);
         const response = await getProductsByIds(bookmarksId, 1, 1000);
-        console.log('products:', response);
         if (!response || !response.products) return setLoading(false);
         setProducts(response.products);
         setLoading(false);

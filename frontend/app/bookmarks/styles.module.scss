@@ -1,11 +1,15 @@
 .bookmarksWrapper {
     position: relative;
+    padding-top: 10px;
+    h2{
+        margin: 0px;
+    }
     .bookmarks {
         display: flex;
         flex-direction: column;
         padding: 10px 0px;
         gap: 10px;
-
+        
         .example {
             display: grid;
             grid-template-columns: 0.5fr 3fr 2fr 2fr;

@@ -23,10 +23,13 @@ function Cart() {
     useEffect(() => {
         function updateCounts() {
             if (typeof window !== 'undefined') {
-                const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-                setBookmarkCount(bookmarks.length > 0 ? bookmarks.length : '');
-                const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-                setCartCount(cart.length > 0 ? cart.length : '');
+                const bookmarks: string[] = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+                setBookmarkCount(bookmarks.length);
+
+                const cart: { product: string; quantity: number }[] = JSON.parse(localStorage.getItem('cart') || '[]');
+                const totalQuantity = cart.reduce((accumulator, currentValue) => accumulator + currentValue.quantity, 0);
+
+                setCartCount(totalQuantity);
             }
         }
 
