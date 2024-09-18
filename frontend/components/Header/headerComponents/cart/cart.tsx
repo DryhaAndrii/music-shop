@@ -60,17 +60,19 @@ function Cart() {
                     }
                 </MyButton>
             </Link>
-
-            <MyButton>
-                <span className="material-symbols-outlined">shopping_cart</span>
-                {cartCount > 0
-                    ? <span className={styles.count}>{cartCount}</span>
-                    : ''
-                }
-            </MyButton>
+            <Link href={'/cart'} style={{ textDecoration: 'none' }}>
+                <MyButton>
+                    <span className="material-symbols-outlined">shopping_cart</span>
+                    {cartCount > 0
+                        ? <span className={styles.count}>{cartCount}</span>
+                        : ''
+                    }
+                </MyButton>
+            </Link>
             <MyButton onClick={userButtonHandler}>
                 <span className="material-symbols-outlined">person</span>
             </MyButton>
+
             {showAuthPanel && <AuthPanel hideAuthPanel={() => setShowAuthPanel(false)} />}
             {showUserPanel && <UserPanel hideUserPanel={() => setShowUserPanel(false)} />}
         </div>
