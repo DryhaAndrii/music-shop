@@ -25,8 +25,7 @@ export default async function ProductPage({ productTitle }: { productTitle: stri
                     </div>
                     <div className={styles.productPurchasingWrapper}>
                         <ProductPurchasing
-                            price={+product.price}
-                            discount={product.discount}
+                            product={product}
                         />
                     </div>
                 </div>

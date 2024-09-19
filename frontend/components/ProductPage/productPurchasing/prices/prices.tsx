@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 import DiscountBadge from "@/components/discountBadge/discountBadge";
 
 interface Props{
-    price: number;
+    price: string;
     discount: string | undefined;
 }
 
@@ -25,11 +25,11 @@ export default function ({price,discount}: Props) {
                         </span>
                         <span className={styles.yourDiscount}>Your discount:
                             <span>
-                                {Math.round(price * +`0.${discount}`)}$
+                                {Math.round(+price * +`0.${discount}`)}$
                             </span>
                         </span>
                     </span>
-                    <p>{`${Math.round(price * (100 - parseInt(discount)) / 100)}$`}</p>
+                    <p>{`${Math.round(+price * (100 - parseInt(discount)) / 100)}$`}</p>
                 </>
                 :
                 <p>{`${price}$`}</p>

@@ -6,16 +6,11 @@ import Phones from "./contactsComponents/phones";
 import DropDownMenu from "./contactsComponents/dropDownMenu";
 
 function Contacts() {
-    const [show, setShow] = useState('hidden');
+    const [show, setShow] = useState(false);
 
 
     function toggleMenu() {
-        if (show === 'hidden') {
-            setShow('shown')
-        }
-        else {
-            setShow('hidden')
-        }
+        setShow(!show);
     }
 
     return (
@@ -24,7 +19,7 @@ function Contacts() {
             <button
                 className={styles.toggleButton}
                 onClick={toggleMenu}
-                style={{ transform: `rotate(${show === 'shown' ? 180 : 0}deg)` }}
+                style={{ transform: `rotate(${show ? 180 : 0}deg)` }}
             >
                 <span className="material-symbols-outlined">
                     arrow_drop_down

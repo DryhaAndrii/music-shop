@@ -6,33 +6,12 @@
     flex-direction: column;
     justify-content: center;
     gap: 20px;
+    position: relative;
 
     .buttonsWrapper {
         display: flex;
         gap: 20px;
         height: 50px;
-
-        .countManager {
-            display: flex;
-            align-items: stretch;
-            border-radius: 5px;
-            border: 1px solid #0000002b;
-
-            input {
-                height: 100%;
-                padding: 0px;
-                width: 20px;
-                text-align: center;
-            }
-
-            button {
-                width: 20px;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0);
-                border: none;
-                border-radius: 0px;
-            }
-        }
 
         .buttons {
             display: flex;
@@ -42,38 +21,12 @@
             button {
                 height: 100%;
                 font-size: 20px;
+                flex-grow: 1;
             }
 
             >button:first-child {
-                width: 100px;
                 background-color: #00a8e8;
                 color: white;
-                flex-grow: 1;
-            }
-
-            >button:nth-child(2) {
-                width: 100px;
-                flex-grow: 1;
-            }
-
-        }
-
-    }
-}
-
-@media (max-width: 1200px) {
-    .productPurchasing {
-        padding: 10px;
-
-        button {
-            font-size: 16px !important;
-        }
-
-        .buttonsWrapper {
-            gap: 5px;
-
-            .buttons {
-                gap: 5px;
             }
         }
     }
@@ -81,50 +34,6 @@
 
 @media (max-width: 768px) {
     .productPurchasing {
-        gap: 10px;
-        .buttonsWrapper {
-            flex-direction: column;
-            height: unset;
-            gap: 10px;
-            .countManager{
-                height: 40px;
-                button{
-                    flex-grow: 1;
-                }
-                input{
-                    flex-grow: 1;
-                }
-            }
-            .buttons {
-                height: 40px;
-            }
-        }
-    }
-}
-
-@media (max-width: 400px) {
-    .productPurchasing {
-        .buttonsWrapper {
-            .countManager {
-                button {
-                    width: 15px;
-                }
-
-                input {
-                    width: 15px;
-                }
-            }
-
-            .buttons {
-                button {
-                    flex-grow: 0;
-                    width: unset !important;
-                }
-
-                button:last-child {
-                    width: 40px !important;
-                }
-            }
-        }
+        padding:15px;
     }
 }
