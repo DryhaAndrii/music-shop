@@ -6,6 +6,12 @@ import Product from '@/types/product';
 import getProductsByIds from '@/functions/getProductsByIds';
 import { cartItem } from '@/types/user';
 import CartItem from './cartItem/cartItem';
+import Order from './order/order';
+import { userAtom } from '@/atoms/user';
+import { useAtom } from 'jotai';
+import { addToastAtom } from "@/atoms/toasts";
+import { TOAST_TYPES } from '@/types/toastTypes';
+import placeOrder from '@/functions/placeOrder';
 
 interface CartItem {
     product: Product;
@@ -14,6 +20,9 @@ interface CartItem {
 
 function Cart() {
     const [cart, setCart] = useState<CartItem[] | null>([]);
+    const [user] = useAtom(userAtom);
+    const [, addToast] = useAtom(addToastAtom);
+    const [totalPrice, setTotalPrice] = useState(0)
     const [isLoading, setLoading] = useState(false);
     useEffect(() => {
         window.addEventListener('storage', fetchCart);
@@ -40,7 +49,29 @@ function Cart() {
         setCart(response.products.map((product: any) =>
             ({ product, quantity: cart.find((item: cartItem) => item.product === product._id)?.quantity || 0 }))
         );
+
+        const price = response.products.reduce((accumulator: number, currentValue: { _id: string, price: number, discount?: number }) => {
+            const quantity = cart.find((item: cartItem) => item.product === currentValue._id)?.quantity || 0;
+            const discount = currentValue.discount && currentValue.discount > 0 ? currentValue.discount : 0;
+            const discountedPrice = currentValue.price * (1 - discount / 100);
+            return accumulator + Math.round(discountedPrice * quantity);
+        }, 0);
+        setTotalPrice(price);
+
         setLoading(false);
+    }
+    async function order(name: string, surname: string, phone: string) {
+        setLoading(true);
+
+        const products = cart?.map((item: CartItem) => ({ productId: item.product._id, quantity: item.quantity }));
+        console.log(name, surname, phone, products, totalPrice);
+        const response = await placeOrder(name, surname, phone, totalPrice, products);
+
+        setLoading(false);
+        
+        if (response.message) return addToast({ message: response.message, type: TOAST_TYPES.SUCCESS });
+
+        addToast({ message: response.error, type: TOAST_TYPES.ERROR });
     }
 
     if (!cart) {
@@ -67,6 +98,8 @@ function Cart() {
                     {cart.map((cartItem) => (
                         <CartItem quantity={cartItem.quantity} product={cartItem.product} key={cartItem.product._id} setLoading={setLoading} />
                     ))}
+                    <h3>Total price: {totalPrice}$</h3>
+                    <Order order={order} totalPrice={totalPrice} />
                 </div>
             </div>
         </div>

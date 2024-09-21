@@ -58,8 +58,6 @@ const mergeCartArrays = (dbCart, clientCart) => {
 // Route to handle login
 router.post('', async (req, res) => {
     const { password, email, bookmarks, cart } = req.body;
-    console.log('cart req.body:', cart);
-
     try {
         const user = await User.findOne({ email });
 
@@ -77,13 +75,10 @@ router.post('', async (req, res) => {
             return res.status(400).json({ message: 'Wrong email or password' });
         }
 
-        console.log('cart from DB:', user.cart);
 
         // Merge and deduplicate bookmarks and merge cart with max quantity for duplicates
         const mergedBookmarks = mergeArrays(user.bookmarks, bookmarks);
         const mergedCart = mergeCartArrays(user.cart, cart);
-
-        console.log('merged cart:', mergedCart);
 
         user.bookmarks = mergedBookmarks;
         user.cart = mergedCart;
