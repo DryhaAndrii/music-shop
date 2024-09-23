@@ -106,7 +106,7 @@ export const TextEditor = ({ editorState, setEditorState, handleKeyCommand }) =>
                 <button 
                     type="button" 
                     onClick={openFileInput}
-                >Вставить изображение</button>
+                >Append image</button>
                 <input
                     ref={fileInputRef}
                     type="file"

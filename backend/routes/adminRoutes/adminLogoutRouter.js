@@ -8,8 +8,8 @@ router.get('', (req, res) => {
         console.log('he has no token');
         return res.status(401).json({ message: 'You have no token', isToken: false });
     }
-    console.log('unlogging');
-    res.clearCookie("token",{ httpOnly: true, secure: true, sameSite: 'none', path: '/' });
-    return res.status(401).json({ message: 'Token is ok but you are logging out'  });
+    console.log('admin unlogging');
+    res.clearCookie("adminToken",{ httpOnly: true, secure: true, sameSite: 'none', path: '/' });
+    return res.status(200).json({ message: 'Token is ok but you are logging out'  });
 });
 module.exports = router;

@@ -2,6 +2,7 @@ import Button from '../button/button';
 import { myStore } from '../../store/store';
 import './header.scss';
 import { toast } from 'react-toastify';
+import Search from './search/search';
 
 
 
@@ -17,7 +18,12 @@ export default function Header() {
                 method: 'GET',
                 credentials: 'include',
             });
-            window.location.href = '/login';
+            const status = response.status;
+            if (status === 200) {
+                return window.location.href = '/login';
+            }
+            const data = await response.json();
+            toast.error(data.message);
         } catch (error) {
             toast.error('An error occurred while checking token, maybe server is not working so you can do nothing now');
             setLoading(false);
@@ -28,9 +34,13 @@ export default function Header() {
             <div className='container'>
                 <div className='wrapper'>
                     <h1><a href='/'>Admin panel</a></h1>
+
                     {window.location.pathname === '/login'
                         ? <></>
-                        : <Button buttonText={'Log out'} onClick={LogOut} />
+                        : <>
+                            <Search />
+                            <Button buttonText={'Log out'} onClick={LogOut} />
+                        </>
                     }
 
                 </div>
