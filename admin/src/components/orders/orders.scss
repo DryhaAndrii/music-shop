@@ -16,6 +16,13 @@
 
             .example {
                 background-color: #00000017;
+                >div{
+                    cursor: pointer;
+                    &:hover{
+                        background-color: rgba(128, 128, 128, 0.37);
+                        
+                    }
+                }
             }
 
             .example,
