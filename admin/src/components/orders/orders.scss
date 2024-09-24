@@ -1,0 +1,61 @@
+.ordersWrapper {
+    padding: 10px 0px;
+
+    h2 {
+        margin: 0px;
+    }
+
+    .wrapper {
+        padding: 10px;
+
+        .orders {
+            min-height: 300px;
+            box-shadow: inset 0px 0px 2px 0px black;
+            padding: 5px;
+            border-radius: 5px;
+
+            .example {
+                background-color: #00000017;
+            }
+
+            .example,
+            .order {
+                padding: 2px;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+                gap: 20px;
+
+                >div {
+                    overflow: auto;
+                }
+
+                .status {
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+
+                    &:hover {
+                        background-color: rgba(128, 128, 128, 0.37);
+                    }
+
+                    position: relative;
+                    overflow: unset;
+
+                    .dropdown {
+                        position: absolute;
+                        background-color: white;
+                        box-shadow: 0px 0px 10px 0px black;
+                        z-index: 20;
+                        top: 100%;
+                        user-select: none;
+                        &__item{
+                            &:hover {
+                                background-color: rgba(128, 128, 128, 0.37);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,3 @@
-// server/routes/api.js
 const express = require('express');
 const router = express.Router();
 
@@ -14,7 +13,8 @@ const getProductsByIds = require('./getProductsByIds');
 const deleteProductById = require('./deleteProductById');
 const editCategoryRouter = require('./editCategoryRouter');
 const editProductRouter = require('./editProductRouter');
-const searh = require('./search');
+const search = require('./search');
+const orders = require('./orders')
 
 router.use('/login', adminLogin);
 router.use('/logout', adminLogout);
@@ -28,6 +28,7 @@ router.use('/getProductsByIds', getProductsByIds);
 router.use('/deleteProductById', deleteProductById);
 router.use('/editCategory', editCategoryRouter);
 router.use('/editProduct', editProductRouter);
-router.use('/search', searh);
+router.use('/search', search);
+router.use('/orders', orders);
 
 module.exports = router;

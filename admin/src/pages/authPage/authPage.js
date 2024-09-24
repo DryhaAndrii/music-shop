@@ -9,6 +9,7 @@ import { myStore } from '../../store/store';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './authPage.scss';
+import Button from '../../components/button/button';
 
 const LETTER_AND_DIGITS_REGEXP = /[^a-zA-Z0-9]/g;
 const LOGIN = 'login';
@@ -71,7 +72,7 @@ export default function AuthPage() {
                 <Form handleSubmit={handleSubmit}>
                     <Input type={INPUT_TYPES.TEXT} placeholder={'Your login'} name={LOGIN} value={login} onChangeHandler={onInputChange} />
                     <Input type={INPUT_TYPES.PASSWORD} placeholder={'Your password'} name={PASSWORD} value={password} onChangeHandler={onInputChange} />
-                    <Input type={INPUT_TYPES.SUBMIT} value="Login" />
+                    <Button buttonText={'Login'} />
                 </Form>
             </div>
 
