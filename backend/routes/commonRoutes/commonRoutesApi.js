@@ -20,6 +20,7 @@ const changePassword = require('./changePassword');
 const bookmark = require('./bookmark');
 const cart = require('./cart');
 const order = require('./order');
+const search = require('./search');
 
 router.use('/getMainCategories', getMainCategories);
 router.use('/getProductsByIds', getProductsByIds);
@@ -40,5 +41,6 @@ router.use('/changePassword', changePassword);
 router.use('/bookmark', bookmark);
 router.use('/cart', cart);
 router.use('/order', order);
+router.use('/search', search);
 
 module.exports = router;

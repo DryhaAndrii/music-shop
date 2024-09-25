@@ -75,13 +75,18 @@
                 input {
                     width: 95%;
                     height: 100%;
-                    border-top-left-radius: 0px;
-                    border-bottom-left-radius: 0px;
+                    border-radius: 0px;
                 }
 
                 button {
-                    border-top-right-radius: 0px;
-                    border-bottom-right-radius: 0px;
+                    &:first-of-type {
+                        border-top-right-radius: 0px;
+                        border-bottom-right-radius: 0px;
+                    }
+                    &:last-of-type{
+                        border-top-left-radius: 0px;
+                        border-bottom-left-radius: 0px;
+                    }
                 }
             }
 
@@ -301,7 +306,7 @@
 
 @media (max-width: 768px) {
     .header {
-        position: unset;
+        position: relative;
         height: 200px;
 
         .outerWrapper {
