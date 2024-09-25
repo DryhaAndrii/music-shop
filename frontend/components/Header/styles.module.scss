@@ -71,22 +71,27 @@
                 align-items: center;
                 justify-content: flex-start;
 
-
-                input {
-                    width: 95%;
+                form {
                     height: 100%;
-                    border-radius: 0px;
-                }
+                    display: flex;
+                    align-items: stretch;
+                    flex-grow: 1;
 
-                button {
-                    &:first-of-type {
+                    button {
                         border-top-right-radius: 0px;
                         border-bottom-right-radius: 0px;
                     }
-                    &:last-of-type{
-                        border-top-left-radius: 0px;
-                        border-bottom-left-radius: 0px;
+
+                    input {
+                        flex-grow: 1;
+                        height: 100%;
+                        border-radius: 0px;
                     }
+                }
+
+                >button {
+                    border-top-left-radius: 0px;
+                    border-bottom-left-radius: 0px;
                 }
             }
 

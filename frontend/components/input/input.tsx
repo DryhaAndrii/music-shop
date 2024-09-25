@@ -26,11 +26,12 @@ interface InputProps {
     onPasteHandler?: (...args: any[]) => void;
     reference?: any;
     maximumLength?: number;
+    disabled?: boolean;
 }
 
 const cx = classNames.bind(styles);
 
-function Input({ onPasteHandler, maximumLength, keyDownHandler, reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
+function Input({ onPasteHandler, disabled, maximumLength, keyDownHandler, reference, type = INPUT_TYPES.TEXT, color = INPUT_COLOR.LIGHT, placeholder, onChangeHandler, name, value, onBlur }: InputProps) {
 
 
     const className = cx({
@@ -54,6 +55,7 @@ function Input({ onPasteHandler, maximumLength, keyDownHandler, reference, type 
         case INPUT_TYPES.PASSWORD:
             return (
                 <input
+                    disabled={disabled}
                     onPaste={onPasteHandler}
                     ref={reference}
                     name={name}
