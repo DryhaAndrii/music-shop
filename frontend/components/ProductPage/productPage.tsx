@@ -14,7 +14,7 @@ const SPACE_REGEX = / /g;
 
 export default async function ProductPage({ productTitle }: { productTitle: string }) {
     const product: Product = await getProductByTitle(productTitle);
-    const { similarProducts, hasMoreNewProducts } = await getSimilarProducts(1, 5, product._id);//This is for prerender the first 5 products
+    const { similarProducts, hasMoreSimilarProducts } = await getSimilarProducts(1, 5, product._id);//This is for prerender the first 5 products
     if (!product) {
         return <h2>Product not found</h2>;
     }
@@ -44,7 +44,7 @@ export default async function ProductPage({ productTitle }: { productTitle: stri
             <SimilarProducts
                 mainProductId={product._id}
                 initialProducts={similarProducts}
-                initialHasMore={hasMoreNewProducts}
+                initialHasMore={hasMoreSimilarProducts}
             />
         </>
     )
