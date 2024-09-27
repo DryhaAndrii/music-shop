@@ -21,6 +21,7 @@ const bookmark = require('./bookmark');
 const cart = require('./cart');
 const order = require('./order');
 const search = require('./search');
+const getSimilarProducts = require('./getSimilarProducts');
 
 router.use('/getMainCategories', getMainCategories);
 router.use('/getProductsByIds', getProductsByIds);
@@ -42,5 +43,6 @@ router.use('/bookmark', bookmark);
 router.use('/cart', cart);
 router.use('/order', order);
 router.use('/search', search);
+router.use('/getSimilarProducts', getSimilarProducts);
 
 module.exports = router;
