@@ -25,7 +25,7 @@ export default function SimilarProducts({ initialProducts, initialHasMore, mainP
 
         setIsLoading(true);
         try {
-            const { similarProducts, hasMoreNewProducts: moreProducts } = await getSimilarProducts(page, 5, mainProductId);
+            const { similarProducts, hasMoreSimilarProducts: moreProducts } = await getSimilarProducts(page, 5, mainProductId);
 
             if (similarProducts && similarProducts.length > 0) {
                 setProducts(prevProducts => [...prevProducts, ...similarProducts]);
@@ -34,7 +34,7 @@ export default function SimilarProducts({ initialProducts, initialHasMore, mainP
 
             setHasMore(moreProducts);
         } catch (error) {
-            console.error('Error fetching new products:', error);
+            console.error('Error fetching similar products:', error);
         } finally {
             setIsLoading(false);
         }
