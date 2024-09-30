@@ -4,54 +4,111 @@ const Product = require('../../models/productModel');
 const Category = require('../../models/categoryModel');
 require('dotenv').config();
 
-async function getSimilarProducts(productId, page = 1, limit = 5) {
+const calculateAttributeSimilarity = (productA, productB) => {
+    let similarityScore = 0;
+    for (let key in productA.attributes) {
+        if (productB.attributes[key] && productB.attributes[key] === productA.attributes[key]) {
+            similarityScore++;
+        }
+    }
+    return similarityScore;
+};
 
-    const product = await Product.findById(productId).populate('parentCategoryId');
-    if (!product) {
-        throw new Error('Product not found');
+async function getProductsOfSameCategory(mainCategory, mainProductId, mainProduct) {
+    let productsOfSameCategory = await Product.find({ '_id': { $in: mainCategory.products } });
+    productsOfSameCategory = productsOfSameCategory.filter(product => product._id.toString() !== mainProductId);
+
+    productsOfSameCategory.sort((a, b) => {
+        // 1. Calculating similarity by attributes
+        const similarityA = calculateAttributeSimilarity(mainProduct, a);
+        const similarityB = calculateAttributeSimilarity(mainProduct, b);
+
+        // 2. Comparing similarities by quantity of matching attributes
+        if (similarityA > similarityB) return -1;
+        if (similarityA < similarityB) return 1;
+
+        // 3. If similarities are equal, comparing prices
+        const priceA = parseFloat(a.price);
+        const priceB = parseFloat(b.price);
+        const mainProductPrice = parseFloat(mainProduct.price);
+
+        const priceDifferenceA = Math.abs(priceA - mainProductPrice);
+        const priceDifferenceB = Math.abs(priceB - mainProductPrice);
+
+        return priceDifferenceA - priceDifferenceB;
+    });
+    return productsOfSameCategory;
+}
+
+async function getProductsOfOtherCategories(mainCategory, mainProduct) {
+    const eldestCategory = await Category.findById(mainCategory.parentCategoryId);
+    if (!eldestCategory) {
+        throw new Error('Eldest category not found');
     }
 
-    const mainCategoryId = product.parentCategoryId._id;
-    const mainCategoryProducts = await Product.find({
-        parentCategoryId: mainCategoryId,
-        _id: { $ne: productId } 
-    }).lean();
-
-
-    const shuffledMainCategoryProducts = mainCategoryProducts.sort(() => 0.5 - Math.random());
-
-    const parentCategory = await Category.findById(product.parentCategoryId.parentCategoryId).populate('subcategories');
-    let siblingCategoryProducts = [];
-    if (parentCategory) {
-        const siblingCategoryIds = parentCategory.subcategories
-            .map(cat => cat._id)
-            .filter(id => !id.equals(mainCategoryId));
-
-        siblingCategoryProducts = await Product.find({
-            parentCategoryId: { $in: siblingCategoryIds }
-        }).lean();
-
-    } else {
-        console.log(`No parent category found for category ${mainCategoryId}`);
+    let otherCategories = await Category.find({ '_id': { $in: eldestCategory.subcategories } });
+    if (!otherCategories) {
+        throw new Error('Other categories not found');
     }
 
-    const shuffledSiblingCategoryProducts = siblingCategoryProducts.sort(() => 0.5 - Math.random());
+    otherCategories = otherCategories.filter(category => category._id.toString() !== mainCategory._id.toString());
 
-    const allProducts = [...shuffledMainCategoryProducts, ...shuffledSiblingCategoryProducts];
+    let products = [];
+    for (const category of otherCategories) {
+        const productsOfOtherCategory = await Product.find({ '_id': { $in: category.products } });
 
-    const totalProducts = allProducts.length;
-    const skip = (page - 1) * limit;
-    const paginatedProducts = allProducts.slice(skip, skip + limit);
+        products = [...products, ...productsOfOtherCategory];
+    }
+    products.sort((a, b) => {
+        // 1. Calculating similarity by attributes
+        const similarityA = calculateAttributeSimilarity(mainProduct, a);
+        const similarityB = calculateAttributeSimilarity(mainProduct, b);
 
+        // 2. Comparing similarities by quantity of matching attributes
+        if (similarityA > similarityB) return -1;
+        if (similarityA < similarityB) return 1;
 
-    const hasMore = totalProducts > skip + limit;
+        // 3. If similarities are equal, comparing prices
+        const priceA = parseFloat(a.price);
+        const priceB = parseFloat(b.price);
+        const mainProductPrice = parseFloat(mainProduct.price);
+
+        const priceDifferenceA = Math.abs(priceA - mainProductPrice);
+        const priceDifferenceB = Math.abs(priceB - mainProductPrice);
+
+        return priceDifferenceA - priceDifferenceB;
+    });
+
+    return products;
+
+}
+
+async function getSimilarProducts(mainProductId, page, limit) {
+    const mainProduct = await Product.findById(mainProductId);
+
+    if (!mainProduct) {
+        throw new Error('Main product not found');
+    }
+
+    const mainCategory = await Category.findById(mainProduct.parentCategoryId);
+
+    if (!mainCategory) {
+        throw new Error('Main category not found');
+    }
+
+    const productsOfSameCategory = await getProductsOfSameCategory(mainCategory, mainProductId, mainProduct);
+    const productsOfOtherCategories = await getProductsOfOtherCategories(mainCategory, mainProduct);
+
+    // Pagination
+    const totalProducts = [...productsOfSameCategory, ...productsOfOtherCategories].length;
+    const paginatedProducts = [...productsOfSameCategory, ...productsOfOtherCategories].slice((page - 1) * limit, page * limit);
 
     return {
         products: paginatedProducts,
-        hasMore: hasMore,
-        totalProducts: totalProducts
+        hasMore: totalProducts > page * limit,
     };
 }
+
 
 router.get('', async (req, res) => {
     try {
@@ -60,11 +117,10 @@ router.get('', async (req, res) => {
         const limit = parseInt(req.query.limit) || 5;
 
         const result = await getSimilarProducts(mainProductId, page, limit);
-        
+
         res.status(200).json({
             products: result.products,
-            hasMore: result.hasMore,
-            totalProducts: result.totalProducts
+            hasMore: result.hasMore
         });
     } catch (error) {
         console.error('Error in getSimilarProducts:', error);
