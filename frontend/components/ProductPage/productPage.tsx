@@ -8,6 +8,7 @@ import ProductPurchasing from "./productPurchasing/productPurchasing";
 import ProductDescription from "./productDescription/productDescription";
 import getSimilarProducts from "@/functions/getSimilarProducts";
 import SimilarProducts from "../similarProducts/similarProducts";
+import ViewedProducts from "../viewedProducts/viewedProducts";
 
 const UNDERSCORE_REGEX = /_/g;
 const SPACE_REGEX = / /g;
@@ -46,6 +47,7 @@ export default async function ProductPage({ productTitle }: { productTitle: stri
                 initialProducts={similarProducts}
                 initialHasMore={hasMoreSimilarProducts}
             />
+            <ViewedProducts currentProductId={product._id}/>
         </>
     )
 }
