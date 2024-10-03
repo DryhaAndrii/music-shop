@@ -32,5 +32,22 @@ router.post('/changeStatusById', authMiddleware, async (req, res) => {
         res.status(500).json({ message: 'Server error during status update' });
     }
 });
+router.post('/deleteOrder', authMiddleware, async (req, res) => {
+    const { orderId } = req.body;
+
+    try {
+        const order = await Order.findByIdAndDelete(orderId);
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        res.status(200).json({ message: 'Order deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error during order deletion' });
+    }
+});
+
 
 module.exports = router;

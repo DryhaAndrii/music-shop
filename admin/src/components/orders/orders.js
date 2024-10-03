@@ -37,9 +37,35 @@ function Orders() {
             hideLoading();
         }
     }
+    async function deleteOrder(orderId) {
+        try {
+            showLoading();
+            const response = await fetch(`${apiUrl}orders/deleteOrder`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ orderId }),
+            });
+            const status = response.status;
+            if (status === 200) {
+                const data = await response.json();
+                toast.success(data.message);
+                await fetchAllOrders();
+            } else {
+                const data = await response.json();
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error('Some error: ' + error.message);
+        } finally {
+            hideLoading();
+        }
+    }
 
     function sortOrders(field) {
-        const newSortOrder = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc'; 
+        const newSortOrder = sortField === field && sortOrder === 'asc' ? 'desc' : 'asc';
         setSortField(field);
         setSortOrder(newSortOrder);
 
@@ -75,7 +101,19 @@ function Orders() {
         setOrders(sortedOrders);
     }
 
-    if (!orders) return null;
+    if (!orders || orders.length === 0) return (
+        <div className='ordersWrapper'>
+            <Loading isShow={isShow} />
+            <div className='container'>
+                <h2>Orders</h2>
+            </div>
+            <div className='wrapper'>
+                <div className='orders'  style={{ minHeight: 'unset' }}>
+                    <h1 style={{ textAlign: 'center' }}>There are no orders</h1>
+                </div>
+            </div>
+        </div>
+    );
 
     return (
         <div className='ordersWrapper'>
@@ -94,11 +132,12 @@ function Orders() {
                         <div onClick={() => sortOrders('totalPrice')}>Total price</div>
                         <div onClick={() => sortOrders('products')}>Products</div>
                         <div onClick={() => sortOrders('status')}>Status</div>
+                        <div>Delete</div>
                     </div>
                     {orders.map((order) => {
-                        return <Order key={order._id} order={order} />;
+                        return <Order key={order._id} order={order} deleteOrder={deleteOrder} />;
                     })}
-                    
+
                 </div>
             </div>
         </div>

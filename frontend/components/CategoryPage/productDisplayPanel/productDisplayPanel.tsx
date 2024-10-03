@@ -90,16 +90,6 @@ function ProductDisplayPanel({
         setLoading(false);
         setCurrentPage(1);
         window.scrollTo(0, 0);//Scroll to top
-
-        // {
-        //     priceRange
-        //     :
-        //     { maxPrice: 1653, minPrice: 130 }
-
-        //     attributes
-        //     :
-        //     {Count of frets: "24 frets", Pickups: "S-S" }
-        // }
     }
     const fetchProductsWithFilters = async () => {
         setLoading(true);

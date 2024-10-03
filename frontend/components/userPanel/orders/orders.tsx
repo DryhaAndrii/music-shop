@@ -1,6 +1,14 @@
 import styles from './styles.module.scss';
 
 function Orders({ orders }: any) {
+    if (!orders || orders.length === 0) return (
+        <div className={styles.wrapper}>
+            <h3>Your orders</h3>
+            <div className={styles.orders}>
+                <h4>You don't have any orders yet</h4>
+            </div>
+        </div>
+    )
     return (
         <div className={styles.wrapper}>
             <h3>Your orders</h3>

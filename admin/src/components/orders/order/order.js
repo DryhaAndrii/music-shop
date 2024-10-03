@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Status from "./status";
+import Button from "../../button/button";
 
 
-function Order({ order }) {
+function Order({ order, deleteOrder }) {
     const [productIsOpen, setProductIsOpen] = useState(false);
     return (
         <div className="order">
@@ -30,8 +31,9 @@ function Order({ order }) {
             <div>{order.surname}</div>
             <div>{order.phone}</div>
             <div>{order.totalPrice}$</div>
-            <div style={{display: 'grid',gridTemplateColumns: '1fr 8fr'}}><span>{order.products.length}</span> products</div>
-            <Status orderId={order._id} status={order.status}/>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 8fr' }}><span>{order.products.length}</span> products</div>
+            <Status orderId={order._id} status={order.status} />
+            <Button buttonText={"Delete"} onClick={() => deleteOrder(order._id)} />
         </div>
     );
 }

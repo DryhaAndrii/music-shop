@@ -65,7 +65,7 @@ function UserPanel({ hideUserPanel }: Props) {
                 <div className={styles.headers}>
                     <h2>{user?.name}`s user panel</h2>
                 </div>
-                {orders.length > 0 && <Orders orders={orders} />}
+                <Orders orders={orders} />
 
                 <div className={styles.buttonWrapper}>
                     <MyButton onClick={logoutButtonHandler} color={BUTTON_COLOR.DARK}>

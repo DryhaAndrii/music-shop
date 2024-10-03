@@ -76,7 +76,7 @@ export default function ViewedProducts({ currentProductId }: { currentProductId:
         <div className={styles.wrapper}>
 
             {isLoading && <Loading />}
-            <div className={`${styles.similarProducts} container`}>
+            <div className={`${styles.viewedProducts} container`}>
 
                 <h2>Recently viewed products</h2>
                 <ProductCardsContainer products={products} columns={5} />
