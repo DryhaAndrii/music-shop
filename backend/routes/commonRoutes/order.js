@@ -40,7 +40,7 @@ router.post('/create', limiter, async (req, res) => {
     }
 });
 
-router.get('/getByToken', limiter, async (req, res) => {
+router.get('/getByToken', async (req, res) => {
     const token = req.cookies.clientToken;
 
     try {
