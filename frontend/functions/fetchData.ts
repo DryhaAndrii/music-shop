@@ -13,7 +13,9 @@ export default async function fetchData(endpoint: string, params?: Record<string
                 url.searchParams.append(key, value);
             });
         }
-
+        console.log('====================');
+        console.log('Fetching to', url);
+        console.log('====================');
 
         const res = await fetch(url, {
             next: {
