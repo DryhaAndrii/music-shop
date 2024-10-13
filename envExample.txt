@@ -1,0 +1,25 @@
+# Sever envs
+MONGODB_URI="Your connection string"
+JWT_SECRET_ADMIN="Yoursecretadminstring"
+JWT_SECRET_CLIENT="Yoursecretclientstring"
+SECRET_SESSION_KEY="Yoursecretsessionkey"
+ADMIN_URL="http://admin:3002"
+CLIENT_URL="http://frontend:3000"
+GOOGLE_CLIENT_ID="your id"
+GOOGLE_CLIENT_SECRET="your client"
+GOOGLE_REDIRECT_URI="https://music-shop-v1x5.onrender.com/api/common/googleAuth/auth/callback"
+ENVIRONMENT='production'
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT="587"
+SMTP_USER="your email"
+SMTP_PASS="your pass"
+
+# Frontend envs
+NEXT_PUBLIC_API_URL="http://server:3001/api/common/"
+NEXT_PUBLIC_API_URL_LOCALHOST="http://localhost:3001/api/common/"
+NEXT_PUBLIC_REVALIDATION_TIME="3600"
+
+# Admin envs
+REACT_APP_API_URL="http://localhost:3001/api/admin/"
+REACT_APP_CLIENT_URL="http://admin:3002"
+PORT="3002"

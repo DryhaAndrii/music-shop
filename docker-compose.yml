@@ -4,6 +4,21 @@ services:
     container_name: server
     ports:
       - "3001:3001"
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET_ADMIN=${JWT_SECRET_ADMIN}
+      - JWT_SECRET_CLIENT=${JWT_SECRET_CLIENT}
+      - SECRET_SESSION_KEY=${SECRET_SESSION_KEY}
+      - ADMIN_URL=${ADMIN_URL}
+      - CLIENT_URL=${CLIENT_URL}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - ENVIRONMENT=production
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
     networks:
       - musicshop-network
 
@@ -11,18 +26,26 @@ services:
     build: ./frontend
     container_name: frontend
     depends_on:
-      - server  
+      - server
     ports:
       - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_API_URL_LOCALHOST=${NEXT_PUBLIC_API_URL_LOCALHOST}
+      - NEXT_PUBLIC_REVALIDATION_TIME=${NEXT_PUBLIC_REVALIDATION_TIME}
     networks:
       - musicshop-network
   admin:
     build: ./admin
     container_name: admin
     depends_on:
-      - server 
+      - server
     ports:
       - "3002:3002"
+    environment:
+      - PORT=${PORT}
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+      - REACT_APP_CLIENT_URL=${REACT_APP_API_URL}
     networks:
       - musicshop-network
 networks:
