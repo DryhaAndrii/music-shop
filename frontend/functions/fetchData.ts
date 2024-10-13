@@ -1,19 +1,23 @@
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = typeof window !== 'undefined' && process.env.NEXT_PUBLIC_API_URL_LOCALHOST
+    ? process.env.NEXT_PUBLIC_API_URL_LOCALHOST
+    : process.env.NEXT_PUBLIC_API_URL;
+
 const revalidationTime = process.env.NEXT_PUBLIC_REVALIDATION_TIME;
 
 export default async function fetchData(endpoint: string, params?: Record<string, string>) {
-    const url = new URL(`${apiUrl}${endpoint}`);
-
-    if (params) {
-        Object.entries(params).forEach(([key, value]) => {
-            url.searchParams.append(key, value);
-        });
-    }
-
     try {
-        const res = await fetch(url.toString(), {
+        const url = new URL(`${apiUrl}${endpoint}`);
+
+        if (params) {
+            Object.entries(params).forEach(([key, value]) => {
+                url.searchParams.append(key, value);
+            });
+        }
+
+
+        const res = await fetch(url, {
             next: {
-                revalidate: revalidationTime ? parseInt(revalidationTime) : undefined,
+                revalidate: revalidationTime ? parseInt(revalidationTime) : 3600,
             },
             credentials: 'include',
         });

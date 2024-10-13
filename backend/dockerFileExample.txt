@@ -1,0 +1,29 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+# Envs
+ENV MONGODB_URI="Your connection string"
+ENV JWT_SECRET_ADMIN="Yoursecretadminstring"
+ENV JWT_SECRET_CLIENT="Yoursecretclientstring"
+ENV SECRET_SESSION_KEY="Yoursecretsessionkey"
+ENV ADMIN_URL="http://admin:3002"
+ENV CLIENT_URL="http://frontend:3000"
+ENV GOOGLE_CLIENT_ID="Your google client Id"
+ENV GOOGLE_CLIENT_SECRET="Your google client secred"
+ENV GOOGLE_REDIRECT_URI="https://music-shop-v1x5.onrender.com/api/common/googleAuth/auth/callback"
+ENV ENVIRONMENT='production'
+ENV SMTP_HOST="smtp.gmail.com"
+ENV SMTP_PORT="587"
+ENV SMTP_USER="your email"
+ENV SMTP_PASS="your pass"
+
+
+EXPOSE 3001
+
+CMD ["npm", "run", "start"]

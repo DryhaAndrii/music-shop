@@ -1,5 +1,7 @@
 import axios from "axios";
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = typeof window !== 'undefined' && process.env.NEXT_PUBLIC_API_URL_LOCALHOST
+    ? process.env.NEXT_PUBLIC_API_URL_LOCALHOST
+    : process.env.NEXT_PUBLIC_API_URL;
 
 export default async function getCategoriesByIds(ids: string[]) {
     try {

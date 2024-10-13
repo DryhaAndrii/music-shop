@@ -1,0 +1,30 @@
+services:
+  server:
+    build: ./backend
+    container_name: server
+    ports:
+      - "3001:3001"
+    networks:
+      - musicshop-network
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    depends_on:
+      - server  
+    ports:
+      - "3000:3000"
+    networks:
+      - musicshop-network
+  admin:
+    build: ./admin
+    container_name: admin
+    depends_on:
+      - server 
+    ports:
+      - "3002:3002"
+    networks:
+      - musicshop-network
+networks:
+  musicshop-network:
+    driver: bridge

@@ -11,6 +11,8 @@ const PORT = 3001;
 const allowedOrigins = [
     process.env.CLIENT_URL,
     process.env.ADMIN_URL,
+    "http://localhost:3000",
+    "http://localhost:3002"
 ];
 const corsOptions = {
     origin: (origin, callback) => {
@@ -43,9 +45,10 @@ app.use((req, res, next) => {
     next();
 });
 
+console.log("Allowed:", allowedOrigins);
 
 app.use('/api', require('./routes/api'));
 
-app.listen(PORT, () => {
+app.listen(PORT,'0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`);
 });
