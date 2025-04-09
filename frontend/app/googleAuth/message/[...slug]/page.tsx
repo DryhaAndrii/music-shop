@@ -13,6 +13,7 @@ export default function GoogleAuth({ params }: { params: { slug: string[] } }) {
     async function fetchExchangeCode() {
         const code = params.slug[0];
         if (!code) return;
+        
         const response = await exchangeCodeMessage(code);
         if (response.error) {
             return setMessage('You should not be here');

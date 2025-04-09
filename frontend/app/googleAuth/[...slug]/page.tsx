@@ -2,8 +2,10 @@
 
 import { exchangeCode } from "@/functions/googleAuth";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import styles from './styles.module.scss';
 export default function GoogleAuth({ params }: { params: { slug: string[] } }) {
+    const router = useRouter();
 
     useEffect(() => {
         fetchExchangeCode(); 
@@ -11,7 +13,7 @@ export default function GoogleAuth({ params }: { params: { slug: string[] } }) {
 
     async function fetchExchangeCode() {
         const code = params.slug[0];
-        if (!code) return;
+        if (!code) return router.push('/');
         await exchangeCode(code);
     }
     return (

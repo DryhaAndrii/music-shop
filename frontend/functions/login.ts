@@ -23,8 +23,8 @@ export default async function login(email: string, password: string) {
         if (status === 200) {
             const data = await response.json();
 
-            localStorage.setItem('bookmarks', JSON.stringify(data.user.bookmarks));
-            localStorage.setItem('cart', JSON.stringify(data.user.cart));
+            localStorage.setItem('bookmarks', JSON.stringify(data.user.bookmarks)||'[]');
+            localStorage.setItem('cart', JSON.stringify(data.user.cart)||'[]');
             
             window.dispatchEvent(new Event("storage"));// Send event to refresh bookmarks
 

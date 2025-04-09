@@ -16,6 +16,7 @@ const CheckAuth = () => {
   }, []);
   async function checkAuthorization() {
 
+    //This should be deleted if you have server that not hibernate and works always
     const timeoutId = setTimeout(() => {
         setToast({ message: 'The server is waking up from hibernation... This may take a little while. Until it wakes up, some functions may not work properly.', type: TOAST_TYPES.INFO });
     }, 5000); 
@@ -23,6 +24,7 @@ const CheckAuth = () => {
     const user = await checkAuth();
     setUser(user || null);
 
+    //And this
     clearTimeout(timeoutId);
   }
   return null;

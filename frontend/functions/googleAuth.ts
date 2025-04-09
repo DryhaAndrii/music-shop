@@ -36,8 +36,12 @@ export async function exchangeCode(code: string) {
         });
         const data = await response.json();
 
-        localStorage.setItem('bookmarks', JSON.stringify(data.bookmarks));
-        localStorage.setItem('cart', JSON.stringify(data.cart));
+        if(data.error){
+            return window.location.href = '/';
+        }
+
+        localStorage.setItem('bookmarks', JSON.stringify(data.bookmarks)||'[]');
+        localStorage.setItem('cart', JSON.stringify(data.cart)||'[]');
         window.dispatchEvent(new Event("storage"));// Send event to refresh bookmarks
         
         window.location.href = '/';

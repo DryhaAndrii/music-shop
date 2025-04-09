@@ -1,6 +1,5 @@
-// app/not-found-page.tsx
 import Link from 'next/link';
-import styles from './not-found-page.module.css'; // Импортируйте стили
+import styles from './not-found-page.module.css';
 
 const NotFoundPage = () => (
     <div className={styles.container}>
