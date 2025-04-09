@@ -2,7 +2,7 @@ import { TOAST_TYPES } from "@/types/toastTypes";
 import { atom } from 'jotai';
 import { ToastType } from "@/types/toastTypes";
 
-export const TOAST_LIFE_TIME = 5000;
+export const TOAST_LIFE_TIME = 8000;
 
 export const toastsAtom = atom<ToastType[]>([]);
 
