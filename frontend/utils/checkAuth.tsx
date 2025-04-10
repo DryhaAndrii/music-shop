@@ -15,16 +15,19 @@ const CheckAuth = () => {
     checkAuthorization();
   }, []);
   async function checkAuthorization() {
+    let waitingTooLong  = false;
 
     //This should be deleted if you have server that not hibernate and works always
     const timeoutId = setTimeout(() => {
-        setToast({ message: 'The server is waking up from hibernation... This may take a little while. Until it wakes up, some functions may not work properly.', type: TOAST_TYPES.INFO });
-    }, 5000); 
+        setToast({ message: 'Establishing connection... Response delayed due to server hibernation.', type: TOAST_TYPES.INFO });
+        waitingTooLong  = true;
+      }, 5000); 
     
     const user = await checkAuth();
     setUser(user || null);
 
-    //And this
+    //This should be deleted as well
+    if (waitingTooLong ) setToast({ message: 'Connection established. Server active.', type: TOAST_TYPES.INFO });
     clearTimeout(timeoutId);
   }
   return null;
